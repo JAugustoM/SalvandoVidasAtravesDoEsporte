@@ -4,8 +4,14 @@ site_description: Documentação do projeto Salvando Vidas atraves do Esporte
 theme:
   name: material
 
+extra_css:
+  - stylesheets/extra.css
+
 nav:
   - Home: index.md
 
   - Visão do Produto e Projeto:
-      - 1. Cenário Atual do Cliente e do Negócio: Visão do Produto e Projeto/index.md
+      - 1. Cenário Atual do Cliente e do Negócio: Visão do Produto e Projeto/CACN.md
+      - 2. Proposta da Solução: Visão do Produto e Projeto/SP.md
+      - 3. Estratégias de Engenharia de Software: Visão do Produto e Projeto/EES.md
+      - 4. Engenharia de Requisitos: Visão do Produto e Projeto/ER.md
