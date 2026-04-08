@@ -4,6 +4,7 @@
 | :---:  | :---:| :---:     | :---    |
 | 0.1 | 01/04/2026| Identificação do contexto do negócio do cliente | Pedro L; Júlia G. |
 | 0.2 | 02/04/2026 | Identificação da oportunidade/problema, Desafios do Projeto e Segmentação de Clientes | Pedro L.; Júlia G.;  Giovani; José A. |
+| 0.3 | 07/04/2026 | Adição da Proposta de Solução Geral e Objetivos Especificos sem correções | Pedro L. |
 
 ## 1.1 Identificação do Cliente/Parceiro
 
@@ -23,7 +24,7 @@ dos materiais doados são realizados por meio de fichas de papel e trocas de men
 
 ## 1.3 Rich Picture
 
-![Rich Picture](../../assets/RichPicture.png "Rich Picture")
+![Rich Picture](../assets/RichPicture.png "Rich Picture")
 
 
 - <strong> Atores: </strong> Instrutor, Voluntário Administrativo, Aluno/Responsável, Doador.
@@ -40,6 +41,10 @@ dos materiais doados são realizados por meio de fichas de papel e trocas de men
 - <strong>Gestão de dados fragmentada e Perdas de históricos:</strong> O preenchimento de formulários de inscrição em papel e o acompanhamento de graduações (faixas e graus) dependem da memória dos instrutores ou de anotações físicas que se perdem com facilidade.
 
 - <strong>Dificuldade em mensurar e comprovar impacto: </strong> A ausência de um banco de dados impede a geração de relatórios rápidos sobre o número de jovens atendidos e o volume de doações distribuídas, dificultando a prestação de contas à comunidade e a atração de novos doadores.
+
+<p>A figura apresenta o Diagrama de Ishikawa do projeto Salvando Vidas Através do Esporte, no qual são organizadas as possíveis causas do problema identificado segundo os 6M’s (Método, Mão de Obra, Máquina, Material, Medição e Meio Ambiente). No diagrama, o fator Meio Ambiente é representado apenas como Ambiente, mantendo o mesmo significado. </p>
+
+![Fishbone Ishikawa](../assets/Fishbone.jpeg "Fishbone Ishikawa")
 
 ## 1.5 Desafios do Projeto
 
