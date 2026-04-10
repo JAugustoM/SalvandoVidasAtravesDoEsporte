@@ -37,7 +37,17 @@ Para apoiar o desenvolvimento será utilizado o Git e Github, além de práticas
 
 ## 2.5 Pesquisa de Mercado e Análise Competitiva
 
-Após uma análise das atuais ferramentas de Dashboards disponíveis no mercado, como DojoApp / Dojo Brasil, chegamos a conclusão que grande maioria delas, senão todas, visam um único objetivo, gerar lucro para a empresa em que estão implementadas. Entretanto, o nosso sistema não visa gerar lucro ou chamar novos empreendedores para investir na instituição, nosso sistema visa organizar um projeto nobre para que ele possa crescer com organização. Além disso, igual outras ferramentas do mercado, nós visamos gerar informações para o cliente sobre a frequência dos alunos, dos recursos disponíveis para a instituição, mas de forma simplista, pois não adianta nada nós entregarmos um produto de alta complexibilidade nas mão de quem não entende como ele funciona ou sem algum tipo de capacitação prévia.
+No mercado atual de sistemas de gestão e Dashboards, as soluções dominantes, como o DojoApp (Dojo Brasil), oferecem plataformas robustas com foco em performance corporativa. No entanto, após uma análise técnica, identificamos que essas ferramentas apresentam fragilidades quando aplicadas a contextos de projetos sociais ou instituições sem fins lucrativos:
+
+- **DojoApp / Dojo Brasil:** Estas plataformas são projetadas com um viés estritamente comercial, visando maximizar o lucro da empresa e atrair novos investidores. Além disso, entregam interfaces de alta complexidade técnica, o que se torna um obstáculo para usuários que não possuem capacitação prévia ou tempo para treinamentos exaustivos.
+
+A nossa solução irá se diferenciar por:
+
+- **Foco em Propósito Social e Organização:** Diferente dos concorrentes, o sistema não visa gerar lucro ou atrair investimentos financeiros. O objetivo central é fornecer uma estrutura organizacional sólida para que projetos nobres possam crescer com ordem e eficiência, priorizando o impacto social em vez do retorno financeiro.
+
+- **Interface Simplista e Intuitiva:** Enquanto o mercado foca em alta complexidade, nosso produto preza pela simplicidade. A ferramenta foi desenhada para ser operada por qualquer pessoa, sem necessidade de capacitação técnica, garantindo que a tecnologia seja um facilitador e não uma barreira.
+
+- **Gestão de Recursos e Frequência:** O sistema foca no que é essencial para a instituição: o controle preciso da frequência dos alunos e a gestão clara dos recursos disponíveis. As informações são entregues de forma direta, permitindo uma tomada de decisão rápida sobre a saúde do projeto.
 
 ## 2.6 Viabilidade da Proposta
 
