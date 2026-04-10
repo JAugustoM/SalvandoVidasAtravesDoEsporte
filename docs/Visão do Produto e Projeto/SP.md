@@ -37,6 +37,18 @@ Para apoiar o desenvolvimento será utilizado o Git e Github, além de práticas
 
 ## 2.5 Pesquisa de Mercado e Análise Competitiva
 
+No mercado atual de sistemas de gestão e Dashboards, as soluções dominantes, como o DojoApp (Dojo Brasil), oferecem plataformas robustas com foco em performance corporativa. No entanto, após uma análise técnica, identificamos que essas ferramentas apresentam fragilidades quando aplicadas a contextos de projetos sociais ou instituições sem fins lucrativos:
+
+- **DojoApp / Dojo Brasil:** Estas plataformas são projetadas com um viés estritamente comercial, visando maximizar o lucro da empresa e atrair novos investidores. Além disso, entregam interfaces de alta complexidade técnica, o que se torna um obstáculo para usuários que não possuem capacitação prévia ou tempo para treinamentos exaustivos.
+
+A nossa solução irá se diferenciar por:
+
+- **Foco em Propósito Social e Organização:** Diferente dos concorrentes, o sistema não visa gerar lucro ou atrair investimentos financeiros. O objetivo central é fornecer uma estrutura organizacional sólida para que projetos nobres possam crescer com ordem e eficiência, priorizando o impacto social em vez do retorno financeiro.
+
+- **Interface Simplista e Intuitiva:** Enquanto o mercado foca em alta complexidade, nosso produto preza pela simplicidade. A ferramenta foi desenhada para ser operada por qualquer pessoa, sem necessidade de capacitação técnica, garantindo que a tecnologia seja um facilitador e não uma barreira.
+
+- **Gestão de Recursos e Frequência:** O sistema foca no que é essencial para a instituição: o controle preciso da frequência dos alunos e a gestão clara dos recursos disponíveis. As informações são entregues de forma direta, permitindo uma tomada de decisão rápida sobre a saúde do projeto.
+
 ## 2.6 Viabilidade da Proposta
 
 A proposta é viável no contexto da disciplina, considerando o acesso ao cliente, o escopo definido e a possibilidade de entrega de um MVP funcional ao final do semestre. Embora a equipe seja reduzida, a familiaridade dos membros da equipe com as ferramentas escolhidas para a construção da solução, aliado às reuniões semanais entre os membros da equipe, a priorização das funcionalidades essenciais da solução e o feedback frequente do cliente viabilizam o projeto.
@@ -44,4 +56,5 @@ A proposta é viável no contexto da disciplina, considerando o acesso ao client
 ## 2.7 Benefícios Esperados
 
 - **Para o cliente:** fortalecer a gestão do projeto social com informações centralizadas, aumento da confiabilidade no acompanhamento de alunos e melhoria no controle de recursos como kimonos e materiais pedagógicos. A solução também deve ampliar a capacidade de planejamento da equipe, apoiar a prestação de contas e reduzir perdas operacionais causadas por registros dispersos.
+
 - **Para os usuários:** proporcionar um atendimento mais organizado, com maior transparência no acompanhamento de frequência, comunicação mais clara entre equipe e responsáveis e distribuição mais justa dos recursos disponíveis. Para instrutores e voluntários, espera-se redução de retrabalho administrativo e acesso mais rápido ao histórico necessário para decisões pedagógicas e sociais.
