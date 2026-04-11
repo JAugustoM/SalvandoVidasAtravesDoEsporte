@@ -1,2 +1,41 @@
-# REQ-2026.1-T02---Salvando-Vidas-atrav-s-do-Esporte-
-Repositório de projeto da disciplina de REQ-T2 - 2026.1.
+# Projeto Salvando Vidas através do Esporte
+
+Repositório da equipe **Na Minha Máquina Funciona** dedicado ao desenvolvimento do trabalho da disciplina Requisitos de Software. Este site contém a documentação do projeto incluindo a Visão do Produto e Projeto, atas de reuniões e demais referências.
+
+## Índice de documentos:
+
+- [Visão do Produto e Projeto](https://mdsreq-fga-unb.github.io/REQ-2026.1-T02-Salvando-Vidas-atraves-do-Esporte/Vis%C3%A3o%20do%20Produto%20e%20Projeto/cenarioAtualDoClienteEDoNegocio/)
+
+## Equipe
+
+<div align="center">
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://avatars.githubusercontent.com/u/176083022?v=4" width="100px;" alt="GIOVANI"/><br />
+        <sub><b>GIOVANI DE OLIVEIRA TEODORO COELHO</b></sub><br />
+        <sub>Matrícula: 241032500</sub>
+      </td>
+      <td align="center">
+        <img src="https://avatars.githubusercontent.com/u/136201020?v=4" width="100px;" alt="JOSÉ"/><br />
+        <sub><b>JOSÉ AUGUSTO ALVES DE MORAES</b></sub><br />
+        <sub>Matrícula: 231026429</sub>
+      </td>
+      <td align="center">
+        <img src="https://avatars.githubusercontent.com/u/188575595?v=4" width="100px;" alt="JULIA"/><br />
+        <sub><b>JULIA GABRIELLA FERREIRA SIQUEIRA</b></sub><br />
+        <sub>Matrícula: 241036142</sub>
+      </td>
+      <td align="center">
+        <img src="https://avatars.githubusercontent.com/u/238123979?v=4" width="100px;" alt="LUCAS"/><br />
+        <sub><b>LUCAS OLIVEIRA DE PAULA</b></sub><br />
+        <sub>Matrícula: 241011386</sub>
+      </td>
+      <td align="center">
+        <img src="https://avatars.githubusercontent.com/u/182804941?v=4" width="100px;" alt="PEDRO"/><br />
+        <sub><b>PEDRO LUCAS BARBOSA DA SILVA</b></sub><br />
+        <sub>Matrícula: 241025710</sub>
+      </td>
+    </tr>
+  </table>
+</div>

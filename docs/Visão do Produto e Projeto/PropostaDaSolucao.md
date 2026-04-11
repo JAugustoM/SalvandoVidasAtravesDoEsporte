@@ -9,17 +9,17 @@ O objetivo do produto é facilitar a organização e o gerenciamento dos alunos 
 Para alcançar o objetivo geral do sistema, foram definidos os seguintes objetivos específicos, numerados para fins de rastreabilidade como os requisitos do projeto. Eles expressam apenas o estado ou resultado desejado; os CPs detalham o "como" isso será viabilizado:
 
 - **OE01:** Cadastro de alunos e responsáveis organizado, centralizado e acessível para consulta.
-- **OE03:** Frequência dos alunos monitorada com sinais de evasão identificáveis.
-- **OE04:** Disponibilidade e movimentação de kimonos e materiais pedagógicos acompanhadas.
-- **OE05:** Responsabilidade sobre os materiais emprestados e suas devoluções rastreável.
-- **OE07:** Histórico de ocorrências, orientações e comunicações relevantes dos alunos preservado em um único registro.
+- **OE02:** Frequência dos alunos monitorada com sinais de evasão identificáveis. 3
+- **OE03:** Disponibilidade e movimentação de kimonos e materiais pedagógicos acompanhadas. 4
+- **OE04:** Responsabilidade sobre os materiais emprestados e suas devoluções rastreável. 5
+- **OE05:** Histórico de ocorrências, orientações e comunicações relevantes dos alunos preservado em um único registro. 7
 
 ## 2.3 Características do Produto (mapeados com os OE do Produto)
 
 No quadro abaixo estão registradas as principais características do produto, relacionadas com os objetivos específicos listados acima.
 
-| ID | Descrição resumida | Valor de negócio principal | OE principal | Contribuição secundária |
-| --- | --- | --- | --- | --- |
+| ID  | Descrição resumida | Valor de negócio principal | OE principal | Contribuição secundária |
+| :-: | :----------------- | :------------------------- | :----------- | :---------------------- |
 | CP1 | Cadastro centralizado de alunos e responsáveis. | Reunir as informações em um único lugar para consulta e atualização. | OE01 | OE07 |
 | CP2 | Registro de frequência por aula. | Permitir o acompanhamento da presença dos alunos. | OE03 | OE07 |
 | CP3 | Acompanhamento de faltas com alertas. | Apoiar a identificação de possíveis evasões. | OE03 | OE07 |
@@ -32,8 +32,18 @@ No quadro abaixo estão registradas as principais características do produto, r
 
 ## 2.4 Tecnologias a Serem Utilizados
 
-Para a construção da solução proposta para o projeto social, serão utilizadas tecnologias adequadas à necessidade de gerenciamento do estoque solidário, ao cadastro e acompanhamento de alunos e o desenvolvimento rápido da aplicação. Para isso, será utilizado o framework Flutter, que é um framework fullstack multiplataforma que permite o desenvolvimento rápido de interfaces nativas. Para persistência de dados será usado o PostgreSQL, por ser bem suportado pelo Flutter, e o Supabase como BaaS, facilitando a implantação do produto final.
-Para apoiar o desenvolvimento será utilizado o Git e Github, além de práticas de teste e integração contínua. 
+| Tecnologia                                 | Descrição                                                     | Aréa de aplicação  |
+| :----------------------------------------- | :------------------------------------------------------------ | :----------------: |
+| :fontawesome-brands-flutter: Flutter       | Framework fullstack para desenvolvimento multiplataforma      |     Fullstack      |
+| :simple-postgresql: PostgreSQL             | Banco de dados SQL                                            |      Backend       |
+| :simple-supabase: Supabase                 | Plataforma BaaS com autenticação e banco  de dados integrada  |      Backend       |
+| :fontawesome-brands-flutter: Flutter Test  | Biblioteca de testes nativa do Flutter                        |       Testes       |
+| :fontawesome-brands-flutter: Mockito       | Biblioteca para geração de *mocks*                            |       Testes       |
+| :simple-github: Github                     | Repositório para versionamento e colaboração                  | Controle de Versão |
+| :simple-githubactions: Github Actions      | Ferramenta de CI/CD, usada para deploy e testes automatizados |       CI/CD        |
+| :material-microsoft-teams: Microsoft Teams | Plataforma para comunicação e reuniões internas               |    Comunicação     |
+| :simple-googlemeet: Google Meet            | Plataforma para reuniões com o cliente                        |    Comunicação     |
+| :simple-whatsapp: WhatsApp                 | Plataforma para comunicações rápidas entre a equipe           |    Comunicação     |
 
 ## 2.5 Pesquisa de Mercado e Análise Competitiva
 

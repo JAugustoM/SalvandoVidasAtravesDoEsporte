@@ -10,6 +10,7 @@
 | 0.6 | 10/04/2026 | Inclusão da Pesquisa de Mercado e Análise Competitiva e da Interação entre Equipe e Cliente | Lucas O. |
 | 0.7 | 10/04/2026 | Inclusão das Estratégias de Engenharia de Software | Júlia G. |  
 | 0.9 | 11/04/2026 | Adição Engenharia de Requisitos + tabela ER e o RAD | Pedro Lucas |
+| 0.10 | 11/04/2026 | Mudança da home page e coloquei as tecnologias numa tabela | José A. | 
 
 ---
 
@@ -52,9 +53,9 @@ Atualmente, o projeto social de jiu-jitsu sofre com a fragmentação de informa�
 
 A figura apresenta o Diagrama de Ishikawa do projeto Salvando Vidas Através do Esporte, no qual são organizadas as possíveis causas do problema identificado segundo os 6M’s (Método, Mão de Obra, Máquina, Material, Medição e Meio Ambiente). No diagrama, o fator Meio Ambiente é representado apenas como Ambiente, mantendo o mesmo significado.
 
-![Diagrama de Ishikawa](../assets/Fishbone.jpeg "Fishbone Ishikawa")
+![Diagrama de Ishikawa](../assets/fishbone.jpeg "Fishbone Ishikawa")
 **Figura 2:** Diagrama de Ishikawa "Fishbone".
-Fonte: Elaborada pelos autores
+Fonte: Elaborada pelo [José Augusto](https://github.com/JAugustoM)
 
 ## 1.5 Desafios do Projeto
 
@@ -71,7 +72,7 @@ A seguir é apresentado um quadro resumo dos stakeholders e adiante uma represen
 | Equipe de Desenvolvimento | Responsável pela construção | Entregar uma aplicação que atenda às necessidades reais do cliente | Alta |
 | Alunos e Responsáveis | Beneficiários finais (indiretos) | Receber um atendimento eficiente, de qualidade e transparente | Baixa |
 
-![Mapa de Stakeholders](../assets/Stakeholders.png "Mapa de Stakeholders")
+![Mapa de Stakeholders](../assets/stakeholders.png "Mapa de Stakeholders")
 **Figura 3:** Mapa de Stakeholders.
 Fonte: Elaborada pelo [José Augusto](https://github.com/JAugustoM)
 
