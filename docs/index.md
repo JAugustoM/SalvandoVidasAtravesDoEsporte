@@ -1,2 +1,104 @@
-# Projeto Salvando Vidas atraves do Esporte
+# Projeto Salvando Vidas através do Esporte
 
+Repositório da equipe **Na Minha Máquina Funciona** dedicado ao desenvolvimento do trabalho da disciplina Requisitos de Software. Este site contém a documentação do projeto incluindo a Visão do Produto e Projeto, atas de reuniões e demais referências.
+
+## Índice de documentos:
+
+- [Visão do Produto e Projeto](./Visão%20do%20Produto%20e%20Projeto/cenarioAtualDoClienteEDoNegocio.md)
+
+## Equipe
+
+<style>
+  .team-all-in-one {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .team-card-compact {
+    flex: 1 1 0; 
+    min-width: 140px; 
+    background-color: var(--md-default-bg-color, #f5f5f5);
+    border: 1px solid var(--md-default-fg-color--lightest, #ddd);
+    border-radius: 8px;
+    padding: 20px 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    word-wrap: break-word;
+  }
+
+  .team-card-compact:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  }
+
+  .team-card-compact img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+    border: 2px solid var(--md-default-bg-color, #fff);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .team-card-compact h3 {
+    font-size: 0.85em;
+    margin: 0 0 6px 0 !important;
+    line-height: 1.3;
+    color: var(--md-default-fg-color, #333);
+    font-weight: 700;
+  }
+
+  .team-card-compact p {
+    margin: 0;
+    font-size: 0.75em;
+    color: var(--md-default-fg-color--light, #666);
+    font-weight: 600;
+  }
+
+  @media (max-width: 800px) {
+    .team-card-compact {
+      flex: 1 1 calc(33.33% - 12px);
+    }
+  }
+  @media (max-width: 500px) {
+    .team-card-compact {
+      flex: 1 1 100%;
+    }
+  }
+</style>
+
+<div class="team-all-in-one">
+  <div class="team-card-compact">
+    <img src="https://avatars.githubusercontent.com/u/176083022?v=4" alt="Foto de GIOVANI">
+    <h3>GIOVANI DE OLIVEIRA TEODORO COELHO</h3>
+    <p>Matrícula: 241032500</p>
+  </div>
+  <div class="team-card-compact">
+    <img src="https://avatars.githubusercontent.com/u/136201020?v=4" alt="Foto de JOSÉ">
+    <h3>JOSÉ AUGUSTO ALVES DE MORAES</h3>
+    <p>Matrícula: 231026429</p>
+  </div>
+  <div class="team-card-compact">
+    <img src="https://avatars.githubusercontent.com/u/188575595?v=4" alt="Foto de JULIA">
+    <h3>JULIA GABRIELLA FERREIRA SIQUEIRA</h3>
+    <p>Matrícula: 241036142</p>
+  </div>
+  <div class="team-card-compact">
+    <img src="https://avatars.githubusercontent.com/u/238123979?v=4" alt="Foto de LUCAS">
+    <h3>LUCAS OLIVEIRA DE PAULA</h3>
+    <p>Matrícula: 241011386</p>
+  </div>
+  <div class="team-card-compact">
+    <img src="https://avatars.githubusercontent.com/u/182804941?v=4" alt="Foto de PEDRO">
+    <h3>PEDRO LUCAS BARBOSA DA SILVA</h3>
+    <p>Matrícula: 241025710</p>
+  </div>
+</div>
