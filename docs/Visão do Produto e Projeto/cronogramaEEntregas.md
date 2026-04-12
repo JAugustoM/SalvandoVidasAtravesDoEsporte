@@ -3,7 +3,9 @@
 # Cronograma RAD — Salvando Vidas Através do Esporte
 
 **Disciplina:** Requisitos de Software · UnB Gama · 2026/1
+
 **Abordagem:** Híbrida · **Ciclo de Vida:** Iterativo-Incremental · **Processo:** RAD
+
 **Reuniões presenciais com cliente:** ~2 por unidade (aproximadamente a cada 14 dias)
 
 ---
@@ -20,7 +22,7 @@
 
 | Iteração | Fase RAD | Atividade ER | Técnica | Produto / Entrega | Início | Fim | Dias | Validação do Cliente |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1.1 | Planejamento de Requisitos | Elicitação e Descoberta | Entrevistas · Brainstorming | Ideação e discussão de proposta pela equipe · Elaboração do documento de proposta inicial · Submissão e aprovação da proposta pelo professor | 26/03 | 06/04 | 12 | — |
+| 1.1 | Planejamento de Requisitos | Elicitação e Descoberta | Entrevistas · Brainstorming | Ideação e discussão de proposta pela equipe · Elaboração do documento de proposta inicial Submissão e aprovação da proposta pelo professor | 26/03 | 06/04 | 12 | — |
 | R0 ⭐ Reunião Cliente | Planejamento de Requisitos | Elicitação e Descoberta | Entrevista | Reunião presencial com coordenador do projeto e representante da Segunda Igreja Batista  · Apresentação da proposta inicial e verificação de aceitação · Primeiros insumos sobre a realidade do projeto social | 31/03 | 31/03 | 1 | ✅ Presencial · Aceitação da proposta pelo coordenador · Alinhamento sobre viabilidade e contexto real do projeto |
 | 1.2 | Planejamento de Requisitos | Elicitação e Descoberta | Brainstorming · Entrevistas · Workshop JAD | Definição de tecnologias (Flutter, Supabase, PostgreSQL, Figma) · Pesquisa de mercado e análise competitiva · Análise de viabilidade · Estratégias ESW: abordagem híbrida, ciclo iterativo-incremental, processo RAD · Atividades e técnicas de ER definidas · Nome do processo, SW e entregas | 07/04 | 13/04 | 7 | — |
 | R1 ⭐ Reunião Cliente | Planejamento de Requisitos | Elicitação e Descoberta | Workshop JAD · Entrevistas | Reunião presencial com voluntários e representante do projeto · Entendimento do que agrega valor à realidade deles · Coleta de sugestões dos clientes sobre funcionalidades | 09/04 | 09/04 | 1 | ✅ Presencial · Validação da direção geral do projeto · Refinamento das necessidades reais dos usuários · Coleta e alinhamento de sugestões dos voluntários |
@@ -66,11 +68,11 @@
 
 ## Notas
 
-> ⚠️ **Modelo preliminar:** este cronograma poderá sofrer alterações ao longo do semestre conforme o andamento do projeto e decisões da equipe e do professor.
+> ⚠️**Modelo preliminar:** este cronograma poderá sofrer alterações ao longo do semestre conforme o andamento do projeto e decisões da equipe e do professor.
 > 
 
-> 📱 **Reuniões online não programadas:** as reuniões presenciais com o cliente são planejadas com frequência de uma média quinzenal (~14 dias). Reuniões online não programadas com o cliente podem ocorrer a qualquer momento conforme necessidade e não estão registradas neste cronograma.
+> 📱**Reuniões online não programadas:** as reuniões presenciais com o cliente são planejadas com frequência de uma média quinzenal (~14 dias). Reuniões online não programadas com o cliente podem ocorrer a qualquer momento conforme necessidade e não estão registradas neste cronograma.
 > 
 
-> 👥 **Reuniões internas de equipe:** a equipe mantém reuniões internas fixas de desenvolvimento nas **terças e quintas-feiras**, presencialmente, após a aula da disciplina.
+> 👥**Reuniões internas de equipe:** a equipe mantém reuniões internas fixas de desenvolvimento nas **terças e quintas-feiras**, presencialmente, após a aula da disciplina.
 >
