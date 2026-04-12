@@ -18,7 +18,7 @@ Para garantir o alinhamento da equipe e o cumprimento dos prazos, estabelecemos 
 
 - **Gestão de Tarefas e Design:** A organização do fluxo de trabalho e o acompanhamento das atividades são centralizados no Trello, onde as demandas são distribuídas e monitoradas. Além disso, o Figma é utilizado como ferramenta de prototipação, permitindo que todos os membros visualizem e validem a interface da solução de forma colaborativa antes do desenvolvimento técnico.
 
-- **Comunicação com o Cliente:** O contato direto com o cliente para apresentações de progresso, elicitação e validação de requisitos é realizado de forma remota através do Google Meet. Essas reuniões garantem que o cliente esteja sempre a par da evolução do projeto e possa fornecer feedbacks em tempo real.
+- **Comunicação com o Cliente:** O contato direto com o cliente para apresentações de progresso, elicitação e validação de requisitos é realizado de forma presencial, ou, remota através do Google Meet. Essas reuniões garantem que o cliente esteja sempre a par da evolução do projeto e possa fornecer feedbacks em tempo real.
 
 ## 6.3 Processo de Validação
 

@@ -20,7 +20,7 @@
 - **Nome:** Projeto Salvando Vidas através do Esporte 
 - **Tipo:** Iniciativa Social
 - **Representante:** José Lucas Siqueira
-- **Forma de Contato:** Reuniões online e encontros presencias quando necessário
+- **Forma de Contato:** Encontros presencias e reuniões online quando necessário
 - **Vínculo com o projeto:** Coordenador do projeto
 
 ## 1.2 introdução ao Negócio e Contexto
