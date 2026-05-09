@@ -236,6 +236,12 @@
     ```
     Reunião com Clientes
     ```
+    ```
+    Workshop JAD
+    ```
+    ```
+    Validação de Requisitos
+    ```
     </div>
     <div class="card fase2-card" markdown>**9**</div>
     <div class="card fase2-card" markdown>**10**</div>
