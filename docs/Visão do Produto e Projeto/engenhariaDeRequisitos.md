@@ -1,29 +1,29 @@
 # Engenharia de Requisitos
 
 ## 5.1 Atividades e Técnicas de ER
-Abaixo, detalhamos as atividades da Engenharia de Requisitos (ER) associadas às técnicas que serão utilizadas no contexto do RAD, cujo foco é o engajamento contínuo do cliente por meio de prototipagem e desenvolvimento em ciclos curtos
+Abaixo, detalhamos as atividades da Engenharia de Requisitos (ER) associadas às técnicas que serão utilizadas no contexto do RAD, cujo foco é o engajamento contínuo do cliente por meio de prototipagem e desenvolvimento em ciclos curtos.
 
 **Planejamento de Requisitos**
 
-- **Elicitações e Descoberta:**
-    - **Workshop JAD (Joint Application Design) adaptado ao contexto do projeto:** Sessões de trabalho colaborativo envolvendo a equipe de desenvolvimento, o cliente e os usuários finais para levantar rapidamente as necessidades de negócio, mapear as funcionalidades centrais do sistema e alinhar as expectativas gerais do sistema.
-    - **Entrevistas e Brainstorming:** Utilizadas no início do projeto e a cada iteração para capturar as dores dos usuários e propor soluções em conjunto com os stakeholders.
+- **Elicitação e Descoberta:**
+    - **Workshop JAD (Joint Application Design) adaptado ao contexto do projeto:** Sessões de trabalho colaborativo envolvendo a equipe de desenvolvimento, o cliente e os usuários finais para levantar rapidamente as necessidades de negócio, mapear as funcionalidades centrais do sistema e alinhar as expectativas gerais do projeto.
+    - **Entrevistas e Brainstorming:** Utilizados no início do projeto e a cada iteração para capturar as dores dos usuários e propor soluções em conjunto com os stakeholders.
 
 - **Análise e Consenso:**
-    - **Priorização MoSCoW:** Técnica de priorização compatível com ambientes iterativos como o RAD, responsável por classificar os requisitos em *Must have* (essenciais para o protótipo/MVP), *Should have*, *Could have* e *Won't have*, garantindo que a equipe foque no que gera mais valor em menos tempo.
+    - **Priorização MoSCoW:** Técnica de priorização compatível com ambientes iterativos como o RAD, responsável por classificar os requisitos em *Must have* (essenciais para o protótipo/MVP), *Should Have*, *Could Have* e *Won't Have*, garantindo que a equipe foque no que gera mais valor em menos tempo.
     - **Matriz Avaliação Técnica × Valor de Negócio:** Para ir além do MoSCoW, esta técnica posiciona os requisitos cruzando o valor percebido pelo cliente com a complexidade/esforço técnico estimado pela equipe, permitindo identificar entregas de alto valor e organizando o esforço de forma mais realista.
         - Para definir o eixo de esforço técnico de forma colaborativa, a equipe utilizará o **Planning Poker** como técnica auxiliar: uma estimativa ágil baseada em consenso onde os requisitos são debatidos, votados simultaneamente em complexidade usando a sequência modificada de Fibonacci (1,2, 3, 5, 8, 13, ...), e as divergências são discutidas até o consenso, garantindo uma avaliação realista e democrática antes de organizar as entregas na matriz.
 
 - **Declaração de Requisitos:**
-    - **Temas, Épicos e User Stories (Histórias de Usuário) e Critérios de Aceitação:** Como complemento à abordagem de prototipação do RAD e para dar suporte ao caráter ágil da abordagem híbrida, os requisitos são organizados em temas e épicos, e detalhados em histórias focadas no usuário. As histórias possuem os seus próprios Critérios de Aceitação (condições que o requisito deve atender para ser considerado válido). Separadamente, para gerenciar o fluxo de trabalho, a equipe utiliza políticas de entrada e saída, como a *Definition of Ready (DoR)* e a *Definition of Done (DoD)*. Essa estrutura é essencial pois auxilia na organização do backlog inicial e no alinhamento com os stakeholders, especialmente usuários com baixo letramento digital.
+    - **Temas, Épicos, User Stories (Histórias de Usuário) e Critérios de Aceitação:** Como complemento à abordagem de prototipação do RAD e para dar suporte ao caráter ágil da abordagem híbrida, os requisitos são organizados em temas e épicos, e detalhados em histórias focadas no usuário. As histórias possuem os seus próprios Critérios de Aceitação (condições que o requisito deve atender para ser considerado válido). Separadamente, para gerenciar o fluxo de trabalho, a equipe utiliza políticas de entrada e saída, como a *Definition of Ready (DoR)* e a *Definition of Done (DoD)*. Essa estrutura é essencial, pois auxilia na organização do backlog inicial e no alinhamento com os stakeholders, especialmente usuários com baixo letramento digital.
 
 - **Verificação e Validação de Requisitos:**
     - **V&V Contínua e Iterativa:** Avaliação para garantir que os requisitos estão estruturalmente corretos (verificação) e atendem às reais necessidades de negócio (validação). No RAD, essa prática não se limita ao início do projeto; ela ocorre a cada iteração, em trabalho conjunto entre a equipe e os clientes, mantendo o alinhamento constante das expectativas. 
 
 - **Organização e Atualização:**
-    - **Matriz de Rastreabilidade:** Estruturação do backlog e garantia da rastreabilidade explícita dos requisitos. Para manter a coerência do que será construído, a equipe utilizará o mapeamento contínuo seguindo a cadeia de rastreabilidade: *OE* (Objetivo Específicos) - *CP* (Característica do Produto) - *requisito/user story* - *critério de aceitação* - *protótipo* - *validação* - *entrega*.
+    - **Matriz de Rastreabilidade:** Estruturação do backlog e garantia da rastreabilidade explícita dos requisitos. Para manter a coerência do que será construído, a equipe utilizará o mapeamento contínuo seguindo a cadeia de rastreabilidade: *OE* (Objetivos Específicos) - *CP* (Característica do Produto) - *requisito/user story* - *critério de aceitação* - *protótipo* - *validação* - *entrega*.
 
-**Design do Usuário (Prototipagem iterativa)**
+**Design do Usuário (Prototipagem Iterativa)**
 
 - **Análise e Consenso:** Negociação contínua com os stakeholders sobre quais funcionalidades farão parte do protótipo atual, avaliando trade-offs entre usabilidade e viabilidade técnica.
 
@@ -33,7 +33,7 @@ Abaixo, detalhamos as atividades da Engenharia de Requisitos (ER) associadas às
     - **Prototipagem Rápida (Wireframes e Mockups):** No RAD, a representação visual é a técnica central para tornar os requisitos concretos, visíveis e validáveis. Consiste na criação iterativa de protótipos de interface, telas e fluxos navegáveis, que servem como principal modelo visual para que os stakeholders compreendam, validem e refinem a solução antes do desenvolvimento completo.
 
 - **Verificação e Validação de Requisitos:**
-    - **Validação de Protótipos com o Cliente:** Sessões onde os *protótipos* são testados em sessões nas quais o cliente interage diretamente com as interfaces e fluxos propostos. O feedback imediato, obtido de forma visual e prática, permite validar se o entendimento dos requisitos, incluindo as histórias de usuário associadas está correto e alinhado às necessidades reais.
+    - **Validação de Protótipos com o Cliente:** Sessões onde os *protótipos* são testados em sessões nas quais o cliente interage diretamente com as interfaces e fluxos propostos. O feedback imediato, obtido de forma visual e prática, permite validar se o entendimento dos requisitos, incluindo as histórias de usuário associadas, está correto e alinhado às necessidades reais.
 
 - **Elicitação e Descoberta (Refinamento):**
     - **Refinamento Iterativo (Sessões JAD contínuas):** Durante a avaliação dos protótipos, novos requisitos ou ajustes (*refinamentos*) são descobertos iterativamente a partir da interação visual do usuário.
