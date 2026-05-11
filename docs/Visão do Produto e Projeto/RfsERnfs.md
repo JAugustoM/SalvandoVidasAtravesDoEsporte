@@ -97,17 +97,19 @@ Os requisitos funcionais descrevem as funcionalidades específicas que o sistema
 
 ## 8.2 Lista de Requisitos Não Funcionais
 
-**RNF01 - Usabilidade (Usability)**: A interface deve ser responsiva, adaptando-se a dispositivos móveis e desktops.
+## 8.2 Lista de Requisitos Não Funcionais
 
-**RNF02 - Usabilidade (Usability)**: O sistema deve permitir a execução de tarefas principais em até 3 cliques.
+**RNF01 - Usabilidade (Usability):** A interface de usuário deve ser totalmente responsiva, utilizando princípios de design fluido para se adaptar automaticamente a diferentes resoluções de tela e dispositivos. A experiência de uso não deve ser degradada em telas menores (smartphones e tablets), garantindo que botões, textos e menus permaneçam legíveis, acessíveis e operáveis sem a necessidade de zoom manual.
 
-**RNF03 - Confiabilidade (Reliability)**: O sistema deve manter logs de alteração para auditoria de dados sensíveis.
+**RNF02 - Usabilidade (Usability):** A arquitetura de informação e a navegação do sistema devem ser otimizadas para que os usuários consigam acessar e executar as funcionalidades principais (como registrar presença, consultar estoque ou cadastrar alunos) em, no máximo, três cliques a partir da tela inicial. O design deve ser intuitivo o suficiente para evitar confusão de navegação e dispensar manuais complexos.
 
-**RNF04 - Desempenho (Performance)**: A consulta de listas de alunos deve ocorrer em tempo inferior a 2 segundos.
+**RNF03 - Confiabilidade (Reliability):** O sistema deve registrar e manter logs detalhados e inalteráveis de todas as ações críticas e alterações em dados sensíveis. Esses logs devem incluir a identificação do usuário responsável pela ação, a data e hora exatas da ocorrência e o dado modificado, garantindo total rastreabilidade e facilitando processos de auditoria para proteção dos dados da instituição.
 
-**RNF05 - Segurança (Security)**: Apenas usuários com permissão de "Instrutor" ou "Admin" devem alterar registros.
+**RNF04 - Desempenho (Performance):** O sistema deve ser otimizado no backend e no banco de dados para garantir que operações de leitura, como a consulta, filtragem e carregamento de listas completas de alunos, sejam processadas e exibidas na interface do usuário em um tempo de resposta estritamente inferior a 2 segundos, mesmo durante picos de acessos simultâneos.
 
-**RNF06 - Portabilidade (Portability)**: O sistema deve ser acessível via navegadores web modernos (Chrome, Firefox, Safari).
+**RNF05 - Segurança (Security):** O sistema deve implementar um rigoroso controle de acesso baseado em papéis. Funcionalidades de escrita e exclusão, como alteração de dados cadastrais e remoção de registros, devem ser restritas exclusivamente a usuários autenticados com os perfis de "Instrutor" ou "Admin". Tentativas de acesso não autorizado a essas funções devem ser bloqueadas imediatamente.
+
+**RNF06 - Suportabilidade (Supportability):** O sistema web deve funcionar de maneira consistente e sem perda de funcionalidades nos navegadores web modernos mais utilizados do mercado, incluindo Google Chrome, Mozilla Firefox e Safari (em suas versões mais recentes). A aplicação deve garantir estabilidade na comunicação cliente-servidor independentemente do sistema operacional base do dispositivo.
 
 ## 8.3 Matriz-síntese de rastreabilidade
 
