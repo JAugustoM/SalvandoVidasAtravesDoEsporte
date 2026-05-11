@@ -1,4 +1,4 @@
-# 7. Interação Entre Equipe e Cliente
+# Interação Entre Equipe e Cliente
 
 ## 7.1 Composição da Equipe
 
