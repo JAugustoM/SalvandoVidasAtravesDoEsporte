@@ -252,7 +252,15 @@
     Reunião de Equipe
     ```
     </div>
-    <div class="card fase2-card" markdown>**13**</div>
+    <div class="card fase2-card" markdown>
+    **13**
+    ```
+    Reunião com Clientes
+    ```
+    ```
+    Validação de Requisitos
+    ```
+    </div>
     <div class="card fase2-card" markdown>
     **14**
     ```
@@ -469,3 +477,36 @@
     <div class="card outro-mes-card" markdown>**1**</div>
     <div class="card outro-mes-card" markdown>**2**</div>
     </div>
+
+<div class="calendar-legend">
+    <div class="legend-item">
+        <span class="legend-color semestre-card"></span> Semestre Letivo
+    </div>
+    <div class="legend-item">
+        <span class="legend-color feriado-card"></span> Feriado
+    </div>
+    <div class="legend-item">
+        <span class="legend-color facultativo-card"></span> Ponto Facultativo
+    </div>
+    <div class="legend-item">
+        <span class="legend-color entrega-card"></span> Entrega Importante
+    </div>
+    <div class="legend-item">
+        <span class="legend-color fase0-card"></span> Fase 0
+    </div>
+    <div class="legend-item">
+        <span class="legend-color fase1-card"></span> Fase 1
+    </div>
+    <div class="legend-item">
+        <span class="legend-color fase2-card"></span> Fase 2
+    </div>
+    <div class="legend-item">
+        <span class="legend-color fase3-card"></span> Fase 3
+    </div>
+    <div class="legend-item">
+        <span class="legend-color fase4-card"></span> Fase 4
+    </div>
+    <div class="legend-item">
+        <span class="legend-color outro-mes-card"></span> Outro Mês
+    </div>
+</div>

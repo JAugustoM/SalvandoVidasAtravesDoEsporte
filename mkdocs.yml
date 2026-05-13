@@ -7,6 +7,8 @@ theme:
   name: material
   palette:
     scheme: slate
+  features:
+    - toc.integrate
 
 extra_css:
   - stylesheets/extra.css
@@ -27,8 +29,9 @@ nav:
       - 11. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
   - Entregas:
       - "Entregas": Entregas/entregas.md
-  - Atas:
+  - Atas e Reuniões Gravadas:
       - "Atas": Atas/atas.md
+      - "Reuniões Gravadas": Atas/reunioes.md
   - Referências: assets/referencias.md
 
 markdown_extensions:
