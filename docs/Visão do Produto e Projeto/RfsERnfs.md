@@ -18,19 +18,19 @@ Os requisitos funcionais descrevem as funcionalidades específicas que o sistema
 
 **RF07 – Editar dados do responsável:** Permitir a modificação das informações pessoais e de contato de um responsável legal previamente cadastrado.
 
-**RF08 - Inativar responsável:**
+**RF08 - Inativar responsável:** Permitir a alteração do status de um responsável legal para inativo, preservando seus dados históricos no sistema, mas impedindo novas vinculações a alunos.
 
-**RF09 - Cadastrar turma:**
+**RF09 - Cadastrar turma:** Permitir a criação de uma nova turma no sistema, registrando detalhes como faixa etária, dias da semana, horários de aula e o professor voluntário responsável.
 
-**RF10 - Editar turma:**
+**RF10 - Editar turma:** Permitir a alteração das informações e configurações de uma turma previamente cadastrada no sistema.
 
-**RF11 - Inativar turma:**
+**RF11 - Inativar turma:** Permitir a alteração do status de uma turma para inativa, encerrando suas atividades regulares, mas mantendo intacto o histórico de aulas e alunos vinculados.
 
-**RF12 - Buscar turmas:**
+**RF12 - Buscar turmas:** Permitir a pesquisa e filtragem das turmas cadastradas utilizando parâmetros como dias de aula, horários ou professor para localizar seus registros.
 
 **RF13 – Registrar presença em aula:** Permitir a marcação de presença ou falta para os alunos associados a uma aula ou turma selecionada.
 
-**RF14 – Registrar detalhes da aula:** Permitir a descrição das atividades realizadas e temas abordados em uma aula registrada no sistema.
+**RF14 – Registrar acontecimentos ocorridos em aula:** Permitir a descrição das atividades realizadas e temas abordados em uma aula registrada no sistema.
 
 **RF15 – Editar registro de presença:** Permitir a retificação do status de frequência de um aluno em uma aula após o lançamento inicial.
 
@@ -62,21 +62,21 @@ Os requisitos funcionais descrevem as funcionalidades específicas que o sistema
 
 **RF29 – Cadastrar campeonato:** Permitir a documentação dos eventos competitivos dos quais o aluno participou, registrando as datas.
 
-**RF30 - Editar campeonato:**
+**RF30 - Editar campeonato:** Permitir a alteração dos dados de um evento competitivo previamente cadastrado, como modificação de nome, data ou local de realização.
 
-**RF31 - Inativar campeonato:**
+**RF31 - Inativar campeonato:** Permitir a alteração do status de um campeonato para inativo (cancelado ou finalizado), preservando os registros de participação passados.
 
-**RF32 - Vincular aluno num campeonato:**
+**RF32 - Vincular aluno em campeonato:** Permitir a associação de um aluno cadastrado a um campeonato específico, formalizando o seu registro de inscrição ou participação no evento.
 
-**RF33 - Desvincular aluno de um campeonato:**
+**RF33 - Desvincular aluno de um campeonato:** Permitir a remoção do vínculo de um aluno com um campeonato, cancelando a sua inscrição ou retirando seu registro de participação.
 
 **RF34 – Cadastrar usuário voluntário:** Permitir a inserção no sistema dos perfis de professores, monitores e demais colaboradores do projeto.
 
-**RF35 - Inativar usuário voluntário:**
+**RF35 - Inativar usuário voluntário:** Permitir a alteração do status de um usuário voluntário para inativo, revogando seu acesso ao sistema e suas atribuições ativas, mas preservando o histórico de sua atuação no projeto.
 
-**RF36 - Editar dados do usuário voluntário:**
+**RF36 - Editar dados do usuário voluntário:** Permitir a alteração das informações pessoais, de contato ou de perfil de um usuário voluntário já registrado no sistema.
 
-**RF37 - Buscar usuários voluntários:**
+**RF37 - Buscar usuários voluntários:** Permitir a pesquisa dos dados de usuários voluntários utilizando parâmetros como nome ou função para localizar seus perfis e cadastros.
 
 
 ## 8.2 Lista de Requisitos Não Funcionais
