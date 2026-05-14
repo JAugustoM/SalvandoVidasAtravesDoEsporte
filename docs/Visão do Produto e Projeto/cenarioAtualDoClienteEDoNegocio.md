@@ -25,9 +25,10 @@
 | 1.3 | 10/05/2026 | Correções dos números dos tópicos | Pedro L. |
 | 1.4 | 11/05/2026 | Correções Interação entre Equipe e Cliente | Júlia G. |
 | 1.5 | 13/05/2026 | Correção geral dos requisitos | Giovani de O.; José A.; Júlia G. Lucas O.; Pedro L. |
-| 1.6 | 17/05/2026 | Correção geral dos requisitos e adição da árvore de rastreabilidade | Giovani de O.; José A.; Pedro L. |
-| 1.7 | 17/05/2026 | Adiciona tabela cronograma | Pedro L. |
-| 1.7.1 | 17/05/2026 | Corrige links no cronograma | José A. |
+| 1.6 | 14/05/2026 | Generalização do DoD | Pedro L. |
+| 1.7 | 16/05/2026 | Correção geral dos requisitos e adição da árvore de rastreabilidade | Giovani de O.; José A.; Pedro L. |
+| 1.8 | 17/05/2026 | Adiciona tabela cronograma | Pedro L. |
+| 1.8.1 | 17/05/2026 | Corrige links no cronograma | José A. |
 
 # 1. Cenário Atual do Cliente e do Negócio
 

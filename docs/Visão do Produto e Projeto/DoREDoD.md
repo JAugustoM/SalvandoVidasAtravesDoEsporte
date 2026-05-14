@@ -2,7 +2,7 @@
 
 ## 9.1 Definition of Ready (DoR)
 
-O DoR é um conjunto de critérios que indicam quando um requisito está pronto para ser trabalhado no Design de Usuário e na Construção rápida. Também é o acordo entre a equipe de desenvolvimento e o Product Owner que garante clareza e alinhamento, minimizando o desenvolvimento de código que não atende às necessidades do cliente. Os critérios do DoR estão descritos no quadro abaixo:
+O DoR é um conjunto de critérios que indicam quando um requisito está pronto para ser trabalhado no Design de Usuário e na Construção rápida. Também é o acordo entre a equipe de desenvolvimento e o cliente que garante clareza e alinhamento, minimizando o desenvolvimento de código que não atende às necessidades do cliente. Os critérios do DoR estão descritos no quadro abaixo:
 
 | Critério | Descrição |
 | :---: | :--- |
@@ -10,30 +10,48 @@ O DoR é um conjunto de critérios que indicam quando um requisito está pronto 
 | Viabilidade | O requisito deve ser viável, tanto em termos tecnológicos quanto em termos de tempo de desenvolvimento.              |
 | Priorização | O requisito deve estar devidamente priorizado utilizando a técnica MoSCoW.                                           |
 |  Testável   | O requisito deve ter critérios de aceite claros, que possam ser verificados pela equipe durante o desenvolvimento.   |
-|  Validação  | O requisito deve ser analisado e validado pelo Product Owner para garantir que está alinhado com a visão do produto. |
+|  Validação  | O requisito deve ser analisado e validado pelo cliente para garantir que está alinhado com a visão do produto. |
 
 ## 9.2 Definition of Done (DoD)
 
-O DoD é um conjunto de critérios que indica quando uma funcionalidade, requisito ou entrega do projeto pode ser considerada finalizada e apta para uso. Isso significa que a solução foi desenvolvida, validada com o cliente e documentada de forma suficiente para manter a rastreabilidade das entregas.
+O *Definition of Done (DoD)* é um conjunto de critérios estabelecidos pela equipe para determinar quando uma entrega (história, requisito ou incremento) pode ser considerada concluída. O conceito de “Done” representa que a funcionalidade foi desenvolvida, testada, validada e documentada, garantindo qualidade, rastreabilidade e alinhamento com as expectativas do Cliente.
 
-### Os critérios do DoD estão descritos abaixo em conformidade com as fases do processo *RAD*:
+Alguns itens que devem ser verificados para determinar se um requisito está *“Done”* são:
 
-| Fase do RAD | Critério menor | Descrição |
-| :--- | :--- | :--- |
-| Planejamento de Requisitos | Requisito validado | O requisito da iteração foi confirmado com o cliente ou PO antes de seguir para a prototipagem. |
-| Planejamento de Requisitos | Prioridade definida | O requisito foi classificado em MoSCoW e posicionado corretamente no backlog. |
-| Planejamento de Requisitos | Critérios de aceite definidos | A história ou funcionalidade possui critérios de aceite claros e verificáveis. |
-| Planejamento de Requisitos | Escopo delimitado | A entrega cabe no timebox da iteração e não deixa dúvidas sobre o que será feito. |
-| Design do Usuário (Prototipagem Iterativa) | Protótipo produzido | As telas, fluxos ou wireframes da funcionalidade foram criados. |
-| Design do Usuário (Prototipagem Iterativa) | Protótipo revisado | O protótipo foi discutido com cliente, usuários ou stakeholders. |
-| Design do Usuário (Prototipagem Iterativa) | Ajustes incorporados | As observações recebidas foram aplicadas ao protótipo antes da construção. |
-| Construção Rápida (Iterativa) | Funcionalidade implementada | A funcionalidade foi codificada conforme o protótipo e os requisitos aprovados. |
-| Construção Rápida (Iterativa) | Integração preservada | A nova entrega não compromete funcionalidades já existentes. |
-| Construção Rápida (Iterativa) | Revisão realizada | A equipe revisou a implementação para reduzir inconsistências e erros. |
-| Construção Rápida (Iterativa) | Testes executados | A entrega passou pelos testes manuais e/ou automatizados previstos. |
-| Transição (Cutover) | Homologação aprovada | O cliente ou PO validou o incremento em ambiente de homologação. |
-| Transição (Cutover) | Evidências registradas | Foram registrados prints, observações ou resultados que comprovem a validação. |
-| Transição (Cutover) | Documentação atualizada | A documentação do projeto foi atualizada com a entrega concluída. |
-| Transição (Cutover) | Pronta para disponibilização | A funcionalidade está apta para apresentação, uso ou implantação. |
 
-> Uma entrega só deve ser considerada concluída quando cumprir os critérios menores da fase correspondente, estiver funcional, testada, validada e registrada na documentação, especialmente nos itens ligados ao cadastro de alunos, frequência, controle de kimonos e histórico de ocorrências.
+- **O requisito foi validado previamente?**  
+O requisito da iteração deve ter sido confirmado e aceito pelo Cliente antes do desenvolvimento, com prioridade definida no backlog utilizando a *técnica MoSCoW*.
+
+- **Os critérios de aceite foram definidos?**  
+A funcionalidade deve possuir critérios de aceite claros, verificáveis e alinhados com o comportamento esperado da entrega.
+
+- **Protótipos, telas ou fluxos foram produzidos e revisados?**  
+Os wireframes, fluxos ou protótipos da funcionalidade devem ter sido criados, discutidos e ajustados com clientes, usuários ou stakeholders quando aplicável.
+
+- **O desenvolvimento foi concluído integralmente?**  
+A funcionalidade deve estar implementada conforme os requisitos e protótipos aprovados.
+
+- **A implementação preserva a integração do sistema?**  
+A nova entrega não deve comprometer funcionalidades já existentes nem introduzir regressões críticas.
+
+- **A funcionalidade foi revisada pela equipe?**  
+A implementação deve passar por revisão técnica para reduzir inconsistências e possíveis falhas.
+
+- **Os testes foram executados e aprovados?**  
+Os testes previstos, manuais e/ou automatizados, devem ser realizados com resultados satisfatórios e cobertura acordada pela equipe.
+
+- **Permissões, auditoria e histórico foram verificados?**  
+Logs, rastreabilidade, preservação de histórico e controles de acesso devem ser validados quando aplicável.
+
+- **A documentação foi atualizada?**  
+A documentação técnica e de requisitos (backlog, matriz de rastreabilidade e manuais de uso) deve refletir o estado atual do sistema após a implementação.
+
+- **A funcionalidade foi homologada pelo Cliente?**  
+O incremento deve ter sido validado formalmente em ambiente de homologação ou demonstração.
+
+- **Está pronta para disponibilização?**  
+A funcionalidade deve estar apta para apresentação ao cliente, utilização imediata ou implantação em ambiente de produção sem impedimentos técnicos.
+
+
+
+> Uma entrega somente será considerada concluída quando atender aos critérios definidos neste DoD, estiver funcional, validada, documentada e aprovada pelo Cliente.
