@@ -245,16 +245,19 @@
     <div class="card fase2-card" markdown>
     **13**
     ```
-    Reunião com Clientes
-    ```
-    ```
-    Validação de Requisitos
+    Planning Poker
     ```
     </div>
     <div class="card fase2-card" markdown>
     **14**
     ```
     Reunião de Equipe
+    ```
+    ```
+    Reunião com Clientes
+    ```
+    ```
+    Validação de Requisitos
     ```
     </div>
     <div class="card fase2-card" markdown>**15**</div>
@@ -479,7 +482,7 @@
         <span class="legend-color facultativo-card"></span> Ponto Facultativo
     </div>
     <div class="legend-item">
-        <span class="legend-color entrega-card"></span> Entrega Importante
+        <span class="legend-color entrega-card"></span> Entregas
     </div>
     <div class="legend-item">
         <span class="legend-color fase0-card"></span> Fase 0
