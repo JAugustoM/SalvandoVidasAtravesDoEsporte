@@ -27,9 +27,13 @@ nav:
       - 11. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
   - Entregas:
       - "Entregas": Entregas/entregas.md
-  - Atas:
+  - Atas e Reuniões Gravadas:
       - "Atas": Atas/atas.md
+      - "Reuniões Gravadas": Atas/reunioes.md
   - Referências: assets/referencias.md
+
+plugins:
+  - include-markdown
 
 markdown_extensions:
   - admonition
