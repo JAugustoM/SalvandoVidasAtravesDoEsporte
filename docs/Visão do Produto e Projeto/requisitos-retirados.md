@@ -47,3 +47,21 @@ Vão virar RNs:
 **RF45 – Consultar quadro de horários:** Permitir a visualização das turmas, horários e responsáveis disponíveis na grade de atividades da instituição.
 
 
+
+---
+
+Novos requisitos retirados
+
+**RF06 – Vincular responsável ao aluno:** Permitir a criação de uma relação no sistema entre o cadastro de um aluno e o de seu responsável legal.
+
+**RF07 – Editar dados do responsável:** Permitir a modificação das informações pessoais e de contato de um responsável legal previamente cadastrado.
+
+**RF08 - Inativar responsável:** Permitir a alteração do status de um responsável legal para inativo, preservando seus dados históricos no sistema, mas impedindo novas vinculações a alunos.
+
+**RF34 – Cadastrar usuário voluntário:** Permitir a inserção no sistema dos perfis de professores, monitores e demais colaboradores do projeto.
+
+**RF35 - Inativar usuário voluntário:** Permitir a alteração do status de um usuário voluntário para inativo, revogando seu acesso ao sistema e suas atribuições ativas, mas preservando o histórico de sua atuação no projeto.
+
+**RF36 - Editar dados do usuário voluntário:** Permitir a alteração das informações pessoais, de contato ou de perfil de um usuário voluntário já registrado no sistema.
+
+**RF37 - Buscar usuários voluntários:** Permitir a pesquisa dos dados de usuários voluntários utilizando parâmetros como nome ou função para localizar seus perfis e cadastros.

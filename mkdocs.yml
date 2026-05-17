@@ -24,6 +24,7 @@ nav:
       - 7. Interação entre Equipe e Cliente: Visão do Produto e Projeto/interacaoEntreEquipeECliente.md
       - 8. Requisitos de Software: Visão do Produto e Projeto/RfsERnfs.md
       - 9. DoR e DoD: Visão do Produto e Projeto/DoREDoD.md
+      - 10. Backlog: Visão do Produto e Projeto/backlog.md
       - 11. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
   - Entregas e Documentos:
       - "Entregas": Entregas/entregas.md
@@ -47,3 +48,9 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - scripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
