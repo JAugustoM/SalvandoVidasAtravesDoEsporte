@@ -25,8 +25,9 @@ nav:
       - 8. Requisitos de Software: Visão do Produto e Projeto/RfsERnfs.md
       - 9. DoR e DoD: Visão do Produto e Projeto/DoREDoD.md
       - 11. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
-  - Entregas:
+  - Entregas e Documentos:
       - "Entregas": Entregas/entregas.md
+      - "Documentos": Entregas/documentos.md
   - Atas e Reuniões Gravadas:
       - "Atas": Atas/atas.md
       - "Reuniões Gravadas": Atas/reunioes.md

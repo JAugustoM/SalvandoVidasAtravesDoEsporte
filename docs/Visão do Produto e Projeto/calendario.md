@@ -612,6 +612,6 @@
         <span class="legend-color outro-mes-card"></span> Outro Mês
     </div>
     <div class="legend-item">
-        <span class="legend-color dia-vazio-card">Dia Vazio</span>
+        <span class="legend-color dia-vazio-card"></span> Dia Vazio
     </div>
 </div>
