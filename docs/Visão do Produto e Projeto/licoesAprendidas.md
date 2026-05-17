@@ -64,6 +64,14 @@ A Unidade 1 foi um período de adaptação intensa, marcado pela formação de u
 
     **Ação de Melhoria:** Passar a usar user stories no formato "Como <persona>, quero <ação>, para <valor>", sempre acompanhadas de critérios de aceitação claros. Manter um checklist de qualidade de requisito (clareza, testabilidade, prioridade, dependências), registrar suposições/ restrições e validar requisitos com protótipos rápidos e revisões com o cliente.
 
+3. Workshop JAD
+
+    **Desafio:** A equipe não tinha muita segurança sobre como executar um workshop JAD no início, o que gerou dúvidas sobre a condução da dinâmica e o papel de cada participante.
+
+    **Lição:** O workshop JAD é uma prática útil para reunir diferentes perspectivas, alinhar expectativas e detalhar requisitos com o cliente de forma colaborativa.
+
+    **Ação de Melhoria:** Através de pesquisas e do estudo prévio da metodologia, a equipe conseguiu estruturar e conduzir o workshop junto ao cliente. Para as próximas vezes, a recomendação é preparar melhor o roteiro da reunião, definir os objetivos com antecedência e organizar os tópicos a serem discutidos para tornar a dinâmica mais fluida.
+
 ### Dificuldades e Ações para Superá-las
 
 1. Falta de experiência em priorização
