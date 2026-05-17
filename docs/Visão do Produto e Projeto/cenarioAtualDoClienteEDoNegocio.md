@@ -29,7 +29,7 @@
 | 1.7 | 16/05/2026 | Correção geral dos requisitos e adição da árvore de rastreabilidade | Giovani de O.; José A.; Pedro L. |
 | 1.8 | 17/05/2026 | Adiciona a sessão de priorização do backlog geral | José A. |
 | 1.9 | 17/05/2026 | Adiciona tabela cronograma | Pedro L. |
-| 1.8.1 | 17/05/2026 | Corrige links no cronograma | José A. |
+| 1.9.1 | 17/05/2026 | Corrige links no cronograma | José A. |
 
 # 1. Cenário Atual do Cliente e do Negócio
 
