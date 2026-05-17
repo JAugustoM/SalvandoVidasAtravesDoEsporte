@@ -87,4 +87,4 @@ A matriz a seguir representa a rastreabilidade entre objetivos específicos (OE)
 
 ## 8.4 Árvore de Rastreabilidade
 
-<iframe style="border: 2px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/board/Pl8q1fRIxDhYP1zkDhp3N7/Árvore-de-Rastreabilidade?node-id=1-2016&embed-host=share" allowfullscreen></iframe>
+<iframe style="border: 2px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/board/Pl8q1fRIxDhYP1zkDhp3N7/Árvore-de-Rastreabilidade?embed-host=share" allowfullscreen></iframe>
