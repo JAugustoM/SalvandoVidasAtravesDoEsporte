@@ -27,13 +27,15 @@ nav:
       - 10. Backlog do Produto:
           - 10.1 Backlog Geral: Visão do Produto e Projeto/10_1_backlog_geral.md
           - 10.2 Priorização Geral e MVP: Visão do Produto e Projeto/10_2_Priorizacao_MVP.md
-          - 10.3 Critérios de Aceitação do MVP: Visão do Produto e Projeto/10_3_criterios_aceitacao_MVP
+          - 10.3 Critérios de Aceitação do MVP: Visão do Produto e Projeto/10_3_criterios_aceitacao_MVP.md
       - 11. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
   - Entregas e Documentos:
       - "Entregas": Entregas/entregas.md
       - "Documentos": Entregas/documentos.md
   - Atas e Reuniões Gravadas:
-      - "Atas": Atas/atas.md
+      - "Atas":
+          - Unidade 1: Atas/unidade-1.md
+          - Unidade 2: Atas/unidade-2.md
       - "Reuniões Gravadas": Atas/reunioes.md
   - Referências: assets/referencias.md
 
