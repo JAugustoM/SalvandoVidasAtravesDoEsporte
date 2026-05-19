@@ -8,27 +8,26 @@ O objetivo do produto é facilitar a organização e o gerenciamento dos alunos 
 
 Para alcançar o objetivo geral do sistema, foram definidos os seguintes objetivos específicos, numerados para fins de rastreabilidade como os requisitos do projeto. Eles expressam apenas o estado ou resultado desejado; os CPs detalham o "como" isso será viabilizado:
 
-- **OE01:** Cadastro de alunos e responsáveis organizado, centralizado e acessível para consulta.
-- **OE02:** Frequência dos alunos monitorada com sinais de evasão identificáveis.
-- **OE03:** Disponibilidade e movimentação de kimonos e materiais pedagógicos acompanhadas. 
-- **OE04:** Responsabilidade sobre os materiais emprestados e suas devoluções rastreável. 
-- **OE05:** Histórico de ocorrências, orientações e comunicações relevantes dos alunos preservado em um único registro. 
+* **OE01:** Fortalecer a gestão adimistrativa do projeto através da cerntralização de dados, indicadores estratégicos e automação de alertas para apoiar a tomada de decisão.
+* **OE02:** Ampliar a capacidade de retenção dos participantes mediante o acompanhamento sistemático de frequência.
+* **OE03:** Assegurar a disponibilidade contínua e a distribuição transparente e equitativa dos recursos necessarios para a prática esportiva.
+* **OE04:** Qualificar o acompanhamento pedagógico e psicossocial dos participantes para subsidiar intervenções assertivas.
 
 ## 2.3 Características do Produto (mapeados com os OE do Produto)
 
 No quadro abaixo estão registradas as principais características do produto, relacionadas com os objetivos específicos listados acima.
 
-| ID  | Descrição resumida | Valor de negócio principal | OE principal | Contribuição secundária |
-| :-: | :----------------- | :------------------------- | :----------- | :---------------------- |
-| CP1 | Cadastro centralizado de alunos e responsáveis. | Reunir as informações em um único lugar para consulta e atualização. | OE01 | OE05 |
-| CP2 | Registro de frequência por aula. | Permitir o acompanhamento da presença dos alunos. | OE02 | OE05 |
-| CP3 | Acompanhamento de faltas com alertas. | Apoiar a identificação de possíveis evasões. | OE02 | OE05 |
-| CP4 | Controle de kimonos e materiais. | Organizar a disponibilidade dos recursos e sua posse atual. | OE03 | OE04 |
-| CP5 | Fila de espera para materiais. | Apoiar a distribuição dos recursos conforme a necessidade. | OE04 | OE03 |
-| CP6 | Painel de acompanhamento geral. | Acompanhar frequência, uso de recursos e evolução dos alunos. | OE02 | OE05 |
-| CP7 | Histórico de ocorrências e orientações. | Manter um registro único para consulta posterior. | OE05 | OE01 |
-| CP8 | Proteção e conservação dos dados. | Garantir que as informações permaneçam seguras e disponíveis. | OE01 | OE02 |
-| CP9 | Redistribuição de recursos. | Apoiar o reaproveitamento e a entrega de materiais. | OE04 | OE03 |
+| ID | Descrição resumida | ID | Valor de negócio principal | OE principal | Contribuição secundária |
+| :-: | :--- | :-: | :--- | :---: | :---: |
+| CP01 | Gestão cadastral de alunos e responsáveis | VN01 | Assegurar a integridade cadastral e os vínculos entre alunos e responsáveis | OE01 | - |
+| CP02 | Gestão de usuários e acesso ao sistema | VN02 | Garantir controle e segurança no acesso ao sistema | OE01 | - |
+| CP03 | Painel de Bordo (Dashboard) e Alertas Centralizados | VN03 | Acelerar a identificação de prioridades diárias através de visões consolidadas | OE01 | OE04 |
+| CP04 | Interface para registro diário de presenças em tempo real | VN04 | Garantir a precisão estatística da participação | OE02 | OE04 |
+| CP05 | Gestão de participação em turmas e campeonatos | VN05 | Fortalecer o acompanhamento de participação dos alunos nas atividades esportivas | OE02 | OE04 |
+| CP06 | Estrutura de estoque e fluxo de entrada/saída de materiais | VN06 | Assegurar o controle da disponibilidade de recursos | OE03 | - |
+| CP07 | Sistema de controle de posse, empréstimos e devoluções | VN07 | Minimizar perdas de ativos e garantir rotatividade justa | OE03 | - |
+| CP08 | Banco de registro cronológico de ocorrências pedagógicas | VN08 |Assegurar o registro histórico do acompanhamento pedagógico| OE04 | OE01 |
+| CP09 | Módulo de indicadores sociais e análise estratégica | VN09 | Apoiar a tomada de decisão através de indicadores sociais| OE04 | OE02 |
 
 ## 2.4 Tecnologias a Serem Utilizados
 

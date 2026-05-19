@@ -14,6 +14,27 @@
 | 0.10 | 12/04/2026 | Inclusão do cronograma inicial | Júlia G. |
 | 0.11 | 12/04/2026 | Inclusão das Atas de reuniões em equipe e com cliente | Júlia G. |
 | 1.0 | 13/04/2026 | Ajustes finais + inclusão do vídeo entrega 1 | José A. ; Pedro L. |
+| 1.1.1 | 29/04/2026 | Criação documento DoR | José A. |
+| 1.1.2 | 30/04/2026 | Adição documento DoD | Pedro L. |
+| 1.1.3 | 02/05/2026 | Ajustes na estratégia de engenharia de software pós feedback do professor | José A. |
+| 1.1.4 | 06/05/2026 | Adiciona seção de Interveção Social | Pedro L. |
+| 1.1.5 | 07/05/2026 | Ajusta as Características de Produto e Objetivos Específicos | Giovani de O.; Lucas O. |
+| 1.1.6 | 07/05/2026 | Estilização do calendário | José A. |
+| 1.2 | 10/05/2026 | Correções Engenharia de Requisitos | Pedro L. |
+| 1.2.1 | 10/05/2026 | Correções dos números dos tópicos | Pedro L. |
+| 1.2.3 | 11/05/2026 | Correções Interação entre Equipe e Cliente | Júlia G. |
+| 1.2.4 | 13/05/2026 | Correção geral dos requisitos | Giovani de O.; José A.; Júlia G. Lucas O.; Pedro L. |
+| 1.2.5 | 14/05/2026 | Generalização do DoD | Pedro L. |
+| 1.3 | 14/05/2026 | Criação documento Backlog | Pedro L. |
+| 1.4 | 16/05/2026 | Correção geral dos requisitos e adição da árvore de rastreabilidade | Giovani de O.; José A.; Lucas O.; Pedro L. |
+| 1.5 | 17/05/2026 | Adiciona a sessão de priorização do backlog geral | José A. |
+| 1.6 | 17/05/2026 | Adiciona tabela cronograma | Pedro L. |
+| 1.7.1 | 17/05/2026 | Corrige links no cronograma | José A. |
+| 1.8.1 | 17/05/2026 | Inclui Backlog Geral inicial | Júlia G. |
+| 1.8.2 | 17/05/2026 | Inclui Priorização do Backlog e MVP | José A.; Pedro L. |
+| 1.8.3 | 17/05/2026 | Inclui Critérios de Aceitação do MVP | Júlia G. |
+| 1.9 | 17/05/2026 | Adiciona seção Lições Aprendidas unidade 2 | Giovani de O,; Lucas O. |
+| 2.0 | 18/05/2026 | Ajustes finais + inclusão do vídeo da entrega 2 | José A.; Pedro L. |
 
 # 1. Cenário Atual do Cliente e do Negócio
 

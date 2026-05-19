@@ -1,0 +1,11 @@
+# Intervenção Social
+
+O **projeto Salvando Vidas Através do Esporte** atua como um importante **instrumento de inclusão social** e desenvolvimento integral para crianças, adolescentes e famílias em situação de vulnerabilidade. Por meio do jiu-jitsu, o projeto oferece não apenas a prática esportiva, mas também a oportunidade de **desenvolver valores e competências** essenciais para a formação cidadã, como **disciplina, respeito, cooperação, responsabilidade e confiança**.
+
+A iniciativa busca promover transformação social ao garantir acesso a oportunidades de desenvolvimento independentemente da condição socioeconômica dos participantes, proporcionando um ambiente seguro, acolhedor e motivador. Segundo o coordenador do projeto, **Jose Lucas Siqueira**, *“o intuito é tirar jovens das ruas e aplicar os fundamentos do esporte na vida dos alunos”*. Nesse sentido, o trabalho desenvolvido pelo projeto vai além do tatame, atuando também no **desenvolvimento disciplinar, comportamental e social** dos alunos por meio do acompanhamento da frequência e da compreensão do contexto familiar de cada participante, **oferecendo um suporte mais humano, acolhedor e efetivo.**
+
+A atuação constante diante de diferentes realidades sociais permite **identificar de forma antecipada possíveis casos de evasão**, possibilitando intervenções rápidas e mais eficazes. Dessa forma, o projeto oferece uma alternativa construtiva capaz de **reduzir a exposição de crianças e adolescentes a fatores de risco, como abandono escolar, violência e vulnerabilidade social.**
+
+Além disso, a criação de uma rede de apoio comunitário envolvendo famílias, voluntários e instituições fortalece os vínculos sociais e amplia o alcance das ações desenvolvidas. A geração de evidências de impacto também contribui para fortalecer a comunidade e garantir a continuidade do projeto, demonstrando os resultados positivos alcançados na transformação da vida dos participantes.
+
+Nesse cenário, a **tecnologia atua** como uma importante **aliada ao potencializar o impacto social do projeto**, otimizando processos de acompanhamento e monitoramento para que os recursos humanos possam concentrar seus esforços no atendimento humanizado e no acolhimento de qualidade. Assim, **devolvemos aos voluntários o recurso mais valioso do projeto: o tempo para acolher e transformar vidas.**

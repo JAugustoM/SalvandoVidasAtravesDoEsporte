@@ -17,19 +17,45 @@ nav:
   - Visão do Produto e Projeto:
       - 1. Cenário Atual do Cliente e do Negócio: Visão do Produto e Projeto/cenarioAtualDoClienteEDoNegocio.md
       - 2. Proposta da Solução: Visão do Produto e Projeto/PropostaDaSolucao.md
-      - 3. Estratégias de Engenharia de Software: Visão do Produto e Projeto/estrategiasDeEngenhariaDeSoftware.md
-      - 4. Engenharia de Requisitos: Visão do Produto e Projeto/engenhariaDeRequisitos.md
-      - 5. Cronograma e Entregas: Visão do Produto e Projeto/cronogramaEEntregas.md
-      - 6. Interação entre Equipe e Cliente: Visão do Produto e Projeto/interacaoEntreEquipeECliente.md
-      - 10. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
-  - Entregas:
-    - "Entregas": Entregas/entregas.md
-  - Atas:
-    - "Atas": Atas/atas.md
+      - 3. Interveção Social: Visão do Produto e Projeto/intervencaoSocial.md
+      - 4. Estratégias de Engenharia de Software: Visão do Produto e Projeto/estrategiasDeEngenhariaDeSoftware.md
+      - 5. Engenharia de Requisitos: Visão do Produto e Projeto/engenhariaDeRequisitos.md
+      - 6. Cronograma e Entregas: Visão do Produto e Projeto/cronogramaEEntregas.md
+      - 7. Interação entre Equipe e Cliente: Visão do Produto e Projeto/interacaoEntreEquipeECliente.md
+      - 8. Requisitos de Software: Visão do Produto e Projeto/requisitosDeSoftware.md
+      - 9. DoR e DoD: Visão do Produto e Projeto/DoREDoD.md
+      - 10. Backlog do Produto:
+          - 10.1 Backlog Geral: Visão do Produto e Projeto/10_1_backlog_geral.md
+          - 10.2 Priorização Geral e MVP: Visão do Produto e Projeto/10_2_Priorizacao_MVP.md
+          - 10.3 Critérios de Aceitação do MVP: Visão do Produto e Projeto/10_3_criterios_aceitacao_MVP.md
+      - 11. Liçoes Aprendidas: Visão do Produto e Projeto/licoesAprendidas.md
+  - Entregas e Documentos:
+      - "Entregas": Entregas/entregas.md
+      - "Documentos": Entregas/documentos.md
+  - Atas e Reuniões Gravadas:
+      - "Atas":
+          - Unidade 1: Atas/unidade-1.md
+          - Unidade 2: Atas/unidade-2.md
+      - "Reuniões Gravadas": Atas/reunioes.md
   - Referências: assets/referencias.md
-  
+
+plugins:
+  - include-markdown
+
 markdown_extensions:
+  - admonition
   - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - scripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
