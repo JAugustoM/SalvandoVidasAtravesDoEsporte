@@ -1,6 +1,6 @@
 # Reuniões com Clientes
 
-## Reunião 24/04 - Introdução a Equipe
+## R2 - Reunião 24/04 - Brainstorming
 
 <iframe src="https://drive.google.com/file/d/1WLh7UAJ0mWn-l7rfomXp-mUDUPTXNiop/preview" width="640" height="480"></iframe>
 
@@ -20,9 +20,9 @@
 
 ### Resumo
 
-Essa reunião foi dedicada para que o grupo inteiro se apresentassem aos stakeholders do projeto e para que fosse discutido o cenário atual do projeto social, permitindo a realização de Elicitação e Descoberta de requisitos.
+Essa reunião foi dedicada para que o grupo inteiro se apresentassem aos stakeholders do projeto e para que fosse discutido o cenário atual do projeto social, permitindo a realização de Elicitação e Descoberta de requisitos via técnica Brainstorming.
 
-## Reunião 08/05 - Workshop JAD
+## R3 - Reunião 08/05 - Workshop JAD adaptado
 
 <iframe src="https://drive.google.com/file/d/1ildVTaRYth3Ttjt_PxKqnVIXsGviu6dn/preview" width="640" height="480"></iframe>
 
@@ -42,9 +42,9 @@ Essa reunião foi dedicada para que o grupo inteiro se apresentassem aos stakeho
 
 ### Resumo
 
-Essa reunião foi dedicada para a realização de uma sessão de Workshop JAD, onde foram exercitadas as atividades de Elicitação e Descoberta, e Análise e Consenso.
+Essa reunião foi dedicada para a realização de uma sessão de Workshop JAD adaptado, onde foram exercitadas as atividades de Elicitação e Descoberta, e Análise e Consenso.
 
-## Reunião 14/05 - Validação do Backlog
+## R4 - Reunião 14/05 - Validação do Backlog
 
 <iframe src="https://drive.google.com/file/d/1RTyCexbizr42eh2_47-xg4FG1LoyvHuI/preview" width="640" height="480"></iframe>
 
