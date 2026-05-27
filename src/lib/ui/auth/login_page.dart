@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../data/stores/session/user_session.dart';
+import '../../routing/routes.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,9 +27,21 @@ class _LoginPageState extends State<LoginPage> {
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Entrar pressionado')),
+      final loggedIn = userSession.loginWithCredentials(
+        email: _emailController.text,
+        password: _passwordController.text,
       );
+
+      if (!loggedIn) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Credenciais inválidas. Use uma conta de teste.'),
+          ),
+        );
+        return;
+      }
+
+      context.go(Routes.home);
     }
   }
 
