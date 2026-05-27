@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
-import 'package:salvando_vidas/main.dart';
+import 'package:salvando_vidas/ui/home/view_models/home_view_models.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     await tester.pumpWidget(
-      Provider(create: (_) => Logger(), child: const MyApp()),
+      Provider(
+        create: (_) => Logger(),
+        child: MaterialApp(home: const HomePage()),
+      ),
     );
 
     // Verify that our counter starts at 0.
@@ -31,7 +34,7 @@ void main() {
   });
 
   testWidgets("Teste do Counter utilizando Keys", (WidgetTester tester) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MaterialApp(home: const HomePage()));
 
     expect(find.byKey(Key("Counter")), findsOneWidget);
   });

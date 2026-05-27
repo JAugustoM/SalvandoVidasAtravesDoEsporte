@@ -4,13 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:salvando_vidas/ui/home/widgets/body.dart';
 import 'package:salvando_vidas/data/stores/home/counter.dart';
 
-final counter = Counter();
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final counter = Counter();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
