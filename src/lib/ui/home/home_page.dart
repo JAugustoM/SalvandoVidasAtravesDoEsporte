@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:salvando_vidas/data/services/user_service.dart';
 
-import '../../data/stores/session/user_session.dart';
 import '../../routing/routes.dart';
 
 class HomePage extends StatelessWidget {
@@ -9,7 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAdmin = userSession.isAdmin;
+    final isAdmin = context.read<UserService>().isAdmin;
 
     return Scaffold(
       body: Container(
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: TextButton.icon(
                         onPressed: () {
-                          userSession.logout();
+                          context.read<UserService>().logout();
                           context.go(Routes.login);
                         },
                         icon: const Icon(Icons.logout_outlined),
@@ -80,10 +81,7 @@ class HomePage extends StatelessWidget {
                                 ? 'Escolha uma área para acessar.'
                                 : 'Seu perfil não é administrador.',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 14),
                           ),
                           if (!isAdmin) ...[
                             SizedBox(height: 8),

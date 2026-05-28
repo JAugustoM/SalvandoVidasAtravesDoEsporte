@@ -2,17 +2,18 @@ import 'package:salvando_vidas/domain/local_user.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserService {
-  final SupabaseClient supabase;
+  final SupabaseClient _supabase;
   LocalUser? localUser;
 
-  UserService(this.supabase);
+  UserService(this._supabase);
 
   Future<bool> login(String email, String password) async {
     try {
-      final res = await supabase.auth.signInWithPassword(
+      final res = await _supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
+
       if (res.user != null) {
         localUser = await getLocalUser(res.user!);
         return localUser != null;
@@ -24,11 +25,11 @@ class UserService {
   }
 
   void logout() async {
-    await supabase.auth.signOut();
+    await _supabase.auth.signOut();
   }
 
   Future<bool> isLoggedIn() async {
-    User? user = supabase.auth.currentUser;
+    User? user = _supabase.auth.currentUser;
 
     if (user != null) {
       localUser = await getLocalUser(user);
@@ -39,7 +40,7 @@ class UserService {
   }
 
   Future<LocalUser?> getLocalUser(User user) async {
-    final data = await supabase.from('users').select().eq('id', user.id);
+    final data = await _supabase.from('users').select().eq('id', user.id);
     if (data.isNotEmpty) {
       return LocalUser(
         data[0]["nome"],
@@ -49,4 +50,6 @@ class UserService {
 
     return null;
   }
+
+  bool get isAdmin => localUser != null ? localUser!.role == Role.admin : false;
 }

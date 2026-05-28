@@ -1,32 +1,34 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:salvando_vidas/data/services/user_service.dart';
+import 'package:salvando_vidas/ui/home/admin_page.dart';
+import 'package:salvando_vidas/ui/home/cadastros_page.dart';
+import 'package:salvando_vidas/ui/home/home_page.dart';
+import 'package:salvando_vidas/ui/login/views/login_page.dart';
 import 'routes.dart';
-
-import '../data/stores/session/user_session.dart';
-import '../ui/auth/login_page.dart';
-import '../ui/home/admin_page.dart';
-import '../ui/home/cadastros_page.dart';
-import '../ui/home/home_page.dart';
 
 // GoRouter configuration
 final router = GoRouter(
-  initialLocation: Routes.login,
-  refreshListenable: userSession,
-  redirect: (context, state) {
-    final isAdminRoute = state.matchedLocation == Routes.admin;
-
-    if (isAdminRoute && !userSession.isAdmin) {
-      return Routes.home;
-    }
-
-    return null;
-  },
+  initialLocation: Routes.home,
   routes: [
-    GoRoute(path: Routes.login, builder: (context, state) => const LoginPage()),
-    GoRoute(path: Routes.home, builder: (context, state) => const HomePage()),
-    GoRoute(path: Routes.admin, builder: (context, state) => const AdminPage()),
+    GoRoute(path: Routes.home, builder: (context, state) => HomePage()),
+    GoRoute(path: Routes.login, builder: (context, state) => LoginPage()),
+    GoRoute(path: Routes.admin, builder: (context, state) => AdminPage()),
     GoRoute(
       path: Routes.cadastros,
-      builder: (context, state) => const CadastrosPage(),
+      builder: (context, state) => CadastrosPage(),
     ),
   ],
+  redirect: (BuildContext context, GoRouterState state) async {
+    final userService = context.read<UserService>();
+
+    if (!await userService.isLoggedIn()) {
+      // Tire o comentário da linha abaixo apenas para testes
+      // userService.logout();
+      return Routes.login;
+    } else {
+      return null;
+    }
+  },
 );
