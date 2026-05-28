@@ -56,6 +56,11 @@ plugins:
       hint_location: "top"
       include_selectors:
         - "img"
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      zoomable: true
+      draggable: true
 
 markdown_extensions:
   - admonition
@@ -80,13 +85,3 @@ markdown_extensions:
 extra_javascript:
   - scripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-
-plugins:
-  - search
-  - glightbox:
-      touchNavigation: true
-      loop: false
-      zoomable: true
-      draggable: true
-
-extra_css: [stylesheets/extra.css]
