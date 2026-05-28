@@ -23,7 +23,7 @@ class UserService {
     return false;
   }
 
-  Future<Null> logout() async {
+  void logout() async {
     await supabase.auth.signOut();
   }
 
