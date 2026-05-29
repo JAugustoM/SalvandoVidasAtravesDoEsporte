@@ -51,5 +51,29 @@ class UserService {
     return null;
   }
 
+  Future<bool> registerUser(
+    String email,
+    String password,
+    String nome,
+    String telefone,
+  ) async {
+    try {
+      final data = await _supabase.rpc(
+        'admin_create_user',
+        params: {
+          'new_email': email,
+          'new_password': password,
+          'new_role': 'voluntario',
+          'new_name': nome,
+          'new_telefone': telefone,
+        },
+      );
+
+      return data != null ? true : false;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   bool get isAdmin => localUser != null ? localUser!.role == Role.admin : false;
 }
