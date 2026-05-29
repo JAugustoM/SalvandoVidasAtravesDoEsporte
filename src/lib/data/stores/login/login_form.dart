@@ -1,12 +1,7 @@
 import 'package:mobx/mobx.dart';
+import 'package:salvando_vidas/data/validators.dart';
 
 part 'login_form.g.dart';
-
-bool isEmail(String email) {
-  final exp = RegExp(r"^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$");
-
-  return exp.hasMatch(email);
-}
 
 // ignore: library_private_types_in_public_api
 class LoginFormStore = _LoginFormStore with _$LoginFormStore;
