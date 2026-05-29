@@ -2,9 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../routing/routes.dart';
+import 'components/action_button.dart';
+import 'components/expansion_action_card.dart';
+import 'components/input_field.dart';
 
-class CadastrosPage extends StatelessWidget {
+class CadastrosPage extends StatefulWidget {
   const CadastrosPage({super.key});
+
+  @override
+  State<CadastrosPage> createState() => _CadastrosPageState();
+}
+
+class _CadastrosPageState extends State<CadastrosPage> {
+  final _studentFormKey = GlobalKey<FormState>();
+  final _studentNameController = TextEditingController();
+  final _studentBirthDateController = TextEditingController();
+  final _studentDocumentController = TextEditingController();
+  final _studentResponsibleNameController = TextEditingController();
+  final _studentResponsiblePhoneController = TextEditingController();
+  final _studentResponsibleEmailController = TextEditingController();
+
+  bool _studentExpanded = false;
+
+  @override
+  void dispose() {
+    _studentNameController.dispose();
+    _studentBirthDateController.dispose();
+    _studentDocumentController.dispose();
+    _studentResponsibleNameController.dispose();
+    _studentResponsiblePhoneController.dispose();
+    _studentResponsibleEmailController.dispose();
+    super.dispose();
+  }
+
+  void _toggleStudentPanel() {
+    setState(() {
+      _studentExpanded = !_studentExpanded;
+    });
+  }
+
+  void _submitStudent() {
+    if (_studentFormKey.currentState?.validate() ?? false) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Aluno e responsável cadastrados.')),
+      );
+      _studentFormKey.currentState?.reset();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +125,7 @@ class CadastrosPage extends StatelessWidget {
                           ),
                           SizedBox(height: 8),
                           Text(
-                            'Área simples para organizar acessos rápidos.',
+                            'Área simples para organizar acessos rápidos e cadastrar alunos.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Colors.white,
@@ -104,10 +148,73 @@ class CadastrosPage extends StatelessWidget {
                       accentColor: const Color(0xFF2457F0),
                     ),
                     const SizedBox(height: 16),
-                    _SimpleInfoCard(
-                      title: 'Alunos',
-                      subtitle: 'Inclusão de novos alunos no sistema.',
+                    ExpansionActionCard(
+                      title: 'Cadastrar alunos',
+                      subtitle: 'Aluno, responsáveis e vínculo inicial',
+                      icon: Icons.person_add_alt_1_outlined,
                       accentColor: const Color(0xFF0B7FA5),
+                      expanded: _studentExpanded,
+                      onToggle: _toggleStudentPanel,
+                      child: Form(
+                        key: _studentFormKey,
+                        child: Column(
+                          children: [
+                            InputField(
+                              controller: _studentNameController,
+                              label: 'Nome do aluno',
+                              hint: 'Digite o nome completo do aluno',
+                              validatorMessage: 'Informe o nome do aluno',
+                            ),
+                            const SizedBox(height: 14),
+                            InputField(
+                              controller: _studentBirthDateController,
+                              label: 'Data de nascimento',
+                              hint: 'DD/MM/AAAA',
+                              keyboardType: TextInputType.datetime,
+                              validatorMessage:
+                                  'Informe a data de nascimento do aluno',
+                            ),
+                            const SizedBox(height: 14),
+                            InputField(
+                              controller: _studentDocumentController,
+                              label: 'Matrícula ou documento',
+                              hint: 'Número da matrícula ou documento',
+                              validatorMessage:
+                                  'Informe a matrícula ou documento',
+                            ),
+                            const SizedBox(height: 14),
+                            InputField(
+                              controller: _studentResponsibleNameController,
+                              label: 'Responsável legal',
+                              hint: 'Nome do responsável legal',
+                              validatorMessage: 'Informe o responsável legal',
+                            ),
+                            const SizedBox(height: 14),
+                            InputField(
+                              controller: _studentResponsiblePhoneController,
+                              label: 'Telefone do responsável',
+                              hint: 'Telefone para contato',
+                              keyboardType: TextInputType.phone,
+                              validatorMessage:
+                                  'Informe o telefone do responsável',
+                            ),
+                            const SizedBox(height: 14),
+                            InputField(
+                              controller: _studentResponsibleEmailController,
+                              label: 'Email do responsável',
+                              hint: 'Email de contato',
+                              keyboardType: TextInputType.emailAddress,
+                              validatorMessage:
+                                  'Informe o email do responsável',
+                            ),
+                            const SizedBox(height: 18),
+                            ActionButton(
+                              label: 'Salvar aluno',
+                              onPressed: _submitStudent,
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
