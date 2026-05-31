@@ -1,5 +1,4 @@
 import 'package:salvando_vidas/domain/local_user.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../supabase_call.dart';
 

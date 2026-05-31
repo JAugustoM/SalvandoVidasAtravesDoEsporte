@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
+export 'package:supabase_flutter/supabase_flutter.dart';
 
 typedef Response = List<Map<String, dynamic>>;
 
