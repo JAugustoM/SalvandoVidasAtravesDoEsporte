@@ -110,17 +110,17 @@ class UserService {
     });
   }
 
-  Future<Result<void>> updateUser(
-    String id,
-    String email,
-    String password,
-    String nome,
-    String telefone,
-    String cpf,
-  ) async {
+  Future<Result<void>> updateUser({
+    required String id,
+    String? email,
+    String? password,
+    String? nome,
+    String? telefone,
+    String? cpf,
+  }) async {
     return safeSupabaseCall(() async {
       await _supabase.rpc(
-        'admin_create_user',
+        'admin_update_user',
         params: {
           'target_user_id': id,
           'new_email': email,
