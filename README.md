@@ -32,9 +32,14 @@ Repositório da equipe **Na Minha Máquina Funciona** dedicado ao desenvolviment
         <sub>Matrícula: 241011386</sub>
       </td>
       <td align="center">
-        <img src="https://avatars.githubusercontent.com/u/182804941?v=4" width="100px;" alt="PEDRO"/><br />
+        <img src="https://avatars.githubusercontent.com/u/182804941?v=4" width="100px;" alt="PEDRO L."/><br />
         <sub><b>PEDRO LUCAS BARBOSA DA SILVA</b></sub><br />
         <sub>Matrícula: 241025710</sub>
+      </td>
+      <td align="center">
+        <img src="https://avatars.githubusercontent.com/u/127259012?v=4" width="100px;" alt="PEDRO R."/><br />
+        <sub><b>PEDRO RAMOS SOUSA REIS</b></sub><br />
+        <sub>Matrícula: 222031680</sub>
       </td>
     </tr>
   </table>
