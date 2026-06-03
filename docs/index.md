@@ -34,7 +34,6 @@ Repositório da equipe **Na Minha Máquina Funciona** dedicado ao desenvolviment
     <h3>PEDRO LUCAS BARBOSA DA SILVA</h3>
     <p>Matrícula: 241025710</p>
   </div>
-  
   <div class="team-card-compact">
     <img src="https://avatars.githubusercontent.com/u/127259012?v=4" alt="Foto de PEDRO R.">
     <h3>PEDRO RAMOS SOUSA REIS</h3>
