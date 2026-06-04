@@ -137,7 +137,27 @@ class MockUserService extends _i1.Mock implements _i4.UserService {
           as _i6.Future<_i7.Result<_i5.LocalUser?>>);
 
   @override
-  _i6.Future<_i7.Result<bool>> registerUser(
+  _i6.Future<_i7.Result<List<_i5.LocalUser>>> listUsers() =>
+      (super.noSuchMethod(
+            Invocation.method(#listUsers, []),
+            returnValue: _i6.Future<_i7.Result<List<_i5.LocalUser>>>.value(
+              _i8.dummyValue<_i7.Result<List<_i5.LocalUser>>>(
+                this,
+                Invocation.method(#listUsers, []),
+              ),
+            ),
+            returnValueForMissingStub:
+                _i6.Future<_i7.Result<List<_i5.LocalUser>>>.value(
+                  _i8.dummyValue<_i7.Result<List<_i5.LocalUser>>>(
+                    this,
+                    Invocation.method(#listUsers, []),
+                  ),
+                ),
+          )
+          as _i6.Future<_i7.Result<List<_i5.LocalUser>>>);
+
+  @override
+  _i6.Future<_i7.Result<void>> registerUser(
     String? email,
     String? password,
     String? nome,
@@ -152,8 +172,8 @@ class MockUserService extends _i1.Mock implements _i4.UserService {
               telefone,
               cpf,
             ]),
-            returnValue: _i6.Future<_i7.Result<bool>>.value(
-              _i8.dummyValue<_i7.Result<bool>>(
+            returnValue: _i6.Future<_i7.Result<void>>.value(
+              _i8.dummyValue<_i7.Result<void>>(
                 this,
                 Invocation.method(#registerUser, [
                   email,
@@ -164,8 +184,8 @@ class MockUserService extends _i1.Mock implements _i4.UserService {
                 ]),
               ),
             ),
-            returnValueForMissingStub: _i6.Future<_i7.Result<bool>>.value(
-              _i8.dummyValue<_i7.Result<bool>>(
+            returnValueForMissingStub: _i6.Future<_i7.Result<void>>.value(
+              _i8.dummyValue<_i7.Result<void>>(
                 this,
                 Invocation.method(#registerUser, [
                   email,
@@ -177,7 +197,73 @@ class MockUserService extends _i1.Mock implements _i4.UserService {
               ),
             ),
           )
-          as _i6.Future<_i7.Result<bool>>);
+          as _i6.Future<_i7.Result<void>>);
+
+  @override
+  _i6.Future<_i7.Result<void>> deleteUser(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteUser, [id]),
+            returnValue: _i6.Future<_i7.Result<void>>.value(
+              _i8.dummyValue<_i7.Result<void>>(
+                this,
+                Invocation.method(#deleteUser, [id]),
+              ),
+            ),
+            returnValueForMissingStub: _i6.Future<_i7.Result<void>>.value(
+              _i8.dummyValue<_i7.Result<void>>(
+                this,
+                Invocation.method(#deleteUser, [id]),
+              ),
+            ),
+          )
+          as _i6.Future<_i7.Result<void>>);
+
+  @override
+  _i6.Future<_i7.Result<void>> updateUser({
+    required String? id,
+    String? email,
+    String? password,
+    String? nome,
+    String? telefone,
+    String? cpf,
+  }) =>
+      (super.noSuchMethod(
+            Invocation.method(#updateUser, [], {
+              #id: id,
+              #email: email,
+              #password: password,
+              #nome: nome,
+              #telefone: telefone,
+              #cpf: cpf,
+            }),
+            returnValue: _i6.Future<_i7.Result<void>>.value(
+              _i8.dummyValue<_i7.Result<void>>(
+                this,
+                Invocation.method(#updateUser, [], {
+                  #id: id,
+                  #email: email,
+                  #password: password,
+                  #nome: nome,
+                  #telefone: telefone,
+                  #cpf: cpf,
+                }),
+              ),
+            ),
+            returnValueForMissingStub: _i6.Future<_i7.Result<void>>.value(
+              _i8.dummyValue<_i7.Result<void>>(
+                this,
+                Invocation.method(#updateUser, [], {
+                  #id: id,
+                  #email: email,
+                  #password: password,
+                  #nome: nome,
+                  #telefone: telefone,
+                  #cpf: cpf,
+                }),
+              ),
+            ),
+          )
+          as _i6.Future<_i7.Result<void>>);
 }
 
 /// A class which mocks [LoginFormStore].

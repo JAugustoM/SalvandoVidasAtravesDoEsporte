@@ -7,7 +7,6 @@ part of 'aluno.dart';
 // **************************************************************************
 
 Aluno _$AlunoFromJson(Map<String, dynamic> json) => Aluno(
-  id: BigInt.parse(json['id'] as String),
   nome: json['nome'] as String,
   cpf: json['cpf'] as String,
   nascimento: const DateConverter().fromJson(json['nascimento'] as String),
@@ -16,6 +15,8 @@ Aluno _$AlunoFromJson(Map<String, dynamic> json) => Aluno(
   grau: (json['grau'] as num).toInt(),
   dataEntrada: const DateConverter().fromJson(json['data_entrada'] as String),
   ativo: json['ativo'] as bool,
+  federado: json['federado'] as bool,
+  id: json['id'] == null ? null : BigInt.parse(json['id'] as String),
   contato: json['contato'] as String?,
   contatoEmergencia: json['contato_emergencia'] as String?,
   linkFoto: json['link_foto'] as String?,
@@ -28,18 +29,19 @@ Aluno _$AlunoFromJson(Map<String, dynamic> json) => Aluno(
 );
 
 Map<String, dynamic> _$AlunoToJson(Aluno instance) => <String, dynamic>{
-  'id': instance.id.toString(),
+  'id': ?instance.id?.toString(),
   'nome': instance.nome,
   'cpf': instance.cpf,
-  'contato': instance.contato,
-  'contato_emergencia': instance.contatoEmergencia,
+  'contato': ?instance.contato,
+  'contato_emergencia': ?instance.contatoEmergencia,
   'email': instance.email,
   'faixa': _$FaixaEnumMap[instance.faixa]!,
   'grau': instance.grau,
-  'link_foto': instance.linkFoto,
-  'id_responsavel': instance.idResponsavel?.toString(),
-  'id_turma': instance.idTurma?.toString(),
+  'link_foto': ?instance.linkFoto,
+  'id_responsavel': ?instance.idResponsavel?.toString(),
+  'id_turma': ?instance.idTurma?.toString(),
   'ativo': instance.ativo,
+  'federado': instance.federado,
   'data_entrada': const DateConverter().toJson(instance.dataEntrada),
   'nascimento': const DateConverter().toJson(instance.nascimento),
 };

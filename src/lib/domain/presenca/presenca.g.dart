@@ -7,9 +7,9 @@ part of 'presenca.dart';
 // **************************************************************************
 
 Presenca _$PresencaFromJson(Map<String, dynamic> json) => Presenca(
-  id: BigInt.parse(json['id'] as String),
   alunoId: BigInt.parse(json['aluno_id'] as String),
   data: const DateConverter().fromJson(json['data'] as String),
+  id: json['id'] == null ? null : BigInt.parse(json['id'] as String),
   turmaId: json['turma_id'] == null
       ? null
       : BigInt.parse(json['turma_id'] as String),
@@ -17,9 +17,9 @@ Presenca _$PresencaFromJson(Map<String, dynamic> json) => Presenca(
 );
 
 Map<String, dynamic> _$PresencaToJson(Presenca instance) => <String, dynamic>{
-  'id': instance.id.toString(),
+  'id': ?instance.id?.toString(),
   'aluno_id': instance.alunoId.toString(),
-  'turma_id': instance.turmaId?.toString(),
-  'user_id': instance.userId,
+  'turma_id': ?instance.turmaId?.toString(),
+  'user_id': ?instance.userId,
   'data': const DateConverter().toJson(instance.data),
 };

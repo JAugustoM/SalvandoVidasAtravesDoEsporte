@@ -7,16 +7,16 @@ part of 'responsavel.dart';
 // **************************************************************************
 
 Responsavel _$ResponsavelFromJson(Map<String, dynamic> json) => Responsavel(
-  id: BigInt.parse(json['id'] as String),
   nome: json['nome'] as String,
   cpf: json['cpf'] as String,
   contato: json['contato'] as String,
   email: json['email'] as String,
+  id: json['id'] == null ? null : BigInt.parse(json['id'] as String),
 );
 
 Map<String, dynamic> _$ResponsavelToJson(Responsavel instance) =>
     <String, dynamic>{
-      'id': instance.id.toString(),
+      'id': ?instance.id?.toString(),
       'nome': instance.nome,
       'cpf': instance.cpf,
       'contato': instance.contato,

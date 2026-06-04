@@ -10,7 +10,7 @@ class UserService {
 
   Future<Result<bool>> login(String email, String password) async {
     final call = await safeSupabaseCall(() async {
-      return await _supabase.auth.signInWithPassword(
+      return _supabase.auth.signInWithPassword(
         email: email,
         password: password,
       );
@@ -36,7 +36,7 @@ class UserService {
   }
 
   Future<Result<void>> logout() async {
-    return await safeSupabaseCall(() async {
+    return safeSupabaseCall(() async {
       await _supabase.auth.signOut().withDefaultTimeout();
       localUser = null;
     });
@@ -56,7 +56,7 @@ class UserService {
   }
 
   Future<Result<LocalUser?>> getLocalUser(User user) async {
-    return await safeSupabaseCall(() async {
+    return safeSupabaseCall(() async {
       final data = await _supabase.from('users').select().eq('id', user.id);
 
       if (data.isNotEmpty) {
@@ -68,7 +68,7 @@ class UserService {
   }
 
   Future<Result<List<LocalUser>>> listUsers() async {
-    return await safeSupabaseCall(() async {
+    return safeSupabaseCall(() async {
       final res = await _supabase.from('users').select();
 
       final users = List<LocalUser>.empty(growable: true);

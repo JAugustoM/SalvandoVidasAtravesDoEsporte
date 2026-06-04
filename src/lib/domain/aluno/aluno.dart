@@ -6,9 +6,9 @@ part 'aluno.g.dart';
 
 enum Faixa { branca, cinza, amarela, laranja, verde, azul, roxa, marrom, preta }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class Aluno {
-  final BigInt id;
+  final BigInt? id;
   final String nome;
   final String cpf;
   final String? contato;
@@ -20,6 +20,7 @@ class Aluno {
   final BigInt? idResponsavel;
   final BigInt? idTurma;
   final bool ativo;
+  final bool federado;
 
   @DateConverter()
   final DateTime dataEntrada;
@@ -28,7 +29,6 @@ class Aluno {
   final DateTime nascimento;
 
   Aluno({
-    required this.id,
     required this.nome,
     required this.cpf,
     required this.nascimento,
@@ -37,6 +37,8 @@ class Aluno {
     required this.grau,
     required this.dataEntrada,
     required this.ativo,
+    required this.federado,
+    this.id,
     this.contato,
     this.contatoEmergencia,
     this.linkFoto,
