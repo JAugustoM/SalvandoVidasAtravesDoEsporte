@@ -106,11 +106,10 @@ class EtapaDadosBasicos extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             _buildDropdownField(
-              label: 'ID da ficha*',
+              label: 'ID da ficha',
               value: idFicha,
               items: ['ID 001', 'ID 002', 'ID 003'],
               onChanged: onIdFichaChanged,
-              validatorMessage: 'Selecione o ID da ficha',
             ),
           ],
         ),
@@ -137,7 +136,7 @@ class EtapaDadosBasicos extends StatelessWidget {
     required String? value,
     required List<String> items,
     required ValueChanged<String?> onChanged,
-    required String validatorMessage,
+    String? validatorMessage,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +156,9 @@ class EtapaDadosBasicos extends StatelessWidget {
           hint: Text(label.replaceAll('*', '')),
           items: items.map((String item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
           onChanged: onChanged,
-          validator: (v) => v == null ? validatorMessage : null,
+          validator: validatorMessage != null 
+            ? (v) => v == null ? validatorMessage : null 
+            : null,
         ),
       ],
     );
