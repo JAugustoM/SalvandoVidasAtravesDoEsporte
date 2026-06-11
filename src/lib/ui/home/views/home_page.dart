@@ -1,19 +1,22 @@
+import 'package:salvando_vidas/data/stores/home/home_store.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import '../home_page_imports.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    //final isAdmin = context.read<UserService>().isAdmin;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final homeState = ref.watch(homeStoreProvider);
 
-    final sampleStudents = [
-      {'nome': 'Fulano', 'turma': '1', 'kimonos': 'Sim', 'ultima': '6 dias'},
-      {'nome': 'Beltrano', 'turma': '2', 'kimonos': 'Sim', 'ultima': '4 dias'},
-      {'nome': 'Ciclano', 'turma': '3', 'kimonos': 'Não', 'ultima': '0 dias'},
-      {'nome': 'Ana', 'turma': '1', 'kimonos': 'Sim', 'ultima': '2 dias'},
-    ];
+    String? aniversariante;
+    int? dias;
+
+    if (homeState.value != null &&
+        homeState.value!.proximoAniversariante.isNotEmpty) {
+      aniversariante = homeState.value!.proximoAniversariante.first.aluno.nome;
+      dias = homeState.value!.proximoAniversariante.first.dias;
+    }
 
     return Scaffold(
       body: Container(
@@ -27,8 +30,14 @@ class HomePage extends StatelessWidget {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(18, 18, 18,
-                MediaQuery.of(context).padding.bottom + kBottomNavigationBarHeight + 12,),
+              padding: EdgeInsets.fromLTRB(
+                18,
+                18,
+                18,
+                MediaQuery.of(context).padding.bottom +
+                    kBottomNavigationBarHeight +
+                    12,
+              ),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 420),
                 child: Column(
@@ -40,8 +49,7 @@ class HomePage extends StatelessWidget {
                       builder: (context, constraints) {
                         const spacing = 12.0;
                         final itemWidth = (constraints.maxWidth - spacing) / 2;
-                        final aspect =
-                            itemWidth / 90; // ajuste de altura desejada
+                        final aspect = itemWidth / 90;
                         return GridView.count(
                           crossAxisCount: 2,
                           crossAxisSpacing: spacing,
@@ -52,25 +60,30 @@ class HomePage extends StatelessWidget {
                           children: [
                             MetricCard(
                               title: 'Próximos aniversariantes',
-                              value: 'Fulano (3 dias)',
+                              value: switch (aniversariante) {
+                                null => "...",
+                                String() => '$aniversariante ($dias dias)',
+                              },
                               color: Colors.white,
                               width: itemWidth,
                             ),
                             MetricCard(
                               title: 'Total de Alunos',
-                              value: '35',
+                              value:
+                                  '${homeState.value?.alunos.length ?? "..."}',
                               color: const Color(0xFF2457F0),
                               width: itemWidth,
                             ),
                             MetricCard(
                               title: 'Kimonos Disponíveis',
-                              value: '3',
+                              value:
+                                  '${homeState.value?.kimonosDisponiveis ?? "..."}',
                               color: const Color(0xFF11A6BF),
                               width: itemWidth,
                             ),
                             MetricCard(
                               title: 'Total de Turmas',
-                              value: '5',
+                              value: '${homeState.value?.totalTurmas ?? "..."}',
                               color: Colors.white,
                               width: itemWidth,
                             ),
@@ -112,53 +125,79 @@ class HomePage extends StatelessWidget {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: SingleChildScrollView(
-                              padding: const EdgeInsets.all(8),
-                              child: Column(
-                                children: sampleStudents.map((s) {
-                                  return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 10,
-                                    ),
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Color(0xFFE6E6E6),
+                            child: homeState.when(
+                              data: (state) {
+                                return RefreshIndicator(
+                                  onRefresh: () =>
+                                      ref.refresh(homeStoreProvider.future),
+                                  child: ListView.builder(
+                                    itemCount: state.alunos.length,
+                                    itemBuilder: (_, index) {
+                                      final aluno = state.alunos[index];
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 10,
                                         ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 4,
-                                          child: Text(s['nome'] ?? ''),
-                                        ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            s['turma'] ?? '',
-                                            textAlign: TextAlign.center,
+                                        decoration: const BoxDecoration(
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              color: Color(0xFFE6E6E6),
+                                            ),
                                           ),
                                         ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Text(
-                                            s['kimonos'] ?? '',
-                                            textAlign: TextAlign.center,
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 4,
+                                              child: Text(aluno.nome),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Text(
+                                                '${aluno.idTurma ?? "N/A"}',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 1,
+                                              child: Text(
+                                                'Não',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              flex: 2,
+                                              child: Text(
+                                                '0',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Expanded(
-                                          flex: 2,
-                                          child: Text(
-                                            s['ultima'] ?? '',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }).toList(),
+                                      );
+                                    },
+                                  ),
+                                );
+                              },
+                              error: (error, stack) {
+                                switch (error) {
+                                  case AppApiException(
+                                    :final message,
+                                    :final error,
+                                  ):
+                                    ref
+                                        .read(loggerProvider)
+                                        .e(message, error: error);
+                                  default:
+                                    break;
+                                }
+                                return Center(
+                                  child: Text('Erro ao carregar os alunos'),
+                                );
+                              },
+                              loading: () => const Center(
+                                child: CircularProgressIndicator(),
                               ),
                             ),
                           ),
@@ -187,14 +226,12 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // espaço inferior gerenciado pelo padding do SingleChildScrollView
                   ],
                 ),
               ),
             ),
           ),
         ),
-        
       ),
     );
   }

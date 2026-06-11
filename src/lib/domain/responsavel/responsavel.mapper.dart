@@ -35,8 +35,8 @@ class ResponsavelMapper extends ClassMapperBase<Responsavel> {
   static const Field<Responsavel, String> _f$email = Field('email', _$email);
   static bool _$ativo(Responsavel v) => v.ativo;
   static const Field<Responsavel, bool> _f$ativo = Field('ativo', _$ativo);
-  static BigInt? _$id(Responsavel v) => v.id;
-  static const Field<Responsavel, BigInt> _f$id = Field('id', _$id, opt: true);
+  static int? _$id(Responsavel v) => v.id;
+  static const Field<Responsavel, int> _f$id = Field('id', _$id, opt: true);
 
   @override
   final MappableFields<Responsavel> fields = const {
@@ -127,7 +127,7 @@ abstract class ResponsavelCopyWith<$R, $In extends Responsavel, $Out>
     String? contato,
     String? email,
     bool? ativo,
-    BigInt? id,
+    int? id,
   });
   ResponsavelCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }

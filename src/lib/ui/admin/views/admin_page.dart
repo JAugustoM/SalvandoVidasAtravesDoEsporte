@@ -1,23 +1,23 @@
+import 'package:salvando_vidas/data/services/user_service/user_service.dart';
+import 'package:salvando_vidas/data/stores/cadastro_voluntario/cadastro_voluntario_form.dart';
 import 'package:salvando_vidas/main_imports.dart';
-import 'package:salvando_vidas/data/stores/cadastros/cadastro_voluntario_form.dart';
-import '../widgets/voluntario_input_field.dart';
+
+import '../../cadastro_voluntario/widgets/action_button.dart';
 import '../../cadastro_voluntario/widgets/expansion_action_card.dart';
 import '../../cadastro_voluntario/widgets/input_field.dart';
-import '../../cadastro_voluntario/widgets/action_button.dart';
+import '../widgets/voluntario_input_field.dart';
 
-class AdminPage extends StatefulWidget {
+class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
 
   @override
-  State<AdminPage> createState() => _AdminPageState();
+  ConsumerState<AdminPage> createState() => _AdminPageState();
 }
 
-class _AdminPageState extends State<AdminPage> {
+class _AdminPageState extends ConsumerState<AdminPage> {
   final _volunteerFormKey = GlobalKey<FormState>();
   final _classFormKey = GlobalKey<FormState>();
   final _studentFormKey = GlobalKey<FormState>();
-
-  final _cadastroVoluntario = CadastroVoluntarioFormStore();
 
   final _classNameController = TextEditingController();
   final _classAgeGroupController = TextEditingController();
@@ -38,14 +38,7 @@ class _AdminPageState extends State<AdminPage> {
   bool _studentExpanded = false;
 
   @override
-  void initState() {
-    super.initState();
-    _cadastroVoluntario.setupValidations();
-  }
-
-  @override
   void dispose() {
-    _cadastroVoluntario.dispose();
     _classNameController.dispose();
     _classAgeGroupController.dispose();
     _classDaysController.dispose();
@@ -96,7 +89,8 @@ class _AdminPageState extends State<AdminPage> {
   }
 
   void _submitVolunteer() async {
-    if (!_cadastroVoluntario.podeCadastrar) {
+    final cadastro = this.ref.read(cadastroVoluntarioProvider);
+    if (!cadastro.podeCadastrar) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Algum campo não foi preenchido corretamente.'),
@@ -105,20 +99,20 @@ class _AdminPageState extends State<AdminPage> {
       return;
     }
 
-    final voluntario = _cadastroVoluntario.voluntario;
-    final result = await context.read<UserService>().registerUser(voluntario);
+    final voluntario = cadastro.voluntario;
 
-    switch (result) {
-      case Failure(:final message, :final error):
-        context.read<Logger>().e(message, error: error);
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(message)));
-      case Success():
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Voluntário cadastrado com sucesso.')),
-        );
-        _volunteerFormKey.currentState?.reset();
+    try {
+      await ref.read(userServiceProvider).registerUser(voluntario);
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Voluntário cadastrado com sucesso.')),
+      );
+      _volunteerFormKey.currentState?.reset();
+    } on AppApiException catch (e) {
+      ref.read(loggerProvider).e(e.message, error: e.error);
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
 
@@ -160,29 +154,6 @@ class _AdminPageState extends State<AdminPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: OutlinedButton.icon(
-                        onPressed: _goBack,
-                        icon: const Icon(Icons.arrow_back_outlined),
-                        label: const Text('Voltar às seções'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF08216F),
-                          side: const BorderSide(color: Color(0xFF08216F)),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 14,
-                          ),
-                          textStyle: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.symmetric(
@@ -232,35 +203,17 @@ class _AdminPageState extends State<AdminPage> {
                         key: _volunteerFormKey,
                         child: Column(
                           children: [
-                            CadastroTextField(
-                              _cadastroVoluntario,
-                              InputTypes.nome,
-                            ),
+                            CadastroTextField(InputTypes.nome),
                             const SizedBox(height: 14),
-                            CadastroTextField(
-                              _cadastroVoluntario,
-                              InputTypes.email,
-                            ),
+                            CadastroTextField(InputTypes.email),
                             const SizedBox(height: 14),
-                            CadastroTextField(
-                              _cadastroVoluntario,
-                              InputTypes.senha,
-                            ),
+                            CadastroTextField(InputTypes.senha),
                             const SizedBox(height: 14),
-                            CadastroTextField(
-                              _cadastroVoluntario,
-                              InputTypes.telefone,
-                            ),
+                            CadastroTextField(InputTypes.telefone),
                             const SizedBox(height: 14),
-                            CadastroTextField(
-                              _cadastroVoluntario,
-                              InputTypes.cpf,
-                            ),
+                            CadastroTextField(InputTypes.cpf),
                             const SizedBox(height: 14),
-                            CadastroTextField(
-                              _cadastroVoluntario,
-                              InputTypes.funcao,
-                            ),
+                            CadastroTextField(InputTypes.funcao),
                             const SizedBox(height: 18),
                             ActionButton(
                               label: 'Salvar voluntário',
@@ -283,21 +236,27 @@ class _AdminPageState extends State<AdminPage> {
                         child: Column(
                           children: [
                             InputField(
-                              controller: _classNameController,
+                              initialValue: '',
+                              update: (value) {},
+                              error: null,
                               label: 'Nome da turma',
                               hint: 'Digite o nome ou identificação',
                               validatorMessage: 'Informe o nome da turma',
                             ),
                             const SizedBox(height: 14),
                             InputField(
-                              controller: _classAgeGroupController,
+                              initialValue: '',
+                              update: (value) {},
+                              error: null,
                               label: 'Faixa etária',
                               hint: 'Ex.: 7 a 10 anos',
                               validatorMessage: 'Informe a faixa etária',
                             ),
                             const SizedBox(height: 14),
                             InputField(
-                              controller: _classDaysController,
+                              initialValue: '',
+                              update: (value) {},
+                              error: null,
                               label: 'Dias da semana',
                               hint: 'Ex.: segunda e quarta',
                               validatorMessage: 'Informe os dias da semana',
@@ -307,7 +266,9 @@ class _AdminPageState extends State<AdminPage> {
                               children: [
                                 Expanded(
                                   child: InputField(
-                                    controller: _classStartTimeController,
+                                    initialValue: '',
+                                    update: (value) {},
+                                    error: null,
                                     label: 'Início',
                                     hint: '08:00',
                                     keyboardType: TextInputType.datetime,
@@ -318,7 +279,9 @@ class _AdminPageState extends State<AdminPage> {
                                 const SizedBox(width: 12),
                                 Expanded(
                                   child: InputField(
-                                    controller: _classEndTimeController,
+                                    initialValue: '',
+                                    update: (value) {},
+                                    error: null,
                                     label: 'Fim',
                                     hint: '10:00',
                                     keyboardType: TextInputType.datetime,
@@ -329,7 +292,9 @@ class _AdminPageState extends State<AdminPage> {
                             ),
                             const SizedBox(height: 14),
                             InputField(
-                              controller: _classResponsibleController,
+                              initialValue: '',
+                              update: (value) {},
+                              error: null,
                               label: 'Professor voluntário responsável',
                               hint: 'Digite o nome do responsável',
                               validatorMessage:
@@ -345,74 +310,6 @@ class _AdminPageState extends State<AdminPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    ExpansionActionCard(
-                      title: 'Cadastrar alunos',
-                      subtitle: 'Aluno, responsáveis e vínculo inicial',
-                      icon: Icons.person_add_alt_1_outlined,
-                      accentColor: const Color(0xFF0B7FA5),
-                      expanded: _studentExpanded,
-                      onToggle: () => _togglePanel('student'),
-                      child: Form(
-                        key: _studentFormKey,
-                        child: Column(
-                          children: [
-                            InputField(
-                              controller: _studentNameController,
-                              label: 'Nome do aluno',
-                              hint: 'Digite o nome completo do aluno',
-                              validatorMessage: 'Informe o nome do aluno',
-                            ),
-                            const SizedBox(height: 14),
-                            InputField(
-                              controller: _studentBirthDateController,
-                              label: 'Data de nascimento',
-                              hint: 'DD/MM/AAAA',
-                              keyboardType: TextInputType.datetime,
-                              validatorMessage:
-                                  'Informe a data de nascimento do aluno',
-                            ),
-                            const SizedBox(height: 14),
-                            InputField(
-                              controller: _studentDocumentController,
-                              label: 'Matrícula ou documento',
-                              hint: 'Número da matrícula ou documento',
-                              validatorMessage:
-                                  'Informe a matrícula ou documento',
-                            ),
-                            const SizedBox(height: 14),
-                            InputField(
-                              controller: _studentResponsibleNameController,
-                              label: 'Responsável legal',
-                              hint: 'Nome do responsável legal',
-                              validatorMessage: 'Informe o responsável legal',
-                            ),
-                            const SizedBox(height: 14),
-                            InputField(
-                              controller: _studentResponsiblePhoneController,
-                              label: 'Telefone do responsável',
-                              hint: 'Telefone para contato',
-                              keyboardType: TextInputType.phone,
-                              validatorMessage:
-                                  'Informe o telefone do responsável',
-                            ),
-                            const SizedBox(height: 14),
-                            InputField(
-                              controller: _studentResponsibleEmailController,
-                              label: 'Email do responsável',
-                              hint: 'Email de contato',
-                              keyboardType: TextInputType.emailAddress,
-                              validatorMessage:
-                                  'Informe o email do responsável',
-                            ),
-                            const SizedBox(height: 18),
-                            ActionButton(
-                              label: 'Salvar aluno',
-                              onPressed: _submitStudent,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),

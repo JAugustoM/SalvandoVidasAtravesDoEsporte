@@ -1,5 +1,7 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salvando_vidas/data/services/global/global_service.dart';
+import 'package:salvando_vidas/data/stores/login/login_controller.dart';
 import 'package:salvando_vidas/main_imports.dart';
+
 import '../login_imports.dart';
 
 class BotaoEntrar extends ConsumerWidget {
@@ -7,10 +9,8 @@ class BotaoEntrar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 1. Ouvimos o resultado do login para ações de UI (Rotas e Alertas)
     ref.listen<AsyncValue<bool>>(loginControllerProvider, (previous, next) {
       if (next.hasError) {
-        // Se ocorreu um erro, pega a mensagem do nosso AppApiException e exibe
         final errorMessage = next.error.toString();
         ScaffoldMessenger.of(
           context,
@@ -22,7 +22,6 @@ class BotaoEntrar extends ConsumerWidget {
       }
     });
 
-    // 2. Lemos o estado atual do controller (para Loading) e do Form (para habilitar o botão)
     final loginState = ref.watch(loginControllerProvider);
     final formState = ref.watch(loginFormProvider);
 

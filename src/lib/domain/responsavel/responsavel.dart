@@ -4,7 +4,7 @@ part 'responsavel.mapper.dart';
 
 @MappableClass()
 class Responsavel with ResponsavelMappable {
-  final BigInt? id;
+  final int? id;
   final String nome;
   final String cpf;
   final String contato;

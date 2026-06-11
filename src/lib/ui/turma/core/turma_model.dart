@@ -1,9 +1,7 @@
 class AlunoModel {
   final String nome;
 
-  const AlunoModel({
-    required this.nome,
-  });
+  const AlunoModel({required this.nome});
 }
 
 class TurmaModel {

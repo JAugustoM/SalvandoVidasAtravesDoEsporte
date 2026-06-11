@@ -9,7 +9,7 @@ import '../global/global_service.dart';
 part 'aluno_service.g.dart';
 
 @riverpod
-AlunoService alunoService(AlunoServiceRef ref) {
+AlunoService alunoService(Ref ref) {
   return AlunoService(ref.watch(supabaseClientProvider));
 }
 
@@ -18,31 +18,40 @@ class AlunoService {
 
   AlunoService(this._supabase);
 
-  Future<Aluno?> cadastrarAluno(Aluno aluno) {
+  Future<Aluno> cadastrarAluno(Aluno aluno) {
     return runSupabaseCall(() async {
       final data = await _supabase
           .from('alunos')
           .insert(aluno.toMap())
           .select();
+      final res = Aluno.fromMap(data.first);
 
-      return data.isNotEmpty ? aluno : null;
+      return res;
     });
   }
 
-  Future<Responsavel?> cadastrarResponsavel(Responsavel responsavel) {
+  Future<Responsavel> cadastrarResponsavel(Responsavel responsavel) {
     return runSupabaseCall(() async {
       final data = await _supabase
           .from('responsaveis')
-          .insert(responsavel.toMap())
+          .upsert(responsavel.toMap(), onConflict: 'cpf')
           .select();
+      final res = Responsavel.fromMap(data.first);
 
-      return data.isNotEmpty ? responsavel : null;
+      return res;
     });
   }
 
   Future<List<Aluno>> listarAlunos() {
     return runSupabaseCall(() async {
       final res = await _supabase.from('alunos').select();
+      return res.map((data) => Aluno.fromMap(data)).toList();
+    });
+  }
+
+  Future<List<Aluno>> listarAlunosTurma(int id) {
+    return runSupabaseCall(() async {
+      final res = await _supabase.from('alunos').select().eq('id_turma', id);
       return res.map((data) => Aluno.fromMap(data)).toList();
     });
   }
@@ -54,25 +63,25 @@ class AlunoService {
     });
   }
 
-  Future<void> atualizaAluno(BigInt id, Data diff) {
+  Future<void> atualizaAluno(int id, Data diff) {
     return runSupabaseCall(() async {
       await _supabase.from('alunos').update(diff).eq('id', id);
     });
   }
 
-  Future<void> atualizaResponsavel(BigInt id, Data diff) {
+  Future<void> atualizaResponsavel(int id, Data diff) {
     return runSupabaseCall(() async {
       await _supabase.from('responsaveis').update(diff).eq('id', id);
     });
   }
 
-  Future<void> deletaAluno(BigInt id) {
+  Future<void> deletaAluno(int id) {
     return runSupabaseCall(() async {
       await _supabase.from('alunos').delete().eq('id', id);
     });
   }
 
-  Future<void> deletaResponsavel(BigInt id) {
+  Future<void> deletaResponsavel(int id) {
     return runSupabaseCall(() async {
       await _supabase.from('responsaveis').delete().eq('id', id);
     });

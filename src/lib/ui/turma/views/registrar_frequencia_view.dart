@@ -1,22 +1,21 @@
+import 'package:salvando_vidas/domain/turma/turma.dart';
 import 'package:salvando_vidas/ui/turma/turma_imports.dart';
 
 class RegistrarFrequenciaView extends StatefulWidget {
-  final TurmaModel turma;
+  final Turma turma;
 
-  const RegistrarFrequenciaView({
-    super.key,
-    required this.turma,
-  });
+  const RegistrarFrequenciaView({super.key, required this.turma});
 
   @override
-  State<RegistrarFrequenciaView> createState() => _RegistrarFrequenciaViewState();
+  State<RegistrarFrequenciaView> createState() =>
+      _RegistrarFrequenciaViewState();
 }
 
 class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
   final _formKey = GlobalKey<FormState>();
   final _dataController = TextEditingController();
   String? _instrutorSelecionado;
-  
+
   // CORREÇÃO AQUI: Agora usamos o 'index' (int) em vez do nome (String) para ser único
   final Map<int, bool> _frequencia = {};
 
@@ -24,8 +23,8 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
   void initState() {
     super.initState();
     // Inicializa todos os alunos como ausentes (false) usando a posição deles na lista
-    if (widget.turma.alunos != null) {
-      for (int i = 0; i < widget.turma.alunos!.length; i++) {
+    if ([] != null) {
+      for (int i = 0; i < 0; i++) {
         _frequencia[i] = false;
       }
     }
@@ -43,7 +42,9 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
             title: const Text(
               'Registrar Frequência?',
               textAlign: TextAlign.center,
@@ -56,7 +57,9 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                   backgroundColor: const Color(0xFFE0E0E0),
                   foregroundColor: Colors.black,
                   elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 onPressed: () => Navigator.of(ctx).pop(),
                 child: const Text('Cancelar'),
@@ -66,7 +69,9 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                   backgroundColor: const Color(0xFF00BCD4), // Ciano
                   foregroundColor: Colors.white,
                   elevation: 0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 onPressed: () {
                   Navigator.of(ctx).pop(); // Fecha o confirm
@@ -87,7 +92,9 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
       barrierDismissible: false,
       builder: (BuildContext ctx) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
           title: const Text(
             'A frequência foi\nregistrada com sucesso!',
             textAlign: TextAlign.center,
@@ -100,7 +107,9 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                 backgroundColor: const Color(0xFF00BCD4),
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 padding: const EdgeInsets.symmetric(horizontal: 32),
               ),
               onPressed: () {
@@ -117,7 +126,7 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
 
   @override
   Widget build(BuildContext context) {
-    final alunos = widget.turma.alunos ?? [];
+    final alunos = [];
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -128,7 +137,10 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 18),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Voltar', style: TextStyle(color: Colors.black, fontSize: 16)),
+        title: const Text(
+          'Voltar',
+          style: TextStyle(color: Colors.black, fontSize: 16),
+        ),
         titleSpacing: 0,
       ),
       body: Form(
@@ -143,14 +155,20 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                   children: [
                     const Text(
                       'Registrar Frequência',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       widget.turma.nome,
-                      style: const TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF666666),
+                      ),
                     ),
                     const SizedBox(height: 24),
-                    
+
                     // Dropdown Instrutor
                     _buildLabel('Instrutor/Professor da Aula:*'),
                     DropdownButtonFormField<String>(
@@ -158,9 +176,12 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                       value: _instrutorSelecionado,
                       hint: const Text('Selecione'),
                       items: ['Professor A', 'Professor B', 'Professor C']
-                          .map((i) => DropdownMenuItem(value: i, child: Text(i)))
+                          .map(
+                            (i) => DropdownMenuItem(value: i, child: Text(i)),
+                          )
                           .toList(),
-                      onChanged: (val) => setState(() => _instrutorSelecionado = val),
+                      onChanged: (val) =>
+                          setState(() => _instrutorSelecionado = val),
                       validator: (val) => val == null ? 'Obrigatório' : null,
                     ),
                     const SizedBox(height: 16),
@@ -171,9 +192,14 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                       controller: _dataController,
                       readOnly: true,
                       decoration: _inputDecoration().copyWith(
-                        suffixIcon: const Icon(Icons.calendar_today, size: 20, color: Color(0xFF666666)),
+                        suffixIcon: const Icon(
+                          Icons.calendar_today,
+                          size: 20,
+                          color: Color(0xFF666666),
+                        ),
                       ),
-                      validator: (val) => val == null || val.isEmpty ? 'Obrigatório' : null,
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Obrigatório' : null,
                       onTap: () async {
                         DateTime? picked = await showDatePicker(
                           context: context,
@@ -183,7 +209,8 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                         );
                         if (picked != null) {
                           setState(() {
-                            _dataController.text = "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
+                            _dataController.text =
+                                "${picked.day.toString().padLeft(2, '0')}/${picked.month.toString().padLeft(2, '0')}/${picked.year}";
                           });
                         }
                       },
@@ -193,7 +220,10 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                     // Lista de Alunos com Checkbox
                     const Text(
                       'Alunos',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     ListView.builder(
@@ -214,20 +244,24 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                               Expanded(
                                 child: Text(
                                   aluno.nome,
-                                  style: const TextStyle(fontWeight: FontWeight.w500),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                               // CORREÇÃO AQUI: Lemos e escrevemos usando o "index"
                               Checkbox(
                                 value: _frequencia[index],
                                 activeColor: const Color(0xFF00BCD4),
-                                side: const BorderSide(color: Color(0xFF999999)),
+                                side: const BorderSide(
+                                  color: Color(0xFF999999),
+                                ),
                                 onChanged: (val) {
                                   setState(() {
                                     _frequencia[index] = val ?? false;
                                   });
                                 },
-                              )
+                              ),
                             ],
                           ),
                         );
@@ -237,7 +271,7 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                 ),
               ),
             ),
-            
+
             // Botão Inferior Fixo
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -248,11 +282,16 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF00BCD4),
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     elevation: 0,
                   ),
                   onPressed: _mostrarDialogConfirmacao,
-                  child: const Text('Registrar Frequência', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  child: const Text(
+                    'Registrar Frequência',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
@@ -273,8 +312,8 @@ class _RegistrarFrequenciaViewState extends State<RegistrarFrequenciaView> {
         text: TextSpan(
           text: textoSemAsterisco,
           style: const TextStyle(
-            fontWeight: FontWeight.bold, 
-            fontSize: 14, 
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
             color: Colors.black, // Cor do texto principal
           ),
           children: [

@@ -5,10 +5,10 @@ part 'presenca.mapper.dart';
 
 @MappableClass()
 class Presenca with PresencaMappable {
-  final BigInt? id;
-  final BigInt alunoId;
+  final int? id;
+  final int alunoId;
 
-  @MappableClass(hook: HookData())
+  @MappableField(hook: HookData())
   final DateTime data;
 
   Presenca({this.id, required this.alunoId, required this.data});

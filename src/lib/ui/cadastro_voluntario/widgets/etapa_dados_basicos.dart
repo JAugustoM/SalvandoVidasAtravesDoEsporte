@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
+import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
 
-class EtapaDadosBasicos extends StatelessWidget {
+class EtapaDadosBasicos extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController nomeController;
   final TextEditingController cpfController;
@@ -30,7 +33,14 @@ class EtapaDadosBasicos extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cadastro = ref.watch(cadastroAlunoProvider);
+    final notifier = ref.read(cadastroAlunoProvider.notifier);
+
+    final dataFormatada = cadastro.nascimento != null
+        ? "${cadastro.nascimento!.day.toString().padLeft(2, '0')}/${cadastro.nascimento!.month.toString().padLeft(2, '0')}/${cadastro.nascimento!.year}"
+        : '';
+
     return Form(
       key: formKey,
       child: SingleChildScrollView(
@@ -39,14 +49,18 @@ class EtapaDadosBasicos extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             InputField(
-              controller: nomeController,
+              initialValue: cadastro.nome,
+              update: notifier.updateNome,
+              error: cadastro.nomeError,
               label: 'Nome*',
               hint: 'Digite o nome completo',
               validatorMessage: 'O nome é obrigatório',
             ),
             const SizedBox(height: 14),
             InputField(
-              controller: cpfController,
+              initialValue: cadastro.cpf,
+              update: notifier.updateCPF,
+              error: cadastro.cpfError,
               label: 'CPF*',
               hint: '000.000.000-00',
               keyboardType: TextInputType.number,
@@ -54,7 +68,9 @@ class EtapaDadosBasicos extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             InputField(
-              controller: telefoneController,
+              initialValue: cadastro.contato,
+              update: notifier.updateContato,
+              error: cadastro.contatoError,
               label: 'Telefone*',
               hint: '(00) 00000-0000',
               keyboardType: TextInputType.phone,
@@ -63,19 +79,29 @@ class EtapaDadosBasicos extends StatelessWidget {
             const SizedBox(height: 14),
             _buildLabel('Aniversário*'),
             TextFormField(
-              controller: dataNascimentoController,
+              key: ValueKey(cadastro.nascimento),
+              initialValue: dataFormatada,
               readOnly: true,
               decoration: InputDecoration(
+                errorText: cadastro.nascimentoError,
                 filled: true,
                 fillColor: const Color(0xFFF5F7FB),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                suffixIcon: const Icon(Icons.calendar_today, color: Color(0xFF08216F)),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
+                suffixIcon: const Icon(
+                  Icons.calendar_today,
+                  color: Color(0xFF08216F),
+                ),
               ),
-              validator: (value) => (value == null || value.isEmpty) ? 'A data é obrigatória' : null,
+              validator: (value) => (value == null || value.isEmpty)
+                  ? 'A data é obrigatória'
+                  : null,
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
                   context: context,
@@ -84,24 +110,34 @@ class EtapaDadosBasicos extends StatelessWidget {
                   lastDate: DateTime.now(),
                 );
                 if (pickedDate != null) {
-                  dataNascimentoController.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+                  notifier.updateNascimento(pickedDate);
                 }
               },
             ),
             const SizedBox(height: 14),
             _buildDropdownField(
               label: 'Tipo sanguíneo*',
-              value: tipoSanguineo,
-              items: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-              onChanged: onTipoSanguineoChanged,
+              value: cadastro.tipoSanguineo,
+              items: TipoSanguineo.values,
+              labelBuilder: (tipo) => tipo.nomeVisivel,
+              onChanged: (value) {
+                if (value != null) {
+                  notifier.updateTipoSanguineo(value);
+                }
+              },
               validatorMessage: 'Selecione o tipo sanguíneo',
             ),
             const SizedBox(height: 14),
             _buildDropdownField(
               label: 'Faixa/Grau*',
-              value: faixa,
-              items: ['Branca', 'Azul', 'Roxa', 'Marrom', 'Preta'],
-              onChanged: onFaixaChanged,
+              value: cadastro.faixa,
+              items: Faixa.values,
+              labelBuilder: (faixa) => faixa.nomeVisivel,
+              onChanged: (value) {
+                if (value != null) {
+                  notifier.updateFaixa(value);
+                }
+              },
               validatorMessage: 'Selecione a faixa',
             ),
             const SizedBox(height: 14),
@@ -109,6 +145,7 @@ class EtapaDadosBasicos extends StatelessWidget {
               label: 'ID da ficha',
               value: idFicha,
               items: ['ID 001', 'ID 002', 'ID 003'],
+              labelBuilder: (String value) => value,
               onChanged: onIdFichaChanged,
             ),
           ],
@@ -131,18 +168,19 @@ class EtapaDadosBasicos extends StatelessWidget {
     );
   }
 
-  Widget _buildDropdownField({
+  Widget _buildDropdownField<T>({
     required String label,
-    required String? value,
-    required List<String> items,
-    required ValueChanged<String?> onChanged,
+    required T? value,
+    required List<T> items,
+    required String Function(T) labelBuilder,
+    required ValueChanged<T?> onChanged,
     String? validatorMessage,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildLabel(label),
-        DropdownButtonFormField<String>(
+        DropdownButtonFormField<T>(
           value: value,
           decoration: InputDecoration(
             filled: true,
@@ -151,14 +189,22 @@ class EtapaDadosBasicos extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
           ),
           hint: Text(label.replaceAll('*', '')),
-          items: items.map((String item) => DropdownMenuItem<String>(value: item, child: Text(item))).toList(),
+          items: items.map((T item) {
+            return DropdownMenuItem<T>(
+              value: item,
+              child: Text(labelBuilder(item)),
+            );
+          }).toList(),
           onChanged: onChanged,
-          validator: validatorMessage != null 
-            ? (v) => v == null ? validatorMessage : null 
-            : null,
+          validator: validatorMessage != null
+              ? (v) => v == null ? validatorMessage : null
+              : null,
         ),
       ],
     );

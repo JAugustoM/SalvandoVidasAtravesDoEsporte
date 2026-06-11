@@ -2,7 +2,7 @@
 
 // coverage:ignore-file
 
-part of 'aluno_service.dart';
+part of 'turma_service.dart';
 
 // **************************************************************************
 // RiverpodGenerator
@@ -11,43 +11,43 @@ part of 'aluno_service.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(alunoService)
-final alunoServiceProvider = AlunoServiceProvider._();
+@ProviderFor(turmaService)
+final turmaServiceProvider = TurmaServiceProvider._();
 
-final class AlunoServiceProvider
-    extends $FunctionalProvider<AlunoService, AlunoService, AlunoService>
-    with $Provider<AlunoService> {
-  AlunoServiceProvider._()
+final class TurmaServiceProvider
+    extends $FunctionalProvider<TurmaService, TurmaService, TurmaService>
+    with $Provider<TurmaService> {
+  TurmaServiceProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'alunoServiceProvider',
+        name: r'turmaServiceProvider',
         isAutoDispose: true,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$alunoServiceHash();
+  String debugGetCreateSourceHash() => _$turmaServiceHash();
 
   @$internal
   @override
-  $ProviderElement<AlunoService> $createElement($ProviderPointer pointer) =>
+  $ProviderElement<TurmaService> $createElement($ProviderPointer pointer) =>
       $ProviderElement(pointer);
 
   @override
-  AlunoService create(Ref ref) {
-    return alunoService(ref);
+  TurmaService create(Ref ref) {
+    return turmaService(ref);
   }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(AlunoService value) {
+  Override overrideWithValue(TurmaService value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<AlunoService>(value),
+      providerOverride: $SyncValueProvider<TurmaService>(value),
     );
   }
 }
 
-String _$alunoServiceHash() => r'78a26ba93683b2faf32245fcdb87e3aedf991903';
+String _$turmaServiceHash() => r'52ea4a43085c956d7a3357e6bd816bd18b9b3ed9';

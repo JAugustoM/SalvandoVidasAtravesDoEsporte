@@ -7,7 +7,7 @@ import '../global/global_service.dart';
 part 'user_service.g.dart';
 
 @Riverpod(keepAlive: true)
-UserService userService(UserServiceRef ref) {
+UserService userService(Ref ref) {
   return UserService(ref.watch(supabaseClientProvider));
 }
 

@@ -8,6 +8,150 @@
 
 part of 'aluno.dart';
 
+class FaixaMapper extends EnumMapper<Faixa> {
+  FaixaMapper._();
+
+  static FaixaMapper? _instance;
+  static FaixaMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = FaixaMapper._());
+    }
+    return _instance!;
+  }
+
+  static Faixa fromValue(dynamic value) {
+    ensureInitialized();
+    return MapperContainer.globals.fromValue(value);
+  }
+
+  @override
+  Faixa decode(dynamic value) {
+    switch (value) {
+      case r'branca':
+        return Faixa.branca;
+      case r'cinza':
+        return Faixa.cinza;
+      case r'amarela':
+        return Faixa.amarela;
+      case r'laranja':
+        return Faixa.laranja;
+      case r'verde':
+        return Faixa.verde;
+      case r'azul':
+        return Faixa.azul;
+      case r'roxa':
+        return Faixa.roxa;
+      case r'marrom':
+        return Faixa.marrom;
+      case r'preta':
+        return Faixa.preta;
+      default:
+        throw MapperException.unknownEnumValue(value);
+    }
+  }
+
+  @override
+  dynamic encode(Faixa self) {
+    switch (self) {
+      case Faixa.branca:
+        return r'branca';
+      case Faixa.cinza:
+        return r'cinza';
+      case Faixa.amarela:
+        return r'amarela';
+      case Faixa.laranja:
+        return r'laranja';
+      case Faixa.verde:
+        return r'verde';
+      case Faixa.azul:
+        return r'azul';
+      case Faixa.roxa:
+        return r'roxa';
+      case Faixa.marrom:
+        return r'marrom';
+      case Faixa.preta:
+        return r'preta';
+    }
+  }
+}
+
+extension FaixaMapperExtension on Faixa {
+  String toValue() {
+    FaixaMapper.ensureInitialized();
+    return MapperContainer.globals.toValue<Faixa>(this) as String;
+  }
+}
+
+class TipoSanguineoMapper extends EnumMapper<TipoSanguineo> {
+  TipoSanguineoMapper._();
+
+  static TipoSanguineoMapper? _instance;
+  static TipoSanguineoMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = TipoSanguineoMapper._());
+    }
+    return _instance!;
+  }
+
+  static TipoSanguineo fromValue(dynamic value) {
+    ensureInitialized();
+    return MapperContainer.globals.fromValue(value);
+  }
+
+  @override
+  TipoSanguineo decode(dynamic value) {
+    switch (value) {
+      case r'a_positivo':
+        return TipoSanguineo.aPositivo;
+      case r'a_negativo':
+        return TipoSanguineo.aNegativo;
+      case r'b_positivo':
+        return TipoSanguineo.bPositivo;
+      case r'b_negativo':
+        return TipoSanguineo.bNegativo;
+      case r'ab_positivo':
+        return TipoSanguineo.abPositivo;
+      case r'ab_negativo':
+        return TipoSanguineo.abNegativo;
+      case r'o_positivo':
+        return TipoSanguineo.oPositivo;
+      case r'o_negativo':
+        return TipoSanguineo.oNegativo;
+      default:
+        throw MapperException.unknownEnumValue(value);
+    }
+  }
+
+  @override
+  dynamic encode(TipoSanguineo self) {
+    switch (self) {
+      case TipoSanguineo.aPositivo:
+        return r'a_positivo';
+      case TipoSanguineo.aNegativo:
+        return r'a_negativo';
+      case TipoSanguineo.bPositivo:
+        return r'b_positivo';
+      case TipoSanguineo.bNegativo:
+        return r'b_negativo';
+      case TipoSanguineo.abPositivo:
+        return r'ab_positivo';
+      case TipoSanguineo.abNegativo:
+        return r'ab_negativo';
+      case TipoSanguineo.oPositivo:
+        return r'o_positivo';
+      case TipoSanguineo.oNegativo:
+        return r'o_negativo';
+    }
+  }
+}
+
+extension TipoSanguineoMapperExtension on TipoSanguineo {
+  String toValue() {
+    TipoSanguineoMapper.ensureInitialized();
+    return MapperContainer.globals.toValue<TipoSanguineo>(this) as String;
+  }
+}
+
 class AlunoMapper extends ClassMapperBase<Aluno> {
   AlunoMapper._();
 
@@ -15,6 +159,8 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
   static AlunoMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = AlunoMapper._());
+      FaixaMapper.ensureInitialized();
+      TipoSanguineoMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -37,6 +183,12 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
   static const Field<Aluno, Faixa> _f$faixa = Field('faixa', _$faixa);
   static int _$grau(Aluno v) => v.grau;
   static const Field<Aluno, int> _f$grau = Field('grau', _$grau);
+  static TipoSanguineo _$tipoSanguineo(Aluno v) => v.tipoSanguineo;
+  static const Field<Aluno, TipoSanguineo> _f$tipoSanguineo = Field(
+    'tipoSanguineo',
+    _$tipoSanguineo,
+    key: r'tipo_sanguineo',
+  );
   static DateTime _$dataEntrada(Aluno v) => v.dataEntrada;
   static const Field<Aluno, DateTime> _f$dataEntrada = Field(
     'dataEntrada',
@@ -47,8 +199,8 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
   static const Field<Aluno, bool> _f$ativo = Field('ativo', _$ativo);
   static bool _$federado(Aluno v) => v.federado;
   static const Field<Aluno, bool> _f$federado = Field('federado', _$federado);
-  static BigInt? _$id(Aluno v) => v.id;
-  static const Field<Aluno, BigInt> _f$id = Field('id', _$id, opt: true);
+  static int? _$id(Aluno v) => v.id;
+  static const Field<Aluno, int> _f$id = Field('id', _$id, opt: true);
   static String? _$contato(Aluno v) => v.contato;
   static const Field<Aluno, String> _f$contato = Field(
     'contato',
@@ -69,15 +221,15 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
     key: r'link_foto',
     opt: true,
   );
-  static BigInt? _$idResponsavel(Aluno v) => v.idResponsavel;
-  static const Field<Aluno, BigInt> _f$idResponsavel = Field(
+  static int? _$idResponsavel(Aluno v) => v.idResponsavel;
+  static const Field<Aluno, int> _f$idResponsavel = Field(
     'idResponsavel',
     _$idResponsavel,
     key: r'id_responsavel',
     opt: true,
   );
-  static BigInt? _$idTurma(Aluno v) => v.idTurma;
-  static const Field<Aluno, BigInt> _f$idTurma = Field(
+  static int? _$idTurma(Aluno v) => v.idTurma;
+  static const Field<Aluno, int> _f$idTurma = Field(
     'idTurma',
     _$idTurma,
     key: r'id_turma',
@@ -92,6 +244,7 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
     #email: _f$email,
     #faixa: _f$faixa,
     #grau: _f$grau,
+    #tipoSanguineo: _f$tipoSanguineo,
     #dataEntrada: _f$dataEntrada,
     #ativo: _f$ativo,
     #federado: _f$federado,
@@ -113,6 +266,7 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
       email: data.dec(_f$email),
       faixa: data.dec(_f$faixa),
       grau: data.dec(_f$grau),
+      tipoSanguineo: data.dec(_f$tipoSanguineo),
       dataEntrada: data.dec(_f$dataEntrada),
       ativo: data.dec(_f$ativo),
       federado: data.dec(_f$federado),
@@ -178,15 +332,16 @@ abstract class AlunoCopyWith<$R, $In extends Aluno, $Out>
     String? email,
     Faixa? faixa,
     int? grau,
+    TipoSanguineo? tipoSanguineo,
     DateTime? dataEntrada,
     bool? ativo,
     bool? federado,
-    BigInt? id,
+    int? id,
     String? contato,
     String? contatoEmergencia,
     String? linkFoto,
-    BigInt? idResponsavel,
-    BigInt? idTurma,
+    int? idResponsavel,
+    int? idTurma,
   });
   AlunoCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -205,6 +360,7 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
     String? email,
     Faixa? faixa,
     int? grau,
+    TipoSanguineo? tipoSanguineo,
     DateTime? dataEntrada,
     bool? ativo,
     bool? federado,
@@ -222,6 +378,7 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
       if (email != null) #email: email,
       if (faixa != null) #faixa: faixa,
       if (grau != null) #grau: grau,
+      if (tipoSanguineo != null) #tipoSanguineo: tipoSanguineo,
       if (dataEntrada != null) #dataEntrada: dataEntrada,
       if (ativo != null) #ativo: ativo,
       if (federado != null) #federado: federado,
@@ -241,6 +398,7 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
     email: data.get(#email, or: $value.email),
     faixa: data.get(#faixa, or: $value.faixa),
     grau: data.get(#grau, or: $value.grau),
+    tipoSanguineo: data.get(#tipoSanguineo, or: $value.tipoSanguineo),
     dataEntrada: data.get(#dataEntrada, or: $value.dataEntrada),
     ativo: data.get(#ativo, or: $value.ativo),
     federado: data.get(#federado, or: $value.federado),
@@ -258,5 +416,155 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
   @override
   AlunoCopyWith<$R2, Aluno, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
       _AlunoCopyWithImpl<$R2, $Out2>($value, $cast, t);
+}
+
+class AlunoHomeMapper extends ClassMapperBase<AlunoHome> {
+  AlunoHomeMapper._();
+
+  static AlunoHomeMapper? _instance;
+  static AlunoHomeMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = AlunoHomeMapper._());
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'AlunoHome';
+
+  static int _$id(AlunoHome v) => v.id;
+  static const Field<AlunoHome, int> _f$id = Field('id', _$id);
+  static String _$nome(AlunoHome v) => v.nome;
+  static const Field<AlunoHome, String> _f$nome = Field('nome', _$nome);
+  static int _$idTurma(AlunoHome v) => v.idTurma;
+  static const Field<AlunoHome, int> _f$idTurma = Field(
+    'idTurma',
+    _$idTurma,
+    key: r'id_turma',
+  );
+  static bool _$temEmprestimo(AlunoHome v) => v.temEmprestimo;
+  static const Field<AlunoHome, bool> _f$temEmprestimo = Field(
+    'temEmprestimo',
+    _$temEmprestimo,
+    key: r'tem_emprestimo',
+    mode: FieldMode.member,
+  );
+  static int _$ultimaPresenca(AlunoHome v) => v.ultimaPresenca;
+  static const Field<AlunoHome, int> _f$ultimaPresenca = Field(
+    'ultimaPresenca',
+    _$ultimaPresenca,
+    key: r'ultima_presenca',
+    mode: FieldMode.member,
+  );
+
+  @override
+  final MappableFields<AlunoHome> fields = const {
+    #id: _f$id,
+    #nome: _f$nome,
+    #idTurma: _f$idTurma,
+    #temEmprestimo: _f$temEmprestimo,
+    #ultimaPresenca: _f$ultimaPresenca,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static AlunoHome _instantiate(DecodingData data) {
+    return AlunoHome(
+      id: data.dec(_f$id),
+      nome: data.dec(_f$nome),
+      idTurma: data.dec(_f$idTurma),
+    );
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static AlunoHome fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<AlunoHome>(map);
+  }
+
+  static AlunoHome fromJson(String json) {
+    return ensureInitialized().decodeJson<AlunoHome>(json);
+  }
+}
+
+mixin AlunoHomeMappable {
+  String toJson() {
+    return AlunoHomeMapper.ensureInitialized().encodeJson<AlunoHome>(
+      this as AlunoHome,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return AlunoHomeMapper.ensureInitialized().encodeMap<AlunoHome>(
+      this as AlunoHome,
+    );
+  }
+
+  AlunoHomeCopyWith<AlunoHome, AlunoHome, AlunoHome> get copyWith =>
+      _AlunoHomeCopyWithImpl<AlunoHome, AlunoHome>(
+        this as AlunoHome,
+        $identity,
+        $identity,
+      );
+  @override
+  String toString() {
+    return AlunoHomeMapper.ensureInitialized().stringifyValue(
+      this as AlunoHome,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return AlunoHomeMapper.ensureInitialized().equalsValue(
+      this as AlunoHome,
+      other,
+    );
+  }
+
+  @override
+  int get hashCode {
+    return AlunoHomeMapper.ensureInitialized().hashValue(this as AlunoHome);
+  }
+}
+
+extension AlunoHomeValueCopy<$R, $Out> on ObjectCopyWith<$R, AlunoHome, $Out> {
+  AlunoHomeCopyWith<$R, AlunoHome, $Out> get $asAlunoHome =>
+      $base.as((v, t, t2) => _AlunoHomeCopyWithImpl<$R, $Out>(v, t, t2));
+}
+
+abstract class AlunoHomeCopyWith<$R, $In extends AlunoHome, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  $R call({int? id, String? nome, int? idTurma});
+  AlunoHomeCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
+}
+
+class _AlunoHomeCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, AlunoHome, $Out>
+    implements AlunoHomeCopyWith<$R, AlunoHome, $Out> {
+  _AlunoHomeCopyWithImpl(super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<AlunoHome> $mapper =
+      AlunoHomeMapper.ensureInitialized();
+  @override
+  $R call({int? id, String? nome, int? idTurma}) => $apply(
+    FieldCopyWithData({
+      if (id != null) #id: id,
+      if (nome != null) #nome: nome,
+      if (idTurma != null) #idTurma: idTurma,
+    }),
+  );
+  @override
+  AlunoHome $make(CopyWithData data) => AlunoHome(
+    id: data.get(#id, or: $value.id),
+    nome: data.get(#nome, or: $value.nome),
+    idTurma: data.get(#idTurma, or: $value.idTurma),
+  );
+
+  @override
+  AlunoHomeCopyWith<$R2, AlunoHome, $Out2> $chain<$R2, $Out2>(
+    Then<$Out2, $R2> t,
+  ) => _AlunoHomeCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
 

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
-    required this.controller,
+    required this.update,
+    required this.error,
+    required this.initialValue,
     required this.label,
     required this.hint,
     required this.validatorMessage,
@@ -13,12 +15,13 @@ class InputField extends StatelessWidget {
 
   final Color? fillColor;
 
-  final TextEditingController controller;
+  final void Function(String) update;
+  final String? error;
+  final String initialValue;
   final String label;
   final String hint;
   final String validatorMessage;
   final TextInputType? keyboardType;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,8 @@ class InputField extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         TextFormField(
-          controller: controller,
+          onChanged: (value) => update(value),
+          initialValue: initialValue,
           keyboardType: keyboardType,
           style: const TextStyle(
             color: Color(0xFF24304D),
@@ -43,6 +47,7 @@ class InputField extends StatelessWidget {
           ),
           decoration: InputDecoration(
             hintText: hint,
+            errorText: error,
             hintStyle: const TextStyle(color: Color(0xAA000000), fontSize: 13),
             filled: true,
             fillColor: fillColor ?? const Color(0xFFD8DDE6),

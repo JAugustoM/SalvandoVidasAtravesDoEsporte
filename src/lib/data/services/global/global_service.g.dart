@@ -50,7 +50,7 @@ final class SupabaseClientProvider
   }
 }
 
-String _$supabaseClientHash() => r'deacb610ba5a2a6164a9836f0ed10a1e9de80426';
+String _$supabaseClientHash() => r'2df5a38617329a3bb0a7e149189bea875722d7b8';
 
 @ProviderFor(logger)
 final loggerProvider = LoggerProvider._();
@@ -90,4 +90,4 @@ final class LoggerProvider extends $FunctionalProvider<Logger, Logger, Logger>
   }
 }
 
-String _$loggerHash() => r'e313b0897e07acdf3c2033b99dcdeb9a9ef8009b';
+String _$loggerHash() => r'3e6033d8b9e13fcae12bcd322baf136fee19e7cc';

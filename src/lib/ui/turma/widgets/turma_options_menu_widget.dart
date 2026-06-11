@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 enum TurmaMenuOption { editar, excluir }
 
 class TurmaOptionsMenuWidget extends StatelessWidget {
-  final String turmaId;
+  final int turmaId;
   final VoidCallback? onEditar;
   final VoidCallback? onExcluir;
 
@@ -17,14 +17,9 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<TurmaMenuOption>(
-      icon: const Icon(
-        Icons.more_vert,
-        color: Color(0xFFAAAAAA),
-      ),
+      icon: const Icon(Icons.more_vert, color: Color(0xFFAAAAAA)),
       color: const Color(0xFFFFFFFF),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       onSelected: (TurmaMenuOption option) {
         switch (option) {
           case TurmaMenuOption.editar:
@@ -40,7 +35,11 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
           value: TurmaMenuOption.editar,
           child: Row(
             children: [
-              const Icon(Icons.edit_outlined, color: Color(0xFF0097B2), size: 18),
+              const Icon(
+                Icons.edit_outlined,
+                color: Color(0xFF0097B2),
+                size: 18,
+              ),
               const SizedBox(width: 8),
               const Text('Editar'),
             ],

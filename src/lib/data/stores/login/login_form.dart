@@ -36,7 +36,6 @@ class LoginFormState {
 class LoginForm extends _$LoginForm {
   @override
   LoginFormState build() {
-    // Inicializa o estado
     return LoginFormState();
   }
 

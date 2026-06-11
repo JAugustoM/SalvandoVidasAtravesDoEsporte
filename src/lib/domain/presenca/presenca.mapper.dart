@@ -22,16 +22,20 @@ class PresencaMapper extends ClassMapperBase<Presenca> {
   @override
   final String id = 'Presenca';
 
-  static BigInt? _$id(Presenca v) => v.id;
-  static const Field<Presenca, BigInt> _f$id = Field('id', _$id, opt: true);
-  static BigInt _$alunoId(Presenca v) => v.alunoId;
-  static const Field<Presenca, BigInt> _f$alunoId = Field(
+  static int? _$id(Presenca v) => v.id;
+  static const Field<Presenca, int> _f$id = Field('id', _$id, opt: true);
+  static int _$alunoId(Presenca v) => v.alunoId;
+  static const Field<Presenca, int> _f$alunoId = Field(
     'alunoId',
     _$alunoId,
     key: r'aluno_id',
   );
   static DateTime _$data(Presenca v) => v.data;
-  static const Field<Presenca, DateTime> _f$data = Field('data', _$data);
+  static const Field<Presenca, DateTime> _f$data = Field(
+    'data',
+    _$data,
+    hook: HookData(),
+  );
 
   @override
   final MappableFields<Presenca> fields = const {
@@ -107,7 +111,7 @@ extension PresencaValueCopy<$R, $Out> on ObjectCopyWith<$R, Presenca, $Out> {
 
 abstract class PresencaCopyWith<$R, $In extends Presenca, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({BigInt? id, BigInt? alunoId, DateTime? data});
+  $R call({int? id, int? alunoId, DateTime? data});
   PresencaCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -120,7 +124,7 @@ class _PresencaCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Presenca> $mapper =
       PresencaMapper.ensureInitialized();
   @override
-  $R call({Object? id = $none, BigInt? alunoId, DateTime? data}) => $apply(
+  $R call({Object? id = $none, int? alunoId, DateTime? data}) => $apply(
     FieldCopyWithData({
       if (id != $none) #id: id,
       if (alunoId != null) #alunoId: alunoId,
