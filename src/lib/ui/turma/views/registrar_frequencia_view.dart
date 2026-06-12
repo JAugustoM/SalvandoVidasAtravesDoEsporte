@@ -138,7 +138,7 @@ class _RegistrarFrequenciaViewState
 
     final dataFormatada = state.value?.data != null
         ? "${state.value!.data.day.toString().padLeft(2, '0')}/${state.value!.data.month.toString().padLeft(2, '0')}/${state.value!.data.year}"
-        : '';
+        : '--/--/----';
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -159,81 +159,81 @@ class _RegistrarFrequenciaViewState
         key: _formKey,
         child: Column(
           children: [
-            state.when(
-              data: (state) => Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Registrar Frequência',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Registrar Frequência',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Text(
-                        widget.turma.nome,
-                        style: const TextStyle(
-                          fontSize: 14,
+                    ),
+                    Text(
+                      widget.turma.nome,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Color(0xFF666666),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+
+                    buildDropdownField(
+                      label: 'Instrutor/Professor da Aula:*',
+                      value: state.value?.professor,
+                      items: state.value?.usuarios ?? [],
+                      labelBuilder: (user) => user.nome,
+                      onChanged: (value) {
+                        if (value != null) {
+                          notifier.updateProfessor(value);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
+                    // DatePicker
+                    buildLabel('Data:*'),
+                    TextFormField(
+                      key: ValueKey(state.value?.data),
+                      readOnly: true,
+                      initialValue: dataFormatada,
+                      decoration: _inputDecoration().copyWith(
+                        suffixIcon: const Icon(
+                          Icons.calendar_today,
+                          size: 20,
                           color: Color(0xFF666666),
                         ),
                       ),
-                      const SizedBox(height: 24),
+                      validator: (val) =>
+                          val == null || val.isEmpty ? 'Obrigatório' : null,
+                      onTap: () async {
+                        DateTime? picked = await showDatePicker(
+                          context: context,
+                          initialDate: state.value?.data ?? DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime.now(),
+                        );
+                        if (picked != null) {
+                          notifier.updateData(picked);
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 24),
 
-                      buildDropdownField(
-                        label: 'Instrutor/Professor da Aula:*',
-                        value: state.professor,
-                        items: state.usuarios,
-                        labelBuilder: (user) => user.nome,
-                        onChanged: (value) {
-                          if (value != null) {
-                            notifier.updateProfessor(value);
-                          }
-                        },
+                    // Lista de Alunos com Checkbox
+                    const Text(
+                      'Alunos',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
-                      const SizedBox(height: 16),
-
-                      // DatePicker
-                      buildLabel('Data:*'),
-                      TextFormField(
-                        key: ValueKey(state.data),
-                        readOnly: true,
-                        initialValue: dataFormatada,
-                        decoration: _inputDecoration().copyWith(
-                          suffixIcon: const Icon(
-                            Icons.calendar_today,
-                            size: 20,
-                            color: Color(0xFF666666),
-                          ),
-                        ),
-                        validator: (val) =>
-                            val == null || val.isEmpty ? 'Obrigatório' : null,
-                        onTap: () async {
-                          DateTime? picked = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime.now(),
-                          );
-                          if (picked != null) {
-                            notifier.updateData(picked);
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 24),
-
-                      // Lista de Alunos com Checkbox
-                      const Text(
-                        'Alunos',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      ListView.builder(
+                    ),
+                    const SizedBox(height: 8),
+                    state.when(
+                      data: (state) => ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: state.alunos.length,
@@ -273,20 +273,22 @@ class _RegistrarFrequenciaViewState
                           );
                         },
                       ),
-                    ],
-                  ),
+                      error: (error, stack) {
+                        switch (error) {
+                          case AppApiException(:final message, :final error):
+                            ref.read(loggerProvider).e(message, error: error);
+                          default:
+                            break;
+                        }
+                        return Center(
+                          child: Text('Erro ao carregar os alunos'),
+                        );
+                      },
+                      loading: () => Center(child: CircularProgressIndicator()),
+                    ),
+                  ],
                 ),
               ),
-              error: (error, stack) {
-                switch (error) {
-                  case AppApiException(:final message, :final error):
-                    ref.read(loggerProvider).e(message, error: error);
-                  default:
-                    break;
-                }
-                return Center(child: Text('Erro ao carregar os alunos'));
-              },
-              loading: () => Center(child: CircularProgressIndicator()),
             ),
 
             // Botão Inferior Fixo

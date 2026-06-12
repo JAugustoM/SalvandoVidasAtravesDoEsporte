@@ -76,6 +76,9 @@ class PresencaStore extends _$PresencaStore {
 
   void updateData(DateTime data) async {
     final dados = state.value!;
+
+    state = AsyncValue.data(dados.copyWith(data: data));
+
     final alunoService = ref.read(alunoServiceProvider);
     final userService = ref.read(userServiceProvider);
     final presencaService = ref.read(presencaServiceProvider);
