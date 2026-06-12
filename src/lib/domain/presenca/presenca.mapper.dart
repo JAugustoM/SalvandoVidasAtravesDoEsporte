@@ -30,6 +30,12 @@ class PresencaMapper extends ClassMapperBase<Presenca> {
     _$alunoId,
     key: r'aluno_id',
   );
+  static int _$turmaId(Presenca v) => v.turmaId;
+  static const Field<Presenca, int> _f$turmaId = Field(
+    'turmaId',
+    _$turmaId,
+    key: r'turma_id',
+  );
   static DateTime _$data(Presenca v) => v.data;
   static const Field<Presenca, DateTime> _f$data = Field(
     'data',
@@ -41,6 +47,7 @@ class PresencaMapper extends ClassMapperBase<Presenca> {
   final MappableFields<Presenca> fields = const {
     #id: _f$id,
     #alunoId: _f$alunoId,
+    #turmaId: _f$turmaId,
     #data: _f$data,
   };
   @override
@@ -50,6 +57,7 @@ class PresencaMapper extends ClassMapperBase<Presenca> {
     return Presenca(
       id: data.dec(_f$id),
       alunoId: data.dec(_f$alunoId),
+      turmaId: data.dec(_f$turmaId),
       data: data.dec(_f$data),
     );
   }
@@ -111,7 +119,7 @@ extension PresencaValueCopy<$R, $Out> on ObjectCopyWith<$R, Presenca, $Out> {
 
 abstract class PresencaCopyWith<$R, $In extends Presenca, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({int? id, int? alunoId, DateTime? data});
+  $R call({int? id, int? alunoId, int? turmaId, DateTime? data});
   PresencaCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -124,17 +132,20 @@ class _PresencaCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Presenca> $mapper =
       PresencaMapper.ensureInitialized();
   @override
-  $R call({Object? id = $none, int? alunoId, DateTime? data}) => $apply(
-    FieldCopyWithData({
-      if (id != $none) #id: id,
-      if (alunoId != null) #alunoId: alunoId,
-      if (data != null) #data: data,
-    }),
-  );
+  $R call({Object? id = $none, int? alunoId, int? turmaId, DateTime? data}) =>
+      $apply(
+        FieldCopyWithData({
+          if (id != $none) #id: id,
+          if (alunoId != null) #alunoId: alunoId,
+          if (turmaId != null) #turmaId: turmaId,
+          if (data != null) #data: data,
+        }),
+      );
   @override
   Presenca $make(CopyWithData data) => Presenca(
     id: data.get(#id, or: $value.id),
     alunoId: data.get(#alunoId, or: $value.alunoId),
+    turmaId: data.get(#turmaId, or: $value.turmaId),
     data: data.get(#data, or: $value.data),
   );
 

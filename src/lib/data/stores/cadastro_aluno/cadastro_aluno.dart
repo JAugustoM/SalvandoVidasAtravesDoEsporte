@@ -16,7 +16,8 @@ class CadastroAlunoState with CadastroAlunoStateMappable {
   final DateTime? nascimento;
   final TipoSanguineo? tipoSanguineo;
   final Faixa? faixa;
-  final int grau = 0;
+  final int grau;
+  final String idFicha;
   final bool dirty;
 
   final String nomeResponsavel;
@@ -28,14 +29,16 @@ class CadastroAlunoState with CadastroAlunoStateMappable {
     this.nome = '',
     this.cpf = '',
     this.contato = '',
-    this.email = 'aluno@gmail.com',
+    this.email = '',
     this.nascimento,
     this.tipoSanguineo,
     this.faixa,
+    this.grau = 0,
+    this.idFicha = '',
     this.nomeResponsavel = '',
     this.cpfResponsavel = '',
     this.contatoResponsavel = '',
-    this.emailResponsavel = 'responsavel@gmail.com',
+    this.emailResponsavel = '',
     this.dirty = false,
   });
 
@@ -69,6 +72,16 @@ class CadastroAlunoState with CadastroAlunoStateMappable {
     return eTelefone(contatoResponsavel) ? null : 'Não é um telefone válido';
   }
 
+  String? get emailError {
+    if (!dirty && email.isEmpty) return null;
+    return eEmail(email) ? null : 'Não é um email válido';
+  }
+
+  String? get emailResponsavelError {
+    if (!dirty && emailResponsavel.isEmpty) return null;
+    return eEmail(emailResponsavel) ? null : 'Não é um email válido';
+  }
+
   String? get nascimentoError {
     if (!dirty && nascimento == null) return null;
     return nascimento != null ? null : 'Não pode estar em branco';
@@ -84,13 +97,29 @@ class CadastroAlunoState with CadastroAlunoStateMappable {
     return faixa != null ? null : 'Não pode estar em branco';
   }
 
+  String? get idFichaError {
+    if (idFicha.isEmpty) return null;
+    return int.tryParse(idFicha) != null
+        ? null
+        : 'O ID da ficha deve ser um número';
+  }
+
   bool get temErros =>
       nomeError != null ||
       cpfError != null ||
       contatoError != null ||
+      emailError != null ||
       nascimentoError != null ||
       tipoSanguineoError != null ||
-      faixaError != null;
+      faixaError != null ||
+      idFichaError != null;
+
+  bool get estaValido =>
+      !temErros &&
+      nome.isNotEmpty &&
+      cpf.isNotEmpty &&
+      contato.isNotEmpty &&
+      email.isNotEmpty;
 
   int get idade {
     final agora = DateTime.now().year;
@@ -116,13 +145,14 @@ class CadastroAlunoState with CadastroAlunoStateMappable {
     ativo: true,
     federado: false,
     dataEntrada: DateTime.now(),
+    idFicha: int.tryParse(idFicha),
   );
 
   Responsavel get responsavel => Responsavel(
-    nome: nomeResponsavel!,
-    cpf: cpfResponsavel!,
-    contato: contatoResponsavel!,
-    email: emailResponsavel!,
+    nome: nomeResponsavel,
+    cpf: cpfResponsavel,
+    contato: contatoResponsavel,
+    email: emailResponsavel,
     ativo: true,
   );
 }
@@ -146,6 +176,10 @@ class CadastroAluno extends _$CadastroAluno {
     state = state.copyWith(contato: value, dirty: true);
   }
 
+  void updateEmail(String value) {
+    state = state.copyWith(email: value, dirty: true);
+  }
+
   void updateNascimento(DateTime value) {
     state = state.copyWith(nascimento: value, dirty: true);
   }
@@ -158,6 +192,10 @@ class CadastroAluno extends _$CadastroAluno {
     state = state.copyWith(faixa: value, dirty: true);
   }
 
+  void updateIdFicha(String value) {
+    state = state.copyWith(idFicha: value, dirty: true);
+  }
+
   void updateNomeResponsavel(String value) {
     state = state.copyWith(nomeResponsavel: value, dirty: true);
   }
@@ -168,6 +206,10 @@ class CadastroAluno extends _$CadastroAluno {
 
   void updateContatoResponsavel(String value) {
     state = state.copyWith(contatoResponsavel: value, dirty: true);
+  }
+
+  void updateEmailResponsavel(String value) {
+    state = state.copyWith(emailResponsavel: value, dirty: true);
   }
 
   void reset() {

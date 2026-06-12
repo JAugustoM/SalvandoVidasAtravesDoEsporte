@@ -7,9 +7,18 @@ part 'presenca.mapper.dart';
 class Presenca with PresencaMappable {
   final int? id;
   final int alunoId;
+  final int turmaId;
 
   @MappableField(hook: HookData())
   final DateTime data;
 
-  Presenca({this.id, required this.alunoId, required this.data});
+  Presenca({
+    this.id,
+    required this.alunoId,
+    required this.turmaId,
+    required this.data,
+  });
+
+  static final fromMap = PresencaMapper.fromMap;
+  static final fromJson = PresencaMapper.fromJson;
 }

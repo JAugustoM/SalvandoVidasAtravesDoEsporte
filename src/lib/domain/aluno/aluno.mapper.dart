@@ -235,6 +235,13 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
     key: r'id_turma',
     opt: true,
   );
+  static int? _$idFicha(Aluno v) => v.idFicha;
+  static const Field<Aluno, int> _f$idFicha = Field(
+    'idFicha',
+    _$idFicha,
+    key: r'id_ficha',
+    opt: true,
+  );
 
   @override
   final MappableFields<Aluno> fields = const {
@@ -254,6 +261,7 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
     #linkFoto: _f$linkFoto,
     #idResponsavel: _f$idResponsavel,
     #idTurma: _f$idTurma,
+    #idFicha: _f$idFicha,
   };
   @override
   final bool ignoreNull = true;
@@ -276,6 +284,7 @@ class AlunoMapper extends ClassMapperBase<Aluno> {
       linkFoto: data.dec(_f$linkFoto),
       idResponsavel: data.dec(_f$idResponsavel),
       idTurma: data.dec(_f$idTurma),
+      idFicha: data.dec(_f$idFicha),
     );
   }
 
@@ -342,6 +351,7 @@ abstract class AlunoCopyWith<$R, $In extends Aluno, $Out>
     String? linkFoto,
     int? idResponsavel,
     int? idTurma,
+    int? idFicha,
   });
   AlunoCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -370,6 +380,7 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
     Object? linkFoto = $none,
     Object? idResponsavel = $none,
     Object? idTurma = $none,
+    Object? idFicha = $none,
   }) => $apply(
     FieldCopyWithData({
       if (nome != null) #nome: nome,
@@ -388,6 +399,7 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
       if (linkFoto != $none) #linkFoto: linkFoto,
       if (idResponsavel != $none) #idResponsavel: idResponsavel,
       if (idTurma != $none) #idTurma: idTurma,
+      if (idFicha != $none) #idFicha: idFicha,
     }),
   );
   @override
@@ -411,160 +423,11 @@ class _AlunoCopyWithImpl<$R, $Out> extends ClassCopyWithBase<$R, Aluno, $Out>
     linkFoto: data.get(#linkFoto, or: $value.linkFoto),
     idResponsavel: data.get(#idResponsavel, or: $value.idResponsavel),
     idTurma: data.get(#idTurma, or: $value.idTurma),
+    idFicha: data.get(#idFicha, or: $value.idFicha),
   );
 
   @override
   AlunoCopyWith<$R2, Aluno, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t) =>
       _AlunoCopyWithImpl<$R2, $Out2>($value, $cast, t);
-}
-
-class AlunoHomeMapper extends ClassMapperBase<AlunoHome> {
-  AlunoHomeMapper._();
-
-  static AlunoHomeMapper? _instance;
-  static AlunoHomeMapper ensureInitialized() {
-    if (_instance == null) {
-      MapperContainer.globals.use(_instance = AlunoHomeMapper._());
-    }
-    return _instance!;
-  }
-
-  @override
-  final String id = 'AlunoHome';
-
-  static int _$id(AlunoHome v) => v.id;
-  static const Field<AlunoHome, int> _f$id = Field('id', _$id);
-  static String _$nome(AlunoHome v) => v.nome;
-  static const Field<AlunoHome, String> _f$nome = Field('nome', _$nome);
-  static int _$idTurma(AlunoHome v) => v.idTurma;
-  static const Field<AlunoHome, int> _f$idTurma = Field(
-    'idTurma',
-    _$idTurma,
-    key: r'id_turma',
-  );
-  static bool _$temEmprestimo(AlunoHome v) => v.temEmprestimo;
-  static const Field<AlunoHome, bool> _f$temEmprestimo = Field(
-    'temEmprestimo',
-    _$temEmprestimo,
-    key: r'tem_emprestimo',
-    mode: FieldMode.member,
-  );
-  static int _$ultimaPresenca(AlunoHome v) => v.ultimaPresenca;
-  static const Field<AlunoHome, int> _f$ultimaPresenca = Field(
-    'ultimaPresenca',
-    _$ultimaPresenca,
-    key: r'ultima_presenca',
-    mode: FieldMode.member,
-  );
-
-  @override
-  final MappableFields<AlunoHome> fields = const {
-    #id: _f$id,
-    #nome: _f$nome,
-    #idTurma: _f$idTurma,
-    #temEmprestimo: _f$temEmprestimo,
-    #ultimaPresenca: _f$ultimaPresenca,
-  };
-  @override
-  final bool ignoreNull = true;
-
-  static AlunoHome _instantiate(DecodingData data) {
-    return AlunoHome(
-      id: data.dec(_f$id),
-      nome: data.dec(_f$nome),
-      idTurma: data.dec(_f$idTurma),
-    );
-  }
-
-  @override
-  final Function instantiate = _instantiate;
-
-  static AlunoHome fromMap(Map<String, dynamic> map) {
-    return ensureInitialized().decodeMap<AlunoHome>(map);
-  }
-
-  static AlunoHome fromJson(String json) {
-    return ensureInitialized().decodeJson<AlunoHome>(json);
-  }
-}
-
-mixin AlunoHomeMappable {
-  String toJson() {
-    return AlunoHomeMapper.ensureInitialized().encodeJson<AlunoHome>(
-      this as AlunoHome,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return AlunoHomeMapper.ensureInitialized().encodeMap<AlunoHome>(
-      this as AlunoHome,
-    );
-  }
-
-  AlunoHomeCopyWith<AlunoHome, AlunoHome, AlunoHome> get copyWith =>
-      _AlunoHomeCopyWithImpl<AlunoHome, AlunoHome>(
-        this as AlunoHome,
-        $identity,
-        $identity,
-      );
-  @override
-  String toString() {
-    return AlunoHomeMapper.ensureInitialized().stringifyValue(
-      this as AlunoHome,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return AlunoHomeMapper.ensureInitialized().equalsValue(
-      this as AlunoHome,
-      other,
-    );
-  }
-
-  @override
-  int get hashCode {
-    return AlunoHomeMapper.ensureInitialized().hashValue(this as AlunoHome);
-  }
-}
-
-extension AlunoHomeValueCopy<$R, $Out> on ObjectCopyWith<$R, AlunoHome, $Out> {
-  AlunoHomeCopyWith<$R, AlunoHome, $Out> get $asAlunoHome =>
-      $base.as((v, t, t2) => _AlunoHomeCopyWithImpl<$R, $Out>(v, t, t2));
-}
-
-abstract class AlunoHomeCopyWith<$R, $In extends AlunoHome, $Out>
-    implements ClassCopyWith<$R, $In, $Out> {
-  $R call({int? id, String? nome, int? idTurma});
-  AlunoHomeCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
-}
-
-class _AlunoHomeCopyWithImpl<$R, $Out>
-    extends ClassCopyWithBase<$R, AlunoHome, $Out>
-    implements AlunoHomeCopyWith<$R, AlunoHome, $Out> {
-  _AlunoHomeCopyWithImpl(super.value, super.then, super.then2);
-
-  @override
-  late final ClassMapperBase<AlunoHome> $mapper =
-      AlunoHomeMapper.ensureInitialized();
-  @override
-  $R call({int? id, String? nome, int? idTurma}) => $apply(
-    FieldCopyWithData({
-      if (id != null) #id: id,
-      if (nome != null) #nome: nome,
-      if (idTurma != null) #idTurma: idTurma,
-    }),
-  );
-  @override
-  AlunoHome $make(CopyWithData data) => AlunoHome(
-    id: data.get(#id, or: $value.id),
-    nome: data.get(#nome, or: $value.nome),
-    idTurma: data.get(#idTurma, or: $value.idTurma),
-  );
-
-  @override
-  AlunoHomeCopyWith<$R2, AlunoHome, $Out2> $chain<$R2, $Out2>(
-    Then<$Out2, $R2> t,
-  ) => _AlunoHomeCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
 

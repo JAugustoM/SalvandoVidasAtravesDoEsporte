@@ -9,3 +9,8 @@ export 'consts.dart';
 export 'data/services/global/global_service.dart';
 export 'routing/router.dart';
 export 'routing/routes.dart';
+
+export 'ui/global/widgets/dropdown.dart';
+export 'ui/global/widgets/label.dart';
+export 'ui/global/widgets/navbar.dart';
+export 'ui/global/widgets/topbar.dart';

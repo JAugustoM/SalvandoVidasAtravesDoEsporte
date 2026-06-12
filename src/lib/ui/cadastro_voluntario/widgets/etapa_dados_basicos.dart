@@ -1,36 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
+import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
 
 class EtapaDadosBasicos extends ConsumerWidget {
   final GlobalKey<FormState> formKey;
-  final TextEditingController nomeController;
-  final TextEditingController cpfController;
-  final TextEditingController telefoneController;
-  final TextEditingController dataNascimentoController;
-  final String? tipoSanguineo;
-  final String? faixa;
-  final String? idFicha;
-  final ValueChanged<String?> onTipoSanguineoChanged;
-  final ValueChanged<String?> onFaixaChanged;
-  final ValueChanged<String?> onIdFichaChanged;
 
-  const EtapaDadosBasicos({
-    super.key,
-    required this.formKey,
-    required this.nomeController,
-    required this.cpfController,
-    required this.telefoneController,
-    required this.dataNascimentoController,
-    required this.tipoSanguineo,
-    required this.faixa,
-    required this.idFicha,
-    required this.onTipoSanguineoChanged,
-    required this.onFaixaChanged,
-    required this.onIdFichaChanged,
-  });
+  const EtapaDadosBasicos({super.key, required this.formKey});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -77,7 +53,17 @@ class EtapaDadosBasicos extends ConsumerWidget {
               validatorMessage: 'O telefone é obrigatório',
             ),
             const SizedBox(height: 14),
-            _buildLabel('Aniversário*'),
+            InputField(
+              initialValue: cadastro.email,
+              update: notifier.updateEmail,
+              error: cadastro.emailError,
+              label: 'Email*',
+              hint: 'email@email.com',
+              keyboardType: TextInputType.emailAddress,
+              validatorMessage: 'O email é obrigatório',
+            ),
+            const SizedBox(height: 14),
+            buildLabel('Aniversário*'),
             TextFormField(
               key: ValueKey(cadastro.nascimento),
               initialValue: dataFormatada,
@@ -115,7 +101,7 @@ class EtapaDadosBasicos extends ConsumerWidget {
               },
             ),
             const SizedBox(height: 14),
-            _buildDropdownField(
+            buildDropdownField(
               label: 'Tipo sanguíneo*',
               value: cadastro.tipoSanguineo,
               items: TipoSanguineo.values,
@@ -128,7 +114,7 @@ class EtapaDadosBasicos extends ConsumerWidget {
               validatorMessage: 'Selecione o tipo sanguíneo',
             ),
             const SizedBox(height: 14),
-            _buildDropdownField(
+            buildDropdownField(
               label: 'Faixa/Grau*',
               value: cadastro.faixa,
               items: Faixa.values,
@@ -141,72 +127,17 @@ class EtapaDadosBasicos extends ConsumerWidget {
               validatorMessage: 'Selecione a faixa',
             ),
             const SizedBox(height: 14),
-            _buildDropdownField(
+            InputField(
+              initialValue: cadastro.idFicha,
+              update: notifier.updateIdFicha,
+              error: cadastro.idFichaError,
               label: 'ID da ficha',
-              value: idFicha,
-              items: ['ID 001', 'ID 002', 'ID 003'],
-              labelBuilder: (String value) => value,
-              onChanged: onIdFichaChanged,
+              hint: 'Digite o id da ficha',
+              validatorMessage: 'O ID da ficha deve ser um número',
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: Color(0xFF08216F),
-          fontWeight: FontWeight.w700,
-          fontSize: 14,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDropdownField<T>({
-    required String label,
-    required T? value,
-    required List<T> items,
-    required String Function(T) labelBuilder,
-    required ValueChanged<T?> onChanged,
-    String? validatorMessage,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildLabel(label),
-        DropdownButtonFormField<T>(
-          value: value,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: const Color(0xFFF5F7FB),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 14,
-            ),
-          ),
-          hint: Text(label.replaceAll('*', '')),
-          items: items.map((T item) {
-            return DropdownMenuItem<T>(
-              value: item,
-              child: Text(labelBuilder(item)),
-            );
-          }).toList(),
-          onChanged: onChanged,
-          validator: validatorMessage != null
-              ? (v) => v == null ? validatorMessage : null
-              : null,
-        ),
-      ],
     );
   }
 }

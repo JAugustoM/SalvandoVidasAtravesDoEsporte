@@ -1,4 +1,6 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'main_imports.dart';
 
@@ -9,7 +11,7 @@ Future<void> main() async {
 
   runApp(
     DevicePreview(
-      enabled: true,
+      enabled: !kReleaseMode,
       builder: (_) => ProviderScope(child: const MyApp()),
     ),
   );
@@ -28,6 +30,12 @@ class MyApp extends ConsumerWidget {
         useMaterial3: true,
       ),
       builder: DevicePreview.appBuilder,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [Locale('pt', 'BR')],
       locale: DevicePreview.locale(context),
     );
   }

@@ -43,7 +43,7 @@ final class CadastroAlunoProvider
   }
 }
 
-String _$cadastroAlunoHash() => r'1d93bca8299df35d4ebd1d1ad93cf434ef8863a0';
+String _$cadastroAlunoHash() => r'98fdd497bfa1ae2af6865d1c98cd4a9035c4e7cc';
 
 abstract class _$CadastroAluno extends $Notifier<CadastroAlunoState> {
   CadastroAlunoState build();

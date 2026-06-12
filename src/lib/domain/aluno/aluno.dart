@@ -83,6 +83,7 @@ class Aluno with AlunoMappable {
   final int? idTurma;
   final bool ativo;
   final bool federado;
+  final int? idFicha;
 
   @MappableClass(hook: HookData())
   final DateTime dataEntrada;
@@ -107,22 +108,9 @@ class Aluno with AlunoMappable {
     this.linkFoto,
     this.idResponsavel,
     this.idTurma,
+    this.idFicha,
   });
 
   static final fromMap = AlunoMapper.fromMap;
   static final fromJson = AlunoMapper.fromJson;
-}
-
-@MappableClass()
-class AlunoHome with AlunoHomeMappable {
-  final int id;
-  final String nome;
-  final int idTurma;
-  bool temEmprestimo = false;
-  int ultimaPresenca = 0;
-
-  AlunoHome({required this.id, required this.nome, required this.idTurma});
-
-  static final fromMap = AlunoHomeMapper.fromMap;
-  static final fromJson = AlunoHomeMapper.fromJson;
 }

@@ -23,14 +23,6 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
   final _formKeyEtapa2 = GlobalKey<FormState>();
   final _formKeyEtapa3 = GlobalKey<FormState>();
   late final _formKeys = [_formKeyEtapa1, _formKeyEtapa2, _formKeyEtapa3];
-  // Controllers - Etapa 1
-  final _nomeController = TextEditingController();
-  final _cpfController = TextEditingController();
-  final _telefoneController = TextEditingController();
-  final _dataNascimentoController = TextEditingController();
-  String? _tipoSanguineo;
-  String? _faixa;
-  String? _idFicha;
   // Controllers - Etapa 2
   final _obsMedicasController = TextEditingController();
   final Map<int, bool?> _respostasMedicas = {
@@ -40,10 +32,6 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
     4: null,
     5: null,
   };
-  // Controllers - Etapa 3
-  final _nomeResponsavelController = TextEditingController();
-  final _cpfResponsavelController = TextEditingController();
-  final _telefoneResponsavelController = TextEditingController();
 
   late CadastroAlunoState cadastro;
   late CadastroAluno notifier;
@@ -53,14 +41,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
   @override
   void dispose() {
     _pageController.dispose();
-    _nomeController.dispose();
-    _cpfController.dispose();
-    _telefoneController.dispose();
-    _dataNascimentoController.dispose();
     _obsMedicasController.dispose();
-    _nomeResponsavelController.dispose();
-    _cpfResponsavelController.dispose();
-    _telefoneResponsavelController.dispose();
     super.dispose();
   }
 
@@ -71,17 +52,15 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
   }
 
   void _avancar() {
-    if (!cadastro.temErros) {
+    if (cadastro.estaValido) {
       if (_etapaAtual == 0 || (_etapaAtual == 1 && cadastro.idade < 18)) {
         _pageController.nextPage(
           duration: const Duration(milliseconds: 300),
           curve: Curves.ease,
         );
       } else if (cadastro.temResponsavel) {
-        print("ok");
         _mostrarDialogConfirmacao();
       }
-      print(cadastro.temResponsavel);
     }
   }
 
@@ -114,13 +93,9 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
               setState(() {
                 _pageController.jumpToPage(0);
                 _etapaAtual = 0;
-                _idFicha = null;
                 notifier.reset();
                 _obsMedicasController.clear();
                 _respostasMedicas.updateAll((key, value) => null);
-                _nomeResponsavelController.clear();
-                _cpfResponsavelController.clear();
-                _telefoneResponsavelController.clear();
               });
             },
           );
@@ -208,22 +183,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                           onPageChanged: _onStepChanged,
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
-                            EtapaDadosBasicos(
-                              formKey: _formKeyEtapa1,
-                              nomeController: _nomeController,
-                              cpfController: _cpfController,
-                              telefoneController: _telefoneController,
-                              dataNascimentoController:
-                                  _dataNascimentoController,
-                              tipoSanguineo: _tipoSanguineo,
-                              faixa: _faixa,
-                              idFicha: _idFicha,
-                              onTipoSanguineoChanged: (v) =>
-                                  setState(() => _tipoSanguineo = v),
-                              onFaixaChanged: (v) => setState(() => _faixa = v),
-                              onIdFichaChanged: (v) =>
-                                  setState(() => _idFicha = v),
-                            ),
+                            EtapaDadosBasicos(formKey: _formKeyEtapa1),
                             EtapaDadosMedicos(
                               formKey: _formKeyEtapa2,
                               respostas: _respostasMedicas,
@@ -231,13 +191,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                                   setState(() => _respostasMedicas[id] = value),
                               obsController: _obsMedicasController,
                             ),
-                            EtapaDadosResponsavel(
-                              formKey: _formKeyEtapa3,
-                              nomeController: _nomeResponsavelController,
-                              cpfController: _cpfResponsavelController,
-                              telefoneController:
-                                  _telefoneResponsavelController,
-                            ),
+                            EtapaDadosResponsavel(formKey: _formKeyEtapa3),
                           ],
                         ),
                       ),

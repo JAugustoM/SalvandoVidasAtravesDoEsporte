@@ -50,7 +50,7 @@ class CadastroAlunoStateMapper extends ClassMapperBase<CadastroAlunoState> {
     'email',
     _$email,
     opt: true,
-    def: 'aluno@gmail.com',
+    def: '',
   );
   static DateTime? _$nascimento(CadastroAlunoState v) => v.nascimento;
   static const Field<CadastroAlunoState, DateTime> _f$nascimento = Field(
@@ -72,6 +72,21 @@ class CadastroAlunoStateMapper extends ClassMapperBase<CadastroAlunoState> {
     'faixa',
     _$faixa,
     opt: true,
+  );
+  static int _$grau(CadastroAlunoState v) => v.grau;
+  static const Field<CadastroAlunoState, int> _f$grau = Field(
+    'grau',
+    _$grau,
+    opt: true,
+    def: 0,
+  );
+  static String _$idFicha(CadastroAlunoState v) => v.idFicha;
+  static const Field<CadastroAlunoState, String> _f$idFicha = Field(
+    'idFicha',
+    _$idFicha,
+    key: r'id_ficha',
+    opt: true,
+    def: '',
   );
   static String _$nomeResponsavel(CadastroAlunoState v) => v.nomeResponsavel;
   static const Field<CadastroAlunoState, String> _f$nomeResponsavel = Field(
@@ -104,7 +119,7 @@ class CadastroAlunoStateMapper extends ClassMapperBase<CadastroAlunoState> {
     _$emailResponsavel,
     key: r'email_responsavel',
     opt: true,
-    def: 'responsavel@gmail.com',
+    def: '',
   );
   static bool _$dirty(CadastroAlunoState v) => v.dirty;
   static const Field<CadastroAlunoState, bool> _f$dirty = Field(
@@ -112,12 +127,6 @@ class CadastroAlunoStateMapper extends ClassMapperBase<CadastroAlunoState> {
     _$dirty,
     opt: true,
     def: false,
-  );
-  static int _$grau(CadastroAlunoState v) => v.grau;
-  static const Field<CadastroAlunoState, int> _f$grau = Field(
-    'grau',
-    _$grau,
-    mode: FieldMode.member,
   );
 
   @override
@@ -129,12 +138,13 @@ class CadastroAlunoStateMapper extends ClassMapperBase<CadastroAlunoState> {
     #nascimento: _f$nascimento,
     #tipoSanguineo: _f$tipoSanguineo,
     #faixa: _f$faixa,
+    #grau: _f$grau,
+    #idFicha: _f$idFicha,
     #nomeResponsavel: _f$nomeResponsavel,
     #cpfResponsavel: _f$cpfResponsavel,
     #contatoResponsavel: _f$contatoResponsavel,
     #emailResponsavel: _f$emailResponsavel,
     #dirty: _f$dirty,
-    #grau: _f$grau,
   };
   @override
   final bool ignoreNull = true;
@@ -148,6 +158,8 @@ class CadastroAlunoStateMapper extends ClassMapperBase<CadastroAlunoState> {
       nascimento: data.dec(_f$nascimento),
       tipoSanguineo: data.dec(_f$tipoSanguineo),
       faixa: data.dec(_f$faixa),
+      grau: data.dec(_f$grau),
+      idFicha: data.dec(_f$idFicha),
       nomeResponsavel: data.dec(_f$nomeResponsavel),
       cpfResponsavel: data.dec(_f$cpfResponsavel),
       contatoResponsavel: data.dec(_f$contatoResponsavel),
@@ -235,6 +247,8 @@ abstract class CadastroAlunoStateCopyWith<
     DateTime? nascimento,
     TipoSanguineo? tipoSanguineo,
     Faixa? faixa,
+    int? grau,
+    String? idFicha,
     String? nomeResponsavel,
     String? cpfResponsavel,
     String? contatoResponsavel,
@@ -263,6 +277,8 @@ class _CadastroAlunoStateCopyWithImpl<$R, $Out>
     Object? nascimento = $none,
     Object? tipoSanguineo = $none,
     Object? faixa = $none,
+    int? grau,
+    String? idFicha,
     String? nomeResponsavel,
     String? cpfResponsavel,
     String? contatoResponsavel,
@@ -277,6 +293,8 @@ class _CadastroAlunoStateCopyWithImpl<$R, $Out>
       if (nascimento != $none) #nascimento: nascimento,
       if (tipoSanguineo != $none) #tipoSanguineo: tipoSanguineo,
       if (faixa != $none) #faixa: faixa,
+      if (grau != null) #grau: grau,
+      if (idFicha != null) #idFicha: idFicha,
       if (nomeResponsavel != null) #nomeResponsavel: nomeResponsavel,
       if (cpfResponsavel != null) #cpfResponsavel: cpfResponsavel,
       if (contatoResponsavel != null) #contatoResponsavel: contatoResponsavel,
@@ -293,6 +311,8 @@ class _CadastroAlunoStateCopyWithImpl<$R, $Out>
     nascimento: data.get(#nascimento, or: $value.nascimento),
     tipoSanguineo: data.get(#tipoSanguineo, or: $value.tipoSanguineo),
     faixa: data.get(#faixa, or: $value.faixa),
+    grau: data.get(#grau, or: $value.grau),
+    idFicha: data.get(#idFicha, or: $value.idFicha),
     nomeResponsavel: data.get(#nomeResponsavel, or: $value.nomeResponsavel),
     cpfResponsavel: data.get(#cpfResponsavel, or: $value.cpfResponsavel),
     contatoResponsavel: data.get(
