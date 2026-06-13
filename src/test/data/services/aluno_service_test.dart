@@ -17,31 +17,29 @@ void main() {
     alunoService = AlunoService(mockSupabaseClient);
   });
 
-  final alunoSimuladoJson = {
-    'id': 1,
-    'nome': 'Lucas Oliveira',
-    'cpf': '123.456.789-00',
-    'email': 'lucas@email.com',
-    'faixa': 'branca', // O dart_mappable lê o nome da enum
-    'grau': 1,
-    'tipo_sanguineo': 'a_positivo', // caseStyle: CaseStyle.snakeCase
-    'nascimento': '2000-01-01T00:00:00.000', // Formato de data comum para o banco
-    'data_entrada': '2026-06-13T00:00:00.000',
-    'ativo': true,
-    'federado': false,
-    'id_turma': 2,
-    
-  };
+  final Map<String, Object> alunoSimuladoJson = <String, Object>{
+  'id': 1,
+  'nome': 'Lucas Oliveira',
+  'cpf': '12345678900', // Sem pontos e traços
+  'email': 'lucas@email.com',
+  'faixa': 'branca', // O dart_mappable lê o nome da enum
+  'grau': 1,
+  'tipo_sanguineo': 'a_positivo', // caseStyle: CaseStyle.snakeCase
+  'nascimento': '2000-01-01', // Apenas YYYY-MM-DD
+  'data_entrada': '2026-06-13', // Apenas YYYY-MM-DD
+  'ativo': true,
+  'federado': false,
+  'id_turma': 2,
+};
 
   final responsavelSimuladoJson = {
-    'id': 1,
-    'nome': 'João Responsável',
-    'cpf': '000.111.222-33',
-    'contato': '(61) 99999-9999',
-    'email': 'joao@email.com',
-    'ativo': true,
-  };
-
+  'id': 1,
+  'nome': 'João Responsável',
+  'cpf': '00011122233', // Sem pontos e traços
+  'contato': '61999999999', // Sem parênteses, espaço ou traço
+  'email': 'joao@email.com',
+  'ativo': true,
+};
   group('AlunoService -', () {
     
     test('deve listar todos os alunos com sucesso', () async {
@@ -148,7 +146,7 @@ void main() {
       when(mockSupabaseClient.from('responsaveis'))
           .thenAnswer((_) => FakeQueryBuilder([]));
 
-      final dadosParaAtualizar = {'contato': '(61) 98888-8888'};
+      final dadosParaAtualizar = {'contato': '61988888888'}; // Sem pontuação também
 
       // 2. ACT & ASSERT
       expect(
