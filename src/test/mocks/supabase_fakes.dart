@@ -12,8 +12,8 @@ class FakeFilterBuilder<T> extends Fake implements PostgrestFilterBuilder<T> {
   @override
   PostgrestFilterBuilder<T> eq(String column, Object value) => this;
 
-  // Se no futuro a gente usar filtros como .neq, .gt, ou .lt no projeto, 
-  // basta adicioná-los aqui seguindo o mesmo padrão do .eq!
+  @override
+  PostgrestTransformBuilder<PostgrestList> select([String columns = '*']) => this as dynamic;
 
   @override
   Future<R> then<R>(
