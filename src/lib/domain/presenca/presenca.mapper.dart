@@ -155,3 +155,180 @@ class _PresencaCopyWithImpl<$R, $Out>
   ) => _PresencaCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
 
+class UltimaPresencaMapper extends ClassMapperBase<UltimaPresenca> {
+  UltimaPresencaMapper._();
+
+  static UltimaPresencaMapper? _instance;
+  static UltimaPresencaMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = UltimaPresencaMapper._());
+    }
+    return _instance!;
+  }
+
+  @override
+  final String id = 'UltimaPresenca';
+
+  static int _$alunoId(UltimaPresenca v) => v.alunoId;
+  static const Field<UltimaPresenca, int> _f$alunoId = Field(
+    'alunoId',
+    _$alunoId,
+    key: r'aluno_id',
+  );
+  static String _$alunoNome(UltimaPresenca v) => v.alunoNome;
+  static const Field<UltimaPresenca, String> _f$alunoNome = Field(
+    'alunoNome',
+    _$alunoNome,
+    key: r'aluno_nome',
+  );
+  static DateTime? _$dataUltimaPresenca(UltimaPresenca v) =>
+      v.dataUltimaPresenca;
+  static const Field<UltimaPresenca, DateTime> _f$dataUltimaPresenca = Field(
+    'dataUltimaPresenca',
+    _$dataUltimaPresenca,
+    key: r'data_ultima_presenca',
+    hook: HookData(),
+  );
+  static int? _$diasDesdeUltimaPresenca(UltimaPresenca v) =>
+      v.diasDesdeUltimaPresenca;
+  static const Field<UltimaPresenca, int> _f$diasDesdeUltimaPresenca = Field(
+    'diasDesdeUltimaPresenca',
+    _$diasDesdeUltimaPresenca,
+    key: r'dias_desde_ultima_presenca',
+  );
+
+  @override
+  final MappableFields<UltimaPresenca> fields = const {
+    #alunoId: _f$alunoId,
+    #alunoNome: _f$alunoNome,
+    #dataUltimaPresenca: _f$dataUltimaPresenca,
+    #diasDesdeUltimaPresenca: _f$diasDesdeUltimaPresenca,
+  };
+  @override
+  final bool ignoreNull = true;
+
+  static UltimaPresenca _instantiate(DecodingData data) {
+    return UltimaPresenca(
+      alunoId: data.dec(_f$alunoId),
+      alunoNome: data.dec(_f$alunoNome),
+      dataUltimaPresenca: data.dec(_f$dataUltimaPresenca),
+      diasDesdeUltimaPresenca: data.dec(_f$diasDesdeUltimaPresenca),
+    );
+  }
+
+  @override
+  final Function instantiate = _instantiate;
+
+  static UltimaPresenca fromMap(Map<String, dynamic> map) {
+    return ensureInitialized().decodeMap<UltimaPresenca>(map);
+  }
+
+  static UltimaPresenca fromJson(String json) {
+    return ensureInitialized().decodeJson<UltimaPresenca>(json);
+  }
+}
+
+mixin UltimaPresencaMappable {
+  String toJson() {
+    return UltimaPresencaMapper.ensureInitialized().encodeJson<UltimaPresenca>(
+      this as UltimaPresenca,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return UltimaPresencaMapper.ensureInitialized().encodeMap<UltimaPresenca>(
+      this as UltimaPresenca,
+    );
+  }
+
+  UltimaPresencaCopyWith<UltimaPresenca, UltimaPresenca, UltimaPresenca>
+  get copyWith => _UltimaPresencaCopyWithImpl<UltimaPresenca, UltimaPresenca>(
+    this as UltimaPresenca,
+    $identity,
+    $identity,
+  );
+  @override
+  String toString() {
+    return UltimaPresencaMapper.ensureInitialized().stringifyValue(
+      this as UltimaPresenca,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return UltimaPresencaMapper.ensureInitialized().equalsValue(
+      this as UltimaPresenca,
+      other,
+    );
+  }
+
+  @override
+  int get hashCode {
+    return UltimaPresencaMapper.ensureInitialized().hashValue(
+      this as UltimaPresenca,
+    );
+  }
+}
+
+extension UltimaPresencaValueCopy<$R, $Out>
+    on ObjectCopyWith<$R, UltimaPresenca, $Out> {
+  UltimaPresencaCopyWith<$R, UltimaPresenca, $Out> get $asUltimaPresenca =>
+      $base.as((v, t, t2) => _UltimaPresencaCopyWithImpl<$R, $Out>(v, t, t2));
+}
+
+abstract class UltimaPresencaCopyWith<$R, $In extends UltimaPresenca, $Out>
+    implements ClassCopyWith<$R, $In, $Out> {
+  $R call({
+    int? alunoId,
+    String? alunoNome,
+    DateTime? dataUltimaPresenca,
+    int? diasDesdeUltimaPresenca,
+  });
+  UltimaPresencaCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
+    Then<$Out2, $R2> t,
+  );
+}
+
+class _UltimaPresencaCopyWithImpl<$R, $Out>
+    extends ClassCopyWithBase<$R, UltimaPresenca, $Out>
+    implements UltimaPresencaCopyWith<$R, UltimaPresenca, $Out> {
+  _UltimaPresencaCopyWithImpl(super.value, super.then, super.then2);
+
+  @override
+  late final ClassMapperBase<UltimaPresenca> $mapper =
+      UltimaPresencaMapper.ensureInitialized();
+  @override
+  $R call({
+    int? alunoId,
+    String? alunoNome,
+    Object? dataUltimaPresenca = $none,
+    Object? diasDesdeUltimaPresenca = $none,
+  }) => $apply(
+    FieldCopyWithData({
+      if (alunoId != null) #alunoId: alunoId,
+      if (alunoNome != null) #alunoNome: alunoNome,
+      if (dataUltimaPresenca != $none) #dataUltimaPresenca: dataUltimaPresenca,
+      if (diasDesdeUltimaPresenca != $none)
+        #diasDesdeUltimaPresenca: diasDesdeUltimaPresenca,
+    }),
+  );
+  @override
+  UltimaPresenca $make(CopyWithData data) => UltimaPresenca(
+    alunoId: data.get(#alunoId, or: $value.alunoId),
+    alunoNome: data.get(#alunoNome, or: $value.alunoNome),
+    dataUltimaPresenca: data.get(
+      #dataUltimaPresenca,
+      or: $value.dataUltimaPresenca,
+    ),
+    diasDesdeUltimaPresenca: data.get(
+      #diasDesdeUltimaPresenca,
+      or: $value.diasDesdeUltimaPresenca,
+    ),
+  );
+
+  @override
+  UltimaPresencaCopyWith<$R2, UltimaPresenca, $Out2> $chain<$R2, $Out2>(
+    Then<$Out2, $R2> t,
+  ) => _UltimaPresencaCopyWithImpl<$R2, $Out2>($value, $cast, t);
+}
+

@@ -24,7 +24,7 @@ final class PresencaServiceProvider
         argument: null,
         retry: null,
         name: r'presencaServiceProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -51,4 +51,4 @@ final class PresencaServiceProvider
   }
 }
 
-String _$presencaServiceHash() => r'2b577c8fbe5365e3b4f633d3c6ab572204c7ae80';
+String _$presencaServiceHash() => r'08ec37f395ca2a3d07b6ff959d4302630c68d7e2';

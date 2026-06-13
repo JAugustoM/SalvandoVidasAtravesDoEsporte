@@ -23,7 +23,7 @@ final class TurmaServiceProvider
         argument: null,
         retry: null,
         name: r'turmaServiceProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -50,4 +50,4 @@ final class TurmaServiceProvider
   }
 }
 
-String _$turmaServiceHash() => r'52ea4a43085c956d7a3357e6bd816bd18b9b3ed9';
+String _$turmaServiceHash() => r'9474053e3e71863b30db36bb58e3be75148ed47a';

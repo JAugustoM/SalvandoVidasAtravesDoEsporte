@@ -131,9 +131,9 @@ class HomePage extends ConsumerWidget {
                                   onRefresh: () =>
                                       ref.refresh(homeStoreProvider.future),
                                   child: ListView.builder(
-                                    itemCount: state.alunos.length,
+                                    itemCount: state.alunosHome.length,
                                     itemBuilder: (_, index) {
-                                      final aluno = state.alunos[index];
+                                      final aluno = state.alunosHome[index];
                                       return Container(
                                         padding: const EdgeInsets.symmetric(
                                           horizontal: 8,
@@ -150,12 +150,12 @@ class HomePage extends ConsumerWidget {
                                           children: [
                                             Expanded(
                                               flex: 4,
-                                              child: Text(aluno.nome),
+                                              child: Text(aluno.$1),
                                             ),
                                             Expanded(
                                               flex: 1,
                                               child: Text(
-                                                '${aluno.idTurma ?? "N/A"}',
+                                                '${aluno.$2 ?? "N/A"}',
                                                 textAlign: TextAlign.center,
                                               ),
                                             ),
@@ -168,10 +168,12 @@ class HomePage extends ConsumerWidget {
                                             ),
                                             Expanded(
                                               flex: 2,
-                                              child: Text(
-                                                '0',
-                                                textAlign: TextAlign.center,
-                                              ),
+                                              child: Text(switch (aluno.$3) {
+                                                null => "Nunca",
+                                                0 => "Hoje",
+                                                1 => "Ontem",
+                                                _ => "Há ${aluno.$3} dias",
+                                              }, textAlign: TextAlign.center),
                                             ),
                                           ],
                                         ),

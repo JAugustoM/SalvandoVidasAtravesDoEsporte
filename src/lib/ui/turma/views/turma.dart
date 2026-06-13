@@ -64,7 +64,7 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
 
   @override
   Widget build(BuildContext context) {
-    final turmas = this.ref.watch(turmasStoreProvider);
+    final turmas = ref.watch(turmasStoreProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -91,30 +91,30 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
           Expanded(
             child: turmas.when(
               data: (listaTurmas) {
-                if (listaTurmas.isEmpty)
-                  return _buildAltState('Nenhuma turma cadastrada');
-
                 return RefreshIndicator(
-                  onRefresh: () => this.ref.refresh(turmasStoreProvider.future),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(top: 16, bottom: 24),
-                    itemCount: listaTurmas.length,
-                    itemBuilder: (context, index) {
-                      final turma = listaTurmas[index];
-                      return TurmaCardWidget(
-                        turma: turma,
-                        onTap: () => _onTapTurma(turma),
-                        onEditar: () => _onEditarTurma(turma),
-                        onExcluir: () => _onExcluirTurma(turma),
-                      );
-                    },
-                  ),
+                  onRefresh: () => ref.refresh(turmasStoreProvider.future),
+                  child: switch (listaTurmas.isNotEmpty) {
+                    false => _buildAltState('Nenhuma turma foi encontrada'),
+                    true => ListView.builder(
+                      padding: const EdgeInsets.only(top: 16, bottom: 24),
+                      itemCount: listaTurmas.length,
+                      itemBuilder: (context, index) {
+                        final turma = listaTurmas[index];
+                        return TurmaCardWidget(
+                          turma: turma,
+                          onTap: () => _onTapTurma(turma),
+                          onEditar: () => _onEditarTurma(turma),
+                          onExcluir: () => _onExcluirTurma(turma),
+                        );
+                      },
+                    ),
+                  },
                 );
               },
               error: (error, stack) {
                 switch (error) {
                   case AppApiException(:final message, :final error):
-                    this.ref.read(loggerProvider).e(message, error: error);
+                    ref.read(loggerProvider).e(message, error: error);
                     return _buildAltState(message);
                   default:
                     return _buildAltState(

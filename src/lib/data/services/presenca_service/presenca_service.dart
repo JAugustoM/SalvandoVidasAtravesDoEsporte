@@ -6,7 +6,7 @@ import 'package:salvando_vidas/domain/presenca/presenca.dart';
 
 part 'presenca_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 PresencaService presencaService(Ref ref) {
   return PresencaService(ref.watch(supabaseClientProvider));
 }
@@ -63,6 +63,13 @@ class PresencaService {
           'p_alunos_presentes': alunos,
         },
       );
+    });
+  }
+
+  Future<List<UltimaPresenca>> obterUltimasPresencas() {
+    return runSupabaseCall(() async {
+      final res = await _supabase.from('dashboard_ultimas_presencas').select();
+      return res.map((data) => UltimaPresenca.fromMap(data)).toList();
     });
   }
 }
