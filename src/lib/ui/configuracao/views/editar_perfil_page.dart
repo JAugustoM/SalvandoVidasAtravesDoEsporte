@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
+import 'package:salvando_vidas/data/stores/update_voluntario/update_voluntario_store.dart';
+import 'package:salvando_vidas/main_imports.dart';
 
 // Importações dos seus componentes customizados
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/action_button.dart';
@@ -16,44 +18,32 @@ class EditarPerfilPage extends ConsumerStatefulWidget {
 
 class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
   final _formKey = GlobalKey<FormState>();
-  
-  // Variáveis de estado com todos os campos do voluntário
-  String _nome = '';
-  String _email = '';
-  String _senha = '';
-  String _telefone = '';
-  String _cpf = '';
-  String _funcao = '';
+  late UpdateVoluntarioState state;
+  late UpdateVoluntario notifier;
+  late Logger logger;
 
-  @override
-  void initState() {
-    super.initState();
-    // Pega os dados atuais do usuário logado para preencher os campos
-    final user = ref.read(userServiceProvider).localUser;
-    
-    if (user != null) {
-      _nome = user.nome;
-      _email = user.email;
-      _telefone = user.telefone; 
-      _cpf = user.cpf;
-      _funcao = user.funcao ?? '';
-    }
-  }
+  void _salvarAlteracoes() async {
+    if (state.podeCadastrar) {
+      try {
+        final diff = state.diff;
+        await ref.read(userServiceProvider).updateUser(diff);
 
-  void _salvarAlteracoes() {
-    if (_formKey.currentState?.validate() ?? false) {
-      // TODO: Passar todas as variáveis (_nome, _email, _telefone, _cpf, _funcao, _senha) 
-      // para o método de atualização do Supabase
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Perfil atualizado com sucesso!')),
-      );
-      context.pop(); // Retorna para a tela de configurações
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Perfil atualizado com sucesso!')),
+        );
+        context.pop(); // Retorna para a tela de configurações
+      } on AppApiException catch (e) {
+        logger.e('', error: e.error);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    state = ref.watch(updateVoluntarioProvider);
+    notifier = ref.read(updateVoluntarioProvider.notifier);
+    logger = ref.read(loggerProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF00BCD4),
@@ -63,7 +53,10 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
           onPressed: () => context.pop(),
         ),
-        title: const Text('Editar Perfil', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Editar Perfil',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -86,7 +79,10 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                     children: [
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 26),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 26,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -103,7 +99,11 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                             const CircleAvatar(
                               radius: 36,
                               backgroundColor: Color(0xFFE2E6FA),
-                              child: Icon(Icons.person, color: Color(0xFF4A55A2), size: 36),
+                              child: Icon(
+                                Icons.person,
+                                color: Color(0xFF4A55A2),
+                                size: 36,
+                              ),
                             ),
                             const SizedBox(height: 16),
                             const Text(
@@ -118,49 +118,53 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                             const Text(
                               'Atualize suas informações pessoais abaixo.',
                               textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.grey, fontSize: 14),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                              ),
                             ),
                             const SizedBox(height: 24),
-                            
+
                             // 1. Nome Completo
                             InputField(
-                              initialValue: _nome,
-                              update: (value) => _nome = value,
-                              error: null,
+                              initialValue: state.nome,
+                              update: notifier.updateNome,
+                              error: state.nomeError,
                               label: 'Nome Completo',
                               hint: 'Digite o nome completo',
                               validatorMessage: 'Informe seu nome',
                             ),
                             const SizedBox(height: 14),
-                            
+
                             // 2. Email
                             InputField(
-                              initialValue: _email,
-                              update: (value) => _email = value,
-                              error: null,
+                              initialValue: state.email,
+                              update: notifier.updateEmail,
+                              error: state.emailError,
                               label: 'E-mail',
                               hint: 'Digite o email do voluntário',
                               keyboardType: TextInputType.emailAddress,
                               validatorMessage: 'Informe seu e-mail',
                             ),
                             const SizedBox(height: 14),
-                            
+
                             // 3. Senha (Opcional na edição)
                             InputField(
-                              initialValue: _senha,
-                              update: (value) => _senha = value,
+                              initialValue: state.senha,
+                              update: notifier.updateSenha,
                               error: null,
                               label: 'Nova Senha (opcional)',
-                              hint: 'Digite a senha do voluntário (deixe em branco para manter)',
-                              validatorMessage: '', 
+                              hint:
+                                  'Digite a senha do voluntário (deixe em branco para manter)',
+                              validatorMessage: '',
                             ),
                             const SizedBox(height: 14),
 
                             // 4. Telefone
                             InputField(
-                              initialValue: _telefone,
-                              update: (value) => _telefone = value,
-                              error: null,
+                              initialValue: state.telefone,
+                              update: notifier.updateTelefone,
+                              error: state.telefoneError,
                               label: 'Telefone',
                               hint: 'Digite o telefone de contato',
                               keyboardType: TextInputType.phone,
@@ -170,9 +174,9 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
 
                             // 5. CPF
                             InputField(
-                              initialValue: _cpf,
-                              update: (value) => _cpf = value,
-                              error: null,
+                              initialValue: state.cpf,
+                              update: notifier.updateCpf,
+                              error: state.cpfError,
                               label: 'CPF',
                               hint: 'Digite o CPF do voluntário',
                               keyboardType: TextInputType.number,
@@ -182,16 +186,16 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
 
                             // 6. Função
                             InputField(
-                              initialValue: _funcao,
-                              update: (value) => _funcao = value,
-                              error: null,
+                              initialValue: state.funcao,
+                              update: notifier.updateFuncao,
+                              error: state.funcaoError,
                               label: 'Função',
                               hint: 'Ex.: professor, monitor, apoio',
                               validatorMessage: 'Informe sua função',
                             ),
-                            
+
                             const SizedBox(height: 24),
-                            
+
                             ActionButton(
                               label: 'Salvar Alterações',
                               onPressed: _salvarAlteracoes,

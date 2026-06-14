@@ -60,6 +60,13 @@ class CadastroVoluntarioStateMapper
     opt: true,
     def: '',
   );
+  static String _$funcao(CadastroVoluntarioState v) => v.funcao;
+  static const Field<CadastroVoluntarioState, String> _f$funcao = Field(
+    'funcao',
+    _$funcao,
+    opt: true,
+    def: '',
+  );
   static bool _$dirty(CadastroVoluntarioState v) => v.dirty;
   static const Field<CadastroVoluntarioState, bool> _f$dirty = Field(
     'dirty',
@@ -75,6 +82,7 @@ class CadastroVoluntarioStateMapper
     #telefone: _f$telefone,
     #senha: _f$senha,
     #cpf: _f$cpf,
+    #funcao: _f$funcao,
     #dirty: _f$dirty,
   };
   @override
@@ -87,6 +95,7 @@ class CadastroVoluntarioStateMapper
       telefone: data.dec(_f$telefone),
       senha: data.dec(_f$senha),
       cpf: data.dec(_f$cpf),
+      funcao: data.dec(_f$funcao),
       dirty: data.dec(_f$dirty),
     );
   }
@@ -167,6 +176,7 @@ abstract class CadastroVoluntarioStateCopyWith<
     String? telefone,
     String? senha,
     String? cpf,
+    String? funcao,
     bool? dirty,
   });
   CadastroVoluntarioStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -190,6 +200,7 @@ class _CadastroVoluntarioStateCopyWithImpl<$R, $Out>
     String? telefone,
     String? senha,
     String? cpf,
+    String? funcao,
     bool? dirty,
   }) => $apply(
     FieldCopyWithData({
@@ -198,6 +209,7 @@ class _CadastroVoluntarioStateCopyWithImpl<$R, $Out>
       if (telefone != null) #telefone: telefone,
       if (senha != null) #senha: senha,
       if (cpf != null) #cpf: cpf,
+      if (funcao != null) #funcao: funcao,
       if (dirty != null) #dirty: dirty,
     }),
   );
@@ -208,6 +220,7 @@ class _CadastroVoluntarioStateCopyWithImpl<$R, $Out>
     telefone: data.get(#telefone, or: $value.telefone),
     senha: data.get(#senha, or: $value.senha),
     cpf: data.get(#cpf, or: $value.cpf),
+    funcao: data.get(#funcao, or: $value.funcao),
     dirty: data.get(#dirty, or: $value.dirty),
   );
 

@@ -90,12 +90,8 @@ class LocalUserMapper extends ClassMapperBase<LocalUser> {
     _$senha,
     opt: true,
   );
-  static String? _$funcao(LocalUser v) => v.funcao;
-  static const Field<LocalUser, String> _f$funcao = Field(
-    'funcao',
-    _$funcao,
-    opt: true,
-  );
+  static String _$funcao(LocalUser v) => v.funcao;
+  static const Field<LocalUser, String> _f$funcao = Field('funcao', _$funcao);
 
   @override
   final MappableFields<LocalUser> fields = const {
@@ -213,7 +209,7 @@ class _LocalUserCopyWithImpl<$R, $Out>
     String? cpf,
     String? email,
     Object? senha = $none,
-    Object? funcao = $none,
+    String? funcao,
   }) => $apply(
     FieldCopyWithData({
       if (id != $none) #id: id,
@@ -223,7 +219,7 @@ class _LocalUserCopyWithImpl<$R, $Out>
       if (cpf != null) #cpf: cpf,
       if (email != null) #email: email,
       if (senha != $none) #senha: senha,
-      if (funcao != $none) #funcao: funcao,
+      if (funcao != null) #funcao: funcao,
     }),
   );
   @override

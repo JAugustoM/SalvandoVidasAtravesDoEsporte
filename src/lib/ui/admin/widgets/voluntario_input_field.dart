@@ -44,7 +44,7 @@ class CadastroTextField extends ConsumerWidget {
         InputTypes.senha => (senha) => notifier.updateSenha(senha),
         InputTypes.telefone => (telefone) => notifier.updateTelefone(telefone),
         InputTypes.cpf => (cpf) => notifier.updateCpf(cpf),
-        InputTypes.funcao => null,
+        InputTypes.funcao => (funcao) => notifier.updateFuncao(funcao),
       },
       style: const TextStyle(
         color: Color(0xFF24304D),
@@ -65,7 +65,7 @@ class CadastroTextField extends ConsumerWidget {
           InputTypes.senha => cadastro.senhaError,
           InputTypes.telefone => cadastro.telefoneError,
           InputTypes.cpf => cadastro.cpfError,
-          InputTypes.funcao => null,
+          InputTypes.funcao => cadastro.funcaoError,
         },
       ),
     );

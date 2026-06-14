@@ -1,13 +1,14 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:salvando_vidas/data/services/user_service/user_service.dart';
 import 'package:salvando_vidas/data/validators.dart';
-import 'package:salvando_vidas/domain/local_user/local_user.dart';
 
-part 'cadastro_voluntario_form.g.dart';
-part 'cadastro_voluntario_form.mapper.dart';
+part 'update_voluntario_store.g.dart';
+part 'update_voluntario_store.mapper.dart';
 
 @MappableClass()
-class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
+class UpdateVoluntarioState with UpdateVoluntarioStateMappable {
+  final String id;
   final String nome;
   final String email;
   final String telefone;
@@ -16,7 +17,8 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
   final String funcao;
   final bool dirty;
 
-  CadastroVoluntarioState({
+  UpdateVoluntarioState({
+    required this.id,
     this.nome = '',
     this.email = '',
     this.telefone = '',
@@ -41,11 +43,6 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     return eTelefone(telefone) ? null : 'Não é um telefone válido';
   }
 
-  String? get senhaError {
-    if (!dirty && senha.isEmpty) return null;
-    return senha.isNotEmpty ? null : 'Não pode estar em branco';
-  }
-
   String? get cpfError {
     if (!dirty && cpf.isEmpty) return null;
     return eCPF(cpf) ? null : 'Não é um CPF válido';
@@ -60,7 +57,6 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
       nomeError != null ||
       emailError != null ||
       telefoneError != null ||
-      senhaError != null ||
       cpfError != null ||
       funcaoError != null;
 
@@ -68,27 +64,35 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
       nome.isNotEmpty &&
       email.isNotEmpty &&
       telefone.isNotEmpty &&
-      senha.isNotEmpty &&
       cpf.isNotEmpty &&
       funcao.isNotEmpty &&
       !temErros;
 
-  LocalUser get voluntario => LocalUser(
-    role: Role.voluntario,
-    nome: nome,
-    telefone: telefone,
-    cpf: cpf,
-    email: email,
-    senha: senha,
-    funcao: funcao,
-  );
+  Map<String, dynamic> get diff => {
+    'p_id': id,
+    'p_email': email.isEmpty ? null : email,
+    'p_senha': senha.isEmpty ? null : senha,
+    'p_nome': nome.isEmpty ? null : nome,
+    'p_telefone': telefone.isEmpty ? null : telefone,
+    'p_cpf': cpf.isEmpty ? null : cpf,
+    'p_funcao': funcao.isEmpty ? null : funcao,
+  };
 }
 
 @riverpod
-class CadastroVoluntario extends _$CadastroVoluntario {
+class UpdateVoluntario extends _$UpdateVoluntario {
   @override
-  CadastroVoluntarioState build() {
-    return CadastroVoluntarioState();
+  UpdateVoluntarioState build() {
+    final user = ref.read(userServiceProvider).localUser!;
+
+    return UpdateVoluntarioState(
+      id: user.id!,
+      nome: user.nome,
+      email: user.email,
+      telefone: user.telefone,
+      cpf: user.cpf,
+      funcao: user.funcao,
+    );
   }
 
   void updateNome(String value) {

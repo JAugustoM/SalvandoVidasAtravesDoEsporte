@@ -15,7 +15,13 @@ class FakeAuth extends Fake implements GoTrueClient {
 
   void setLogado(bool logado) {
     _currentUser = logado
-        ? User(id: 'user-123', appMetadata: {}, userMetadata: {}, aud: 'auth', createdAt: '')
+        ? User(
+            id: 'user-123',
+            appMetadata: {},
+            userMetadata: {},
+            aud: 'auth',
+            createdAt: '',
+          )
         : null;
   }
 
@@ -26,7 +32,13 @@ class FakeAuth extends Fake implements GoTrueClient {
   dynamic noSuchMethod(Invocation invocation) {
     if (invocation.memberName == #signInWithPassword) {
       if (simularErro) throw Exception('Credenciais inválidas');
-      final user = User(id: 'user-123', appMetadata: {}, userMetadata: {}, aud: 'auth', createdAt: '');
+      final user = User(
+        id: 'user-123',
+        appMetadata: {},
+        userMetadata: {},
+        aud: 'auth',
+        createdAt: '',
+      );
       return Future.value(AuthResponse(user: user));
     }
     if (invocation.memberName == #signOut) {
@@ -45,9 +57,9 @@ void main() {
   setUp(() {
     mockSupabaseClient = MockSupabaseClient();
     fakeAuth = FakeAuth();
-    
+
     when(mockSupabaseClient.auth).thenReturn(fakeAuth);
-    
+
     userService = UserService(mockSupabaseClient);
   });
 
@@ -59,41 +71,51 @@ void main() {
     'telefone': '61999999999',
     'cpf': '12345678900',
     'email': 'teste@teste.com',
+    'funcao': 'Teste',
   };
 
   group('UserService -', () {
-    test('deve realizar login com sucesso e carregar o usuario local', () async {
-      // 1. ARRANGE
-      fakeAuth.simularErro = false;
-      when(mockSupabaseClient.from('users'))
-          .thenAnswer((_) => FakeQueryBuilder([localUserSimuladoJson]));
+    test(
+      'deve realizar login com sucesso e carregar o usuario local',
+      () async {
+        // 1. ARRANGE
+        fakeAuth.simularErro = false;
+        when(
+          mockSupabaseClient.from('users'),
+        ).thenAnswer((_) => FakeQueryBuilder([localUserSimuladoJson]));
 
-      // 2. ACT
-      final resultado = await userService.login('teste@teste.com', 'senha');
+        // 2. ACT
+        final resultado = await userService.login('teste@teste.com', 'senha');
 
-      // 3. ASSERT
-      expect(resultado, isTrue);
-      expect(userService.localUser, isNotNull);
-      expect(userService.localUser!.nome, 'João Silva');
-      expect(userService.isAdmin, isTrue);
-    });
+        // 3. ASSERT
+        expect(resultado, isTrue);
+        expect(userService.localUser, isNotNull);
+        expect(userService.localUser!.nome, 'João Silva');
+        expect(userService.isAdmin, isTrue);
+      },
+    );
 
-    test('deve lancar erro ao tentar fazer login com credenciais invalidas', () async {
-      // 1. ARRANGE
-      fakeAuth.simularErro = true;
+    test(
+      'deve lancar erro ao tentar fazer login com credenciais invalidas',
+      () async {
+        // 1. ARRANGE
+        fakeAuth.simularErro = true;
 
-      // 2. ACT & ASSERT
-      expect(
-        () async => await userService.login('teste@teste.com', 'senha-errada'),
-        throwsA(isA<Exception>()),
-      );
-    });
+        // 2. ACT & ASSERT
+        expect(
+          () async =>
+              await userService.login('teste@teste.com', 'senha-errada'),
+          throwsA(isA<Exception>()),
+        );
+      },
+    );
 
     test('deve identificar usuario ja logado no sistema', () async {
       // 1. ARRANGE
       fakeAuth.setLogado(true);
-      when(mockSupabaseClient.from('users'))
-          .thenAnswer((_) => FakeQueryBuilder([localUserSimuladoJson]));
+      when(
+        mockSupabaseClient.from('users'),
+      ).thenAnswer((_) => FakeQueryBuilder([localUserSimuladoJson]));
 
       // 2. ACT
       final resultado = await userService.isLoggedIn();
@@ -129,8 +151,9 @@ void main() {
 
     test('deve listar usuarios com sucesso', () async {
       // 1. ARRANGE
-      when(mockSupabaseClient.from('users'))
-          .thenAnswer((_) => FakeQueryBuilder([localUserSimuladoJson]));
+      when(
+        mockSupabaseClient.from('users'),
+      ).thenAnswer((_) => FakeQueryBuilder([localUserSimuladoJson]));
 
       // 2. ACT
       final usuarios = await userService.listUsers();
@@ -143,8 +166,9 @@ void main() {
 
     test('deve registrar usuario com sucesso via rpc', () async {
       // 1. ARRANGE
-      when(mockSupabaseClient.rpc(any, params: anyNamed('params')))
-          .thenAnswer((_) => FakeFilterBuilder<dynamic>([]));
+      when(
+        mockSupabaseClient.rpc(any, params: anyNamed('params')),
+      ).thenAnswer((_) => FakeFilterBuilder<dynamic>([]));
 
       final novoUsuario = LocalUser.fromMap(localUserSimuladoJson);
 
@@ -157,20 +181,25 @@ void main() {
 
     test('deve atualizar usuario com sucesso via rpc', () async {
       // 1. ARRANGE
-      when(mockSupabaseClient.rpc(any, params: anyNamed('params')))
-          .thenAnswer((_) => FakeFilterBuilder<dynamic>([]));
+      when(
+        mockSupabaseClient.rpc(any, params: anyNamed('params')),
+      ).thenAnswer((_) => FakeFilterBuilder<dynamic>([]));
 
       // 2. ACT & ASSERT
       expect(
-        () async => await userService.updateUser(id: 'user-123', nome: 'Nome Novo'),
+        () async => await userService.updateUser({
+          'id': 'user-123',
+          'nome': 'Nome Novo',
+        }),
         returnsNormally,
       );
     });
 
     test('deve deletar usuario com sucesso via rpc', () async {
       // 1. ARRANGE
-      when(mockSupabaseClient.rpc(any, params: anyNamed('params')))
-          .thenAnswer((_) => FakeFilterBuilder<dynamic>([]));
+      when(
+        mockSupabaseClient.rpc(any, params: anyNamed('params')),
+      ).thenAnswer((_) => FakeFilterBuilder<dynamic>([]));
 
       // 2. ACT & ASSERT
       expect(

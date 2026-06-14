@@ -44,7 +44,7 @@ final class CadastroVoluntarioProvider
 }
 
 String _$cadastroVoluntarioHash() =>
-    r'7b48cec75294528c476ca7ad1b2bfd838ffee9b8';
+    r'6ddb1296754c42ff0531b573c414f5a36c8c6ae0';
 
 abstract class _$CadastroVoluntario extends $Notifier<CadastroVoluntarioState> {
   CadastroVoluntarioState build();
