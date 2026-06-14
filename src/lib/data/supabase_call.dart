@@ -14,9 +14,9 @@ class AppApiException implements Exception {
 }
 
 extension FutureTimeout<T> on Future<T> {
-  Future<T> withDefaultTimeout({int seconds = 5}) {
+  Future<T> withDefaultTimeout({int seconds = 2, int milliseconds = 500}) {
     return timeout(
-      Duration(seconds: seconds),
+      Duration(seconds: seconds, milliseconds: milliseconds),
       onTimeout: () {
         throw AppApiException('A operação demorou demais para responder.');
       },

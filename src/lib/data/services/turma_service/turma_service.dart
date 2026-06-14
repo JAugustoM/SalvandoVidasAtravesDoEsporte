@@ -6,7 +6,7 @@ import '../global/global_service.dart';
 
 part 'turma_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 TurmaService turmaService(Ref ref) {
   return TurmaService(ref.watch(supabaseClientProvider));
 }

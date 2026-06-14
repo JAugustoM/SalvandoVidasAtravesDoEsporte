@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:salvando_vidas/ui/global/widgets/label.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
@@ -10,6 +12,7 @@ class InputField extends StatelessWidget {
     required this.validatorMessage,
     this.keyboardType,
     this.fillColor,
+    this.inputFormatters,
     super.key,
   });
 
@@ -22,25 +25,20 @@ class InputField extends StatelessWidget {
   final String hint;
   final String validatorMessage;
   final TextInputType? keyboardType;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: const TextStyle(
-            color: Color(0xFF10A9D0),
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        buildLabel(label),
         const SizedBox(height: 6),
         TextFormField(
           onChanged: (value) => update(value),
           initialValue: initialValue,
           keyboardType: keyboardType,
+          inputFormatters: inputFormatters,
           style: const TextStyle(
             color: Color(0xFF24304D),
             fontWeight: FontWeight.w600,
