@@ -14,6 +14,7 @@ class LocalUser with LocalUserMappable {
   final String cpf;
   final String email;
   final String? senha;
+  final String? funcao; 
 
   const LocalUser({
     this.id,
@@ -23,6 +24,7 @@ class LocalUser with LocalUserMappable {
     required this.cpf,
     required this.email,
     this.senha,
+    this.funcao, 
   });
 
   static final fromMap = LocalUserMapper.fromMap;

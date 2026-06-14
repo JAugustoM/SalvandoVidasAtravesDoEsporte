@@ -58,7 +58,8 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
                     IconButton(
                       // EDITAR PERFIL
                       onPressed: () {
-                        /* futura tela editar perfil */
+                        // Navega para a tela de edição
+                        context.push(Routes.editarPerfil);
                       },
                       icon: const Icon(Icons.edit),
                     ),
