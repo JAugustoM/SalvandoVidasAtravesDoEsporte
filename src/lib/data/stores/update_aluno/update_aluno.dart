@@ -25,7 +25,12 @@ class UpdateAlunoState with UpdateAlunoStateMappable {
   final String contatoResponsavel;
   final String emailResponsavel;
 
+  final Aluno alunoOriginal;
+  final Responsavel? responsavelOriginal;
+
   UpdateAlunoState({
+    required this.alunoOriginal,
+    required this.responsavelOriginal,
     this.nome = '',
     this.cpf = '',
     this.contato = '',
@@ -148,6 +153,51 @@ class UpdateAlunoState with UpdateAlunoStateMappable {
     idFicha: int.tryParse(idFicha),
   );
 
+  Map<String, dynamic> diffAluno(Aluno aluno) {
+    final Map<String, dynamic> diff = {};
+
+    if (alunoOriginal.nome != aluno.nome) {
+      diff['nome'] = aluno.nome;
+    }
+
+    if (alunoOriginal.cpf != aluno.cpf) {
+      diff['cpf'] = aluno.cpf;
+    }
+
+    if (alunoOriginal.contato != aluno.contato) {
+      diff['contato'] = aluno.contato;
+    }
+
+    if (alunoOriginal.email != aluno.email) {
+      diff['email'] = aluno.email;
+    }
+
+    if (alunoOriginal.nascimento != aluno.nascimento) {
+      diff['nascimento'] = aluno.nascimento;
+    }
+
+    if (alunoOriginal.tipoSanguineo != aluno.tipoSanguineo) {
+      diff['tipo_sanguineo'] = aluno.tipoSanguineo;
+    }
+
+    if (alunoOriginal.faixa != aluno.faixa) {
+      diff['faixa'] = aluno.faixa;
+    }
+
+    if (alunoOriginal.grau != aluno.grau) {
+      diff['grau'] = aluno.grau;
+    }
+
+    if (alunoOriginal.idFicha != aluno.idFicha) {
+      diff['id_ficha'] = aluno.idFicha;
+    }
+
+    if (alunoOriginal.idResponsavel != aluno.idResponsavel) {
+      diff['id_responsavel'] = aluno.idResponsavel;
+    }
+    return diff;
+  }
+
   Responsavel get responsavel => Responsavel(
     nome: nomeResponsavel,
     cpf: cpfResponsavel,
@@ -162,6 +212,8 @@ class UpdateAluno extends _$UpdateAluno {
   @override
   UpdateAlunoState build(Aluno aluno, Responsavel? responsavel) {
     return UpdateAlunoState(
+      alunoOriginal: aluno,
+      responsavelOriginal: responsavel,
       nome: aluno.nome,
       cpf: aluno.cpf,
       contato: aluno.contato ?? '',

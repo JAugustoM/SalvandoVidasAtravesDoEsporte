@@ -15,6 +15,8 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
   static UpdateAlunoStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = UpdateAlunoStateMapper._());
+      AlunoMapper.ensureInitialized();
+      ResponsavelMapper.ensureInitialized();
       TipoSanguineoMapper.ensureInitialized();
       FaixaMapper.ensureInitialized();
     }
@@ -24,6 +26,20 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
   @override
   final String id = 'UpdateAlunoState';
 
+  static Aluno _$alunoOriginal(UpdateAlunoState v) => v.alunoOriginal;
+  static const Field<UpdateAlunoState, Aluno> _f$alunoOriginal = Field(
+    'alunoOriginal',
+    _$alunoOriginal,
+    key: r'aluno_original',
+  );
+  static Responsavel? _$responsavelOriginal(UpdateAlunoState v) =>
+      v.responsavelOriginal;
+  static const Field<UpdateAlunoState, Responsavel> _f$responsavelOriginal =
+      Field(
+        'responsavelOriginal',
+        _$responsavelOriginal,
+        key: r'responsavel_original',
+      );
   static String _$nome(UpdateAlunoState v) => v.nome;
   static const Field<UpdateAlunoState, String> _f$nome = Field(
     'nome',
@@ -129,6 +145,8 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
 
   @override
   final MappableFields<UpdateAlunoState> fields = const {
+    #alunoOriginal: _f$alunoOriginal,
+    #responsavelOriginal: _f$responsavelOriginal,
     #nome: _f$nome,
     #cpf: _f$cpf,
     #contato: _f$contato,
@@ -149,6 +167,8 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
 
   static UpdateAlunoState _instantiate(DecodingData data) {
     return UpdateAlunoState(
+      alunoOriginal: data.dec(_f$alunoOriginal),
+      responsavelOriginal: data.dec(_f$responsavelOriginal),
       nome: data.dec(_f$nome),
       cpf: data.dec(_f$cpf),
       contato: data.dec(_f$contato),
@@ -228,7 +248,11 @@ extension UpdateAlunoStateValueCopy<$R, $Out>
 
 abstract class UpdateAlunoStateCopyWith<$R, $In extends UpdateAlunoState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  AlunoCopyWith<$R, Aluno, Aluno> get alunoOriginal;
+  ResponsavelCopyWith<$R, Responsavel, Responsavel>? get responsavelOriginal;
   $R call({
+    Aluno? alunoOriginal,
+    Responsavel? responsavelOriginal,
     String? nome,
     String? cpf,
     String? contato,
@@ -258,7 +282,17 @@ class _UpdateAlunoStateCopyWithImpl<$R, $Out>
   late final ClassMapperBase<UpdateAlunoState> $mapper =
       UpdateAlunoStateMapper.ensureInitialized();
   @override
+  AlunoCopyWith<$R, Aluno, Aluno> get alunoOriginal =>
+      $value.alunoOriginal.copyWith.$chain((v) => call(alunoOriginal: v));
+  @override
+  ResponsavelCopyWith<$R, Responsavel, Responsavel>? get responsavelOriginal =>
+      $value.responsavelOriginal?.copyWith.$chain(
+        (v) => call(responsavelOriginal: v),
+      );
+  @override
   $R call({
+    Aluno? alunoOriginal,
+    Object? responsavelOriginal = $none,
     String? nome,
     String? cpf,
     String? contato,
@@ -275,6 +309,9 @@ class _UpdateAlunoStateCopyWithImpl<$R, $Out>
     bool? dirty,
   }) => $apply(
     FieldCopyWithData({
+      if (alunoOriginal != null) #alunoOriginal: alunoOriginal,
+      if (responsavelOriginal != $none)
+        #responsavelOriginal: responsavelOriginal,
       if (nome != null) #nome: nome,
       if (cpf != null) #cpf: cpf,
       if (contato != null) #contato: contato,
@@ -293,6 +330,11 @@ class _UpdateAlunoStateCopyWithImpl<$R, $Out>
   );
   @override
   UpdateAlunoState $make(CopyWithData data) => UpdateAlunoState(
+    alunoOriginal: data.get(#alunoOriginal, or: $value.alunoOriginal),
+    responsavelOriginal: data.get(
+      #responsavelOriginal,
+      or: $value.responsavelOriginal,
+    ),
     nome: data.get(#nome, or: $value.nome),
     cpf: data.get(#cpf, or: $value.cpf),
     contato: data.get(#contato, or: $value.contato),
