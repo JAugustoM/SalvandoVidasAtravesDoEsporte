@@ -61,6 +61,8 @@ jobs:
 
       - name: Move projeto para o disco C
         run: Move-Item -Path src -Destination C:\src
+      - name: Move projeto para o disco C
+        run: Move-Item -Path src -Destination C:\src
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
@@ -69,17 +71,21 @@ jobs:
 
       - name: Install dependencies
         working-directory: C:\src
+        working-directory: C:\src
         run: flutter pub get
 
       - name: Build Windows
+        working-directory: C:\src
         working-directory: C:\src
         run: flutter build windows --release
 
       - name: Build ISS script
         working-directory: C:\src
+        working-directory: C:\src
         run: dart run inno_bundle --no-app --no-installer
 
       - name: Output config into GitHub output
+        working-directory: C:\src
         working-directory: C:\src
         id: envs
         shell: bash
@@ -93,6 +99,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: windows.exe
+          path: C:\src\build\windows\x64\installer\Release\${{ steps.envs.outputs.APP_NAME_CAMEL_CASE }}-x86_64-${{ steps.envs.outputs.APP_VERSION }}-Installer.exe
           path: C:\src\build\windows\x64\installer\Release\${{ steps.envs.outputs.APP_NAME_CAMEL_CASE }}-x86_64-${{ steps.envs.outputs.APP_VERSION }}-Installer.exe
 
   create-release:
