@@ -195,13 +195,13 @@ class _PesquisaAlunoStateCopyWithImpl<$R, $Out>
     List<Aluno>? alunos,
     List<Aluno>? alunosFiltrados,
     Map<int, Responsavel>? responsaveis,
-    Object? mostrarInativos = $none,
+    bool? mostrarInativos,
   }) => $apply(
     FieldCopyWithData({
       if (alunos != null) #alunos: alunos,
       if (alunosFiltrados != null) #alunosFiltrados: alunosFiltrados,
       if (responsaveis != null) #responsaveis: responsaveis,
-      if (mostrarInativos != $none) #mostrarInativos: mostrarInativos,
+      if (mostrarInativos != null) #mostrarInativos: mostrarInativos,
     }),
   );
   @override
@@ -217,3 +217,4 @@ class _PesquisaAlunoStateCopyWithImpl<$R, $Out>
     Then<$Out2, $R2> t,
   ) => _PesquisaAlunoStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
+

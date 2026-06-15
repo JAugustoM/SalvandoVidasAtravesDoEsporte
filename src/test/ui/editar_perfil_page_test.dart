@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
+import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/configuracao/views/editar_perfil_page.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
@@ -11,18 +12,19 @@ import 'package:salvando_vidas/domain/local_user/local_user.dart';
 class FakeUserService implements UserService {
   @override
   LocalUser? get localUser => const LocalUser(
-        id: '1234-uuid-teste', // <--- FALTAVA ISSO PARA A TELA NÃO QUEBRAR
-        nome: 'Giovani',
-        email: 'g@g.com',
-        telefone: '123',
-        cpf: '123',
-        role: Role.voluntario,
-        funcao: 'Professor',
-      );
-      
+    id: '1234-uuid-teste', // <--- FALTAVA ISSO PARA A TELA NÃO QUEBRAR
+    nome: 'Giovani',
+    email: 'g@g.com',
+    telefone: '123',
+    cpf: '123',
+    role: Role.voluntario,
+    funcao: 'Professor',
+    faixa: Faixa.preta,
+  );
+
   @override
   Future<bool> isLoggedIn() async => true;
-  
+
   @override
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
@@ -34,7 +36,9 @@ class FakeLogger extends Logger {
 }
 
 void main() {
-  testWidgets('Deve exibir erro de validacao ao tentar salvar com nome vazio', (WidgetTester tester) async {
+  testWidgets('Deve exibir erro de validacao ao tentar salvar com nome vazio', (
+    WidgetTester tester,
+  ) async {
     tester.binding.window.physicalSizeTestValue = const Size(1080, 2340);
     tester.binding.window.devicePixelRatioTestValue = 1.0;
     addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
@@ -45,9 +49,7 @@ void main() {
           userServiceProvider.overrideWithValue(FakeUserService()),
           loggerProvider.overrideWithValue(FakeLogger()),
         ],
-        child: const MaterialApp(
-          home: EditarPerfilPage(),
-        ),
+        child: const MaterialApp(home: EditarPerfilPage()),
       ),
     );
 
@@ -55,7 +57,11 @@ void main() {
 
     // Procura qualquer componente da tela que permita edição de texto
     final camposInput = find.byType(EditableText);
-    expect(camposInput, findsWidgets, reason: 'A tela não renderizou os campos.');
+    expect(
+      camposInput,
+      findsWidgets,
+      reason: 'A tela não renderizou os campos.',
+    );
 
     // Apaga o campo de nome
     await tester.enterText(camposInput.first, '');

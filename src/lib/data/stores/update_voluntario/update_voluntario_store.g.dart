@@ -43,7 +43,7 @@ final class UpdateVoluntarioProvider
   }
 }
 
-String _$updateVoluntarioHash() => r'c7188310f7273bb83e94c418453b510d6ff64be7';
+String _$updateVoluntarioHash() => r'de42dbe4247a8690294638e53ba2466a16325412';
 
 abstract class _$UpdateVoluntario extends $Notifier<UpdateVoluntarioState> {
   UpdateVoluntarioState build();

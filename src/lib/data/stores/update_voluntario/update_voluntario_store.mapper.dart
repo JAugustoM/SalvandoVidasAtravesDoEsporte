@@ -16,6 +16,7 @@ class UpdateVoluntarioStateMapper
   static UpdateVoluntarioStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = UpdateVoluntarioStateMapper._());
+      FaixaMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -67,6 +68,13 @@ class UpdateVoluntarioStateMapper
     opt: true,
     def: '',
   );
+  static Faixa _$faixa(UpdateVoluntarioState v) => v.faixa;
+  static const Field<UpdateVoluntarioState, Faixa> _f$faixa = Field(
+    'faixa',
+    _$faixa,
+    opt: true,
+    def: Faixa.branca,
+  );
   static bool _$dirty(UpdateVoluntarioState v) => v.dirty;
   static const Field<UpdateVoluntarioState, bool> _f$dirty = Field(
     'dirty',
@@ -84,6 +92,7 @@ class UpdateVoluntarioStateMapper
     #senha: _f$senha,
     #cpf: _f$cpf,
     #funcao: _f$funcao,
+    #faixa: _f$faixa,
     #dirty: _f$dirty,
   };
   @override
@@ -98,6 +107,7 @@ class UpdateVoluntarioStateMapper
       senha: data.dec(_f$senha),
       cpf: data.dec(_f$cpf),
       funcao: data.dec(_f$funcao),
+      faixa: data.dec(_f$faixa),
       dirty: data.dec(_f$dirty),
     );
   }
@@ -180,6 +190,7 @@ abstract class UpdateVoluntarioStateCopyWith<
     String? senha,
     String? cpf,
     String? funcao,
+    Faixa? faixa,
     bool? dirty,
   });
   UpdateVoluntarioStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
@@ -204,6 +215,7 @@ class _UpdateVoluntarioStateCopyWithImpl<$R, $Out>
     String? senha,
     String? cpf,
     String? funcao,
+    Faixa? faixa,
     bool? dirty,
   }) => $apply(
     FieldCopyWithData({
@@ -214,6 +226,7 @@ class _UpdateVoluntarioStateCopyWithImpl<$R, $Out>
       if (senha != null) #senha: senha,
       if (cpf != null) #cpf: cpf,
       if (funcao != null) #funcao: funcao,
+      if (faixa != null) #faixa: faixa,
       if (dirty != null) #dirty: dirty,
     }),
   );
@@ -226,6 +239,7 @@ class _UpdateVoluntarioStateCopyWithImpl<$R, $Out>
     senha: data.get(#senha, or: $value.senha),
     cpf: data.get(#cpf, or: $value.cpf),
     funcao: data.get(#funcao, or: $value.funcao),
+    faixa: data.get(#faixa, or: $value.faixa),
     dirty: data.get(#dirty, or: $value.dirty),
   );
 

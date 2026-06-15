@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:salvando_vidas/data/validators.dart';
+import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/local_user/local_user.dart';
 
 part 'cadastro_voluntario_form.g.dart';
@@ -14,6 +15,7 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
   final String senha;
   final String cpf;
   final String funcao;
+  final Faixa faixa;
   final bool dirty;
 
   CadastroVoluntarioState({
@@ -23,6 +25,7 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     this.senha = '',
     this.cpf = '',
     this.funcao = '',
+    this.faixa = Faixa.branca,
     this.dirty = false,
   });
 
@@ -81,6 +84,7 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     email: email,
     senha: senha,
     funcao: funcao,
+    faixa: faixa,
   );
 }
 
@@ -113,5 +117,9 @@ class CadastroVoluntario extends _$CadastroVoluntario {
 
   void updateFuncao(String value) {
     state = state.copyWith(funcao: value, dirty: true);
+  }
+
+  void updateFaixa(Faixa value) {
+    state = state.copyWith(faixa: value, dirty: true);
   }
 }

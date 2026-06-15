@@ -72,6 +72,7 @@ void main() {
     'cpf': '12345678900',
     'email': 'teste@teste.com',
     'funcao': 'Teste',
+    'faixa': 'branca',
   };
 
   group('UserService -', () {

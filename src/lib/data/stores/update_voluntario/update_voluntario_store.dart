@@ -2,6 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
 import 'package:salvando_vidas/data/validators.dart';
+import 'package:salvando_vidas/domain/aluno/aluno.dart';
 
 part 'update_voluntario_store.g.dart';
 part 'update_voluntario_store.mapper.dart';
@@ -15,6 +16,7 @@ class UpdateVoluntarioState with UpdateVoluntarioStateMappable {
   final String senha;
   final String cpf;
   final String funcao;
+  final Faixa faixa;
   final bool dirty;
 
   UpdateVoluntarioState({
@@ -25,6 +27,7 @@ class UpdateVoluntarioState with UpdateVoluntarioStateMappable {
     this.senha = '',
     this.cpf = '',
     this.funcao = '',
+    this.faixa = Faixa.branca,
     this.dirty = false,
   });
 
@@ -92,6 +95,7 @@ class UpdateVoluntario extends _$UpdateVoluntario {
       telefone: user.telefone,
       cpf: user.cpf,
       funcao: user.funcao,
+      faixa: user.faixa,
     );
   }
 
@@ -117,5 +121,9 @@ class UpdateVoluntario extends _$UpdateVoluntario {
 
   void updateFuncao(String value) {
     state = state.copyWith(funcao: value, dirty: true);
+  }
+
+  void updateFaixa(Faixa value) {
+    state = state.copyWith(faixa: value, dirty: true);
   }
 }
