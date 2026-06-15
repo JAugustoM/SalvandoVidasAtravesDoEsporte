@@ -37,12 +37,21 @@ class PesquisaAlunoStateMapper extends ClassMapperBase<PesquisaAlunoState> {
       v.responsaveis;
   static const Field<PesquisaAlunoState, Map<int, Responsavel>>
   _f$responsaveis = Field('responsaveis', _$responsaveis);
+  static bool _$mostrarInativos(PesquisaAlunoState v) => v.mostrarInativos;
+  static const Field<PesquisaAlunoState, bool> _f$mostrarInativos = Field(
+    'mostrarInativos',
+    _$mostrarInativos,
+    key: r'mostrar_inativos',
+    opt: true,
+    def: false,
+  );
 
   @override
   final MappableFields<PesquisaAlunoState> fields = const {
     #alunos: _f$alunos,
     #alunosFiltrados: _f$alunosFiltrados,
     #responsaveis: _f$responsaveis,
+    #mostrarInativos: _f$mostrarInativos,
   };
   @override
   final bool ignoreNull = true;
@@ -52,6 +61,7 @@ class PesquisaAlunoStateMapper extends ClassMapperBase<PesquisaAlunoState> {
       alunos: data.dec(_f$alunos),
       alunosFiltrados: data.dec(_f$alunosFiltrados),
       responsaveis: data.dec(_f$responsaveis),
+      mostrarInativos: data.dec(_f$mostrarInativos),
     );
   }
 
@@ -139,6 +149,7 @@ abstract class PesquisaAlunoStateCopyWith<
     List<Aluno>? alunos,
     List<Aluno>? alunosFiltrados,
     Map<int, Responsavel>? responsaveis,
+    bool? mostrarInativos,
   });
   PesquisaAlunoStateCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
     Then<$Out2, $R2> t,
@@ -184,11 +195,13 @@ class _PesquisaAlunoStateCopyWithImpl<$R, $Out>
     List<Aluno>? alunos,
     List<Aluno>? alunosFiltrados,
     Map<int, Responsavel>? responsaveis,
+    Object? mostrarInativos = $none,
   }) => $apply(
     FieldCopyWithData({
       if (alunos != null) #alunos: alunos,
       if (alunosFiltrados != null) #alunosFiltrados: alunosFiltrados,
       if (responsaveis != null) #responsaveis: responsaveis,
+      if (mostrarInativos != $none) #mostrarInativos: mostrarInativos,
     }),
   );
   @override
@@ -196,6 +209,7 @@ class _PesquisaAlunoStateCopyWithImpl<$R, $Out>
     alunos: data.get(#alunos, or: $value.alunos),
     alunosFiltrados: data.get(#alunosFiltrados, or: $value.alunosFiltrados),
     responsaveis: data.get(#responsaveis, or: $value.responsaveis),
+    mostrarInativos: data.get(#mostrarInativos, or: $value.mostrarInativos),
   );
 
   @override
@@ -203,4 +217,3 @@ class _PesquisaAlunoStateCopyWithImpl<$R, $Out>
     Then<$Out2, $R2> t,
   ) => _PesquisaAlunoStateCopyWithImpl<$R2, $Out2>($value, $cast, t);
 }
-
