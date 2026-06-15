@@ -20,6 +20,7 @@ void main() {
     cpf: '111.111.111-11',
     telefone: '61999999999',
     role: Role.voluntario,
+    funcao: 'Voluntário',
   );
 
   // Helper to build the test environment

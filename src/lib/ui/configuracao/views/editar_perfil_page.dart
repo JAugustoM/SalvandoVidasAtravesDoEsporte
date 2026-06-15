@@ -23,17 +23,20 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
   late Logger logger;
 
   void _salvarAlteracoes() async {
-    if (state.podeCadastrar) {
-      try {
-        final diff = state.diff;
-        await ref.read(userServiceProvider).updateUser(diff);
+    // Aciona a validação visual do Form antes de prosseguir
+    if (_formKey.currentState?.validate() ?? false) {
+      if (state.podeCadastrar) {
+        try {
+          final diff = state.diff;
+          await ref.read(userServiceProvider).updateUser(diff);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Perfil atualizado com sucesso!')),
-        );
-        context.pop(); // Retorna para a tela de configurações
-      } on AppApiException catch (e) {
-        logger.e('', error: e.error);
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Perfil atualizado com sucesso!')),
+          );
+          context.pop(); // Retorna para a tela de configurações
+        } on AppApiException catch (e) {
+          logger.e('', error: e.error);
+        }
       }
     }
   }

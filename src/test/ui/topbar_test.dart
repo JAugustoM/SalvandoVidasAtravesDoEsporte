@@ -23,7 +23,7 @@ void main() {
       );
 
       // Verifica se a logo está presente e se não estamos na home ainda
-      expect(find.text('Logo'), findsOneWidget);
+      expect(find.byKey(const ValueKey('logoText')), findsOneWidget);
       expect(find.text('Pagina Home'), findsNothing);
 
       // Simula o clique no GestureDetector que envolve a logo

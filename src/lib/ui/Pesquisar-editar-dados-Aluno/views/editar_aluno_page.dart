@@ -92,7 +92,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
           duration: const Duration(milliseconds: 300),
           curve: Curves.ease,
         );
-      } else if (state.temResponsavel) {
+      } else {
         _mostrarDialogConfirmacao();
       }
     }

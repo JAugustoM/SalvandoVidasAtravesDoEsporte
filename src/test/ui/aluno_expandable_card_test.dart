@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
+import 'package:salvando_vidas/data/services/aluno_service/aluno_service.dart';
+import 'package:salvando_vidas/data/services/global/global_service.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno_mock.dart';
 import 'package:salvando_vidas/ui/Pesquisar-editar-dados-Aluno/views/editar_aluno_page.dart';
 import 'package:salvando_vidas/ui/Pesquisar-editar-dados-Aluno/widgets/aluno_expandable_card.dart';
+import 'package:logger/logger.dart';
 
+import 'aluno_expandable_card_test.mocks.dart';
+
+@GenerateNiceMocks([MockSpec<AlunoService>(), MockSpec<Logger>()])
 void main() {
+  late MockAlunoService mockAlunoService;
+  late MockLogger mockLogger;
+
   // Pega um aluno ativo e cria uma versão inativa para os testes
   final Aluno alunoAtivo = alunosMock.first;
   final Aluno alunoInativo = Aluno(
@@ -25,11 +37,22 @@ void main() {
       idTurma: alunoAtivo.idTurma,
       idResponsavel: alunoAtivo.idResponsavel);
 
+  setUp(() {
+    mockAlunoService = MockAlunoService();
+    mockLogger = MockLogger();
+  });
+
   Widget createWidgetUnderTest(Aluno aluno) {
-    return MaterialApp(
-      home: Scaffold(
-        body: ListView(
-          children: [AlunoExpandableCard(aluno: aluno)],
+    return ProviderScope(
+      overrides: [
+        alunoServiceProvider.overrideWithValue(mockAlunoService),
+        loggerProvider.overrideWithValue(mockLogger),
+      ],
+      child: MaterialApp(
+        home: Scaffold(
+          body: ListView(
+            children: [AlunoExpandableCard(aluno: aluno, responsavel: null)],
+          ),
         ),
       ),
     );
