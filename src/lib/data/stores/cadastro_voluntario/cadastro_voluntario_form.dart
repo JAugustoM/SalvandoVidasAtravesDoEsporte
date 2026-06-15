@@ -1,6 +1,7 @@
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:salvando_vidas/data/validators.dart';
+import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/local_user/local_user.dart';
 
 part 'cadastro_voluntario_form.g.dart';
@@ -13,6 +14,8 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
   final String telefone;
   final String senha;
   final String cpf;
+  final String funcao;
+  final Faixa faixa;
   final bool dirty;
 
   CadastroVoluntarioState({
@@ -21,6 +24,8 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     this.telefone = '',
     this.senha = '',
     this.cpf = '',
+    this.funcao = '',
+    this.faixa = Faixa.branca,
     this.dirty = false,
   });
 
@@ -49,12 +54,18 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     return eCPF(cpf) ? null : 'Não é um CPF válido';
   }
 
+  String? get funcaoError {
+    if (!dirty && funcao.isEmpty) return null;
+    return funcao.isNotEmpty ? null : 'Não pode estar em branco';
+  }
+
   bool get temErros =>
       nomeError != null ||
       emailError != null ||
       telefoneError != null ||
       senhaError != null ||
-      cpfError != null;
+      cpfError != null ||
+      funcaoError != null;
 
   bool get podeCadastrar =>
       nome.isNotEmpty &&
@@ -62,6 +73,7 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
       telefone.isNotEmpty &&
       senha.isNotEmpty &&
       cpf.isNotEmpty &&
+      funcao.isNotEmpty &&
       !temErros;
 
   LocalUser get voluntario => LocalUser(
@@ -71,6 +83,8 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     cpf: cpf,
     email: email,
     senha: senha,
+    funcao: funcao,
+    faixa: faixa,
   );
 }
 
@@ -99,5 +113,13 @@ class CadastroVoluntario extends _$CadastroVoluntario {
 
   void updateCpf(String value) {
     state = state.copyWith(cpf: value, dirty: true);
+  }
+
+  void updateFuncao(String value) {
+    state = state.copyWith(funcao: value, dirty: true);
+  }
+
+  void updateFaixa(Faixa value) {
+    state = state.copyWith(faixa: value, dirty: true);
   }
 }

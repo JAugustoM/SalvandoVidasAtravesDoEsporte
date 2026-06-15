@@ -62,6 +62,7 @@ class LocalUserMapper extends ClassMapperBase<LocalUser> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = LocalUserMapper._());
       RoleMapper.ensureInitialized();
+      FaixaMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -90,6 +91,10 @@ class LocalUserMapper extends ClassMapperBase<LocalUser> {
     _$senha,
     opt: true,
   );
+  static String _$funcao(LocalUser v) => v.funcao;
+  static const Field<LocalUser, String> _f$funcao = Field('funcao', _$funcao);
+  static Faixa _$faixa(LocalUser v) => v.faixa;
+  static const Field<LocalUser, Faixa> _f$faixa = Field('faixa', _$faixa);
 
   @override
   final MappableFields<LocalUser> fields = const {
@@ -100,6 +105,8 @@ class LocalUserMapper extends ClassMapperBase<LocalUser> {
     #cpf: _f$cpf,
     #email: _f$email,
     #senha: _f$senha,
+    #funcao: _f$funcao,
+    #faixa: _f$faixa,
   };
   @override
   final bool ignoreNull = true;
@@ -113,6 +120,8 @@ class LocalUserMapper extends ClassMapperBase<LocalUser> {
       cpf: data.dec(_f$cpf),
       email: data.dec(_f$email),
       senha: data.dec(_f$senha),
+      funcao: data.dec(_f$funcao),
+      faixa: data.dec(_f$faixa),
     );
   }
 
@@ -183,6 +192,8 @@ abstract class LocalUserCopyWith<$R, $In extends LocalUser, $Out>
     String? cpf,
     String? email,
     String? senha,
+    String? funcao,
+    Faixa? faixa,
   });
   LocalUserCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
@@ -204,6 +215,8 @@ class _LocalUserCopyWithImpl<$R, $Out>
     String? cpf,
     String? email,
     Object? senha = $none,
+    String? funcao,
+    Faixa? faixa,
   }) => $apply(
     FieldCopyWithData({
       if (id != $none) #id: id,
@@ -213,6 +226,8 @@ class _LocalUserCopyWithImpl<$R, $Out>
       if (cpf != null) #cpf: cpf,
       if (email != null) #email: email,
       if (senha != $none) #senha: senha,
+      if (funcao != null) #funcao: funcao,
+      if (faixa != null) #faixa: faixa,
     }),
   );
   @override
@@ -224,6 +239,8 @@ class _LocalUserCopyWithImpl<$R, $Out>
     cpf: data.get(#cpf, or: $value.cpf),
     email: data.get(#email, or: $value.email),
     senha: data.get(#senha, or: $value.senha),
+    funcao: data.get(#funcao, or: $value.funcao),
+    faixa: data.get(#faixa, or: $value.faixa),
   );
 
   @override

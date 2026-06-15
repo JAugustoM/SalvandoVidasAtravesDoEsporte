@@ -27,7 +27,11 @@ class TopBar extends StatelessWidget
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(6),),
-                  child: const Text('Logo', style: TextStyle(color: Color(0xFF08216F), fontWeight: FontWeight.w700,),),
+                  child: const Text(
+                    'Logo',
+                    key: ValueKey('logoText'),
+                    style: TextStyle(color: Color(0xFF08216F), fontWeight: FontWeight.w700,),
+                  ),
                 ),
               ),
             ],

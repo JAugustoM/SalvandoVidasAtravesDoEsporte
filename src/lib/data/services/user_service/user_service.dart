@@ -76,26 +76,9 @@ class UserService {
     });
   }
 
-  Future<void> updateUser({
-    required String id,
-    String? email,
-    String? password,
-    String? nome,
-    String? telefone,
-    String? cpf,
-  }) async {
+  Future<void> updateUser(Map<String, dynamic> diff) async {
     return runSupabaseCall(() async {
-      await _supabase.rpc(
-        'admin_update_user',
-        params: {
-          'target_user_id': id,
-          'new_email': email,
-          'new_password': password,
-          'new_name': nome,
-          'new_telefone': telefone,
-          'new_cpf': cpf,
-        },
-      );
+      await _supabase.rpc('admin_update_user', params: diff);
     });
   }
 

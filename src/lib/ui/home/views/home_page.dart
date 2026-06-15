@@ -9,15 +9,6 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homeState = ref.watch(homeStoreProvider);
 
-    String? aniversariante;
-    int? dias;
-
-    if (homeState.value != null &&
-        homeState.value!.proximoAniversariante.isNotEmpty) {
-      aniversariante = homeState.value!.proximoAniversariante.first.aluno.nome;
-      dias = homeState.value!.proximoAniversariante.first.dias;
-    }
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -44,50 +35,177 @@ class HomePage extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 8),
-                    // Metrics cards (2x2) - grid responsivo
+
+                    // Metrics grid: aniversariantes ocupa coluna esquerda inteira (2 linhas)
                     LayoutBuilder(
                       builder: (context, constraints) {
                         const spacing = 12.0;
                         final itemWidth = (constraints.maxWidth - spacing) / 2;
-                        final aspect = itemWidth / 90;
-                        return GridView.count(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: spacing,
-                          mainAxisSpacing: spacing,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          childAspectRatio: aspect,
-                          children: [
-                            MetricCard(
-                              title: 'Próximos aniversariantes',
-                              value: switch (aniversariante) {
-                                null => "...",
-                                String() => '$aniversariante ($dias dias)',
-                              },
-                              color: Colors.white,
-                              width: itemWidth,
-                            ),
-                            MetricCard(
-                              title: 'Total de Alunos',
-                              value:
-                                  '${homeState.value?.alunos.length ?? "..."}',
-                              color: const Color(0xFF2457F0),
-                              width: itemWidth,
-                            ),
-                            MetricCard(
-                              title: 'Kimonos Disponíveis',
-                              value:
-                                  '${homeState.value?.kimonosDisponiveis ?? "..."}',
-                              color: const Color(0xFF11A6BF),
-                              width: itemWidth,
-                            ),
-                            MetricCard(
-                              title: 'Total de Turmas',
-                              value: '${homeState.value?.totalTurmas ?? "..."}',
-                              color: Colors.white,
-                              width: itemWidth,
-                            ),
-                          ],
+                        final itemHeight = 90.0;
+                        final tallHeight = itemHeight * 2 + spacing;
+
+                        return SizedBox(
+                          height: tallHeight,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              // Coluna esquerda: Aniversariantes (altura dupla)
+                              SizedBox(
+                                width: itemWidth,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Color(0x18000000),
+                                        blurRadius: 8,
+                                        offset: Offset(0, 4),
+                                      ),
+                                    ],
+                                  ),
+                                  padding: const EdgeInsets.all(12),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Próximos aniversariantes',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xFF555555),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 6),
+                                      Expanded(
+                                        child: homeState.when(
+                                          data: (state) {
+                                            final lista =
+                                                state.proximoAniversariante;
+                                            if (lista.isEmpty) {
+                                              return const Center(
+                                                child: Text(
+                                                  'Nenhum nos próximos 7 dias',
+                                                  style: TextStyle(
+                                                    fontSize: 11,
+                                                    color: Color(0xFF888888),
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              );
+                                            }
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              itemCount: lista.length,
+                                              itemBuilder: (_, i) {
+                                                final item = lista[i];
+                                                final diasTexto =
+                                                    item.dias == 0
+                                                        ? 'Hoje! 🎉'
+                                                        : item.dias == 1
+                                                            ? 'Amanhã'
+                                                            : '${item.dias} dias';
+                                                return Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 3),
+                                                  child: Row(
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.cake_outlined,
+                                                        size: 14,
+                                                        color:
+                                                            Color(0xFF11A6BF),
+                                                      ),
+                                                      const SizedBox(width: 4),
+                                                      Expanded(
+                                                        child: Text(
+                                                          item.aluno.nome,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        diasTexto,
+                                                        style: TextStyle(
+                                                          fontSize: 11,
+                                                          color: item.dias == 0
+                                                              ? const Color(
+                                                                  0xFF2457F0)
+                                                              : const Color(
+                                                                  0xFF888888),
+                                                          fontWeight:
+                                                              item.dias == 0
+                                                                  ? FontWeight
+                                                                      .w700
+                                                                  : FontWeight
+                                                                      .normal,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          error: (_, __) => const Center(
+                                              child: Text('Erro')),
+                                          loading: () => const Center(
+                                            child: SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child:
+                                                  CircularProgressIndicator(
+                                                      strokeWidth: 2),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: spacing),
+
+                              // Coluna direita: Total de Alunos (topo) + Kimonos (baixo)
+                              SizedBox(
+                                width: itemWidth,
+                                child: Column(
+                                  children: [
+                                    // Total de Alunos
+                                    SizedBox(
+                                      height: itemHeight,
+                                      child: MetricCard(
+                                        title: 'Total de Alunos',
+                                        value:
+                                            '${homeState.value?.alunos.length ?? "..."}',
+                                        color: const Color(0xFF2457F0),
+                                        width: itemWidth,
+                                      ),
+                                    ),
+                                    const SizedBox(height: spacing),
+                                    // Kimonos Disponíveis
+                                    SizedBox(
+                                      height: itemHeight,
+                                      child: MetricCard(
+                                        title: 'Kimonos Disponíveis',
+                                        value:
+                                            '${homeState.value?.kimonosDisponiveis ?? "..."}',
+                                        color: const Color(0xFF11A6BF),
+                                        width: itemWidth,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         );
                       },
                     ),
@@ -120,17 +238,90 @@ class HomePage extends ConsumerWidget {
                           ),
                           const SizedBox(height: 8),
                           Container(
-                            height: 220,
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: homeState.when(
-                              data: (state) {
-                                return RefreshIndicator(
-                                  onRefresh: () =>
-                                      ref.refresh(homeStoreProvider.future),
-                                  child: ListView.builder(
+                            child: Column(
+                              children: [
+                                // Header das colunas
+                                Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 6,
+                                    vertical: 4,
+                                  ),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFFF0F2F5),
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(8),
+                                    ),
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        color: Color(0xFFDDDDDD),
+                                      ),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: const [
+                                      Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          'Nome',
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF555555),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          'Turma',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF555555),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Text(
+                                          'Kimono',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF555555),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Text(
+                                          'Última\npresença',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.w700,
+                                            color: Color(0xFF555555),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                // Lista de alunos
+                                SizedBox(
+                                  height: 220,
+                                  child: homeState.when(
+                                    data: (state) {
+                                      return RefreshIndicator(
+                                        onRefresh: () =>
+                                            ref.refresh(homeStoreProvider.future),
+                                        child: ListView.builder(
                                     itemCount: state.alunosHome.length,
                                     itemBuilder: (_, index) {
                                       final aluno = state.alunosHome[index];
@@ -160,7 +351,7 @@ class HomePage extends ConsumerWidget {
                                               ),
                                             ),
                                             Expanded(
-                                              flex: 1,
+                                              flex: 2,
                                               child: Text(
                                                 'Não',
                                                 textAlign: TextAlign.center,
@@ -201,6 +392,9 @@ class HomePage extends ConsumerWidget {
                               loading: () => const Center(
                                 child: CircularProgressIndicator(),
                               ),
+                            ),
+                          ),
+                              ],
                             ),
                           ),
                         ],

@@ -10,6 +10,9 @@ import 'package:salvando_vidas/ui/global/widgets/topbar.dart';
 import 'package:salvando_vidas/ui/home/views/home_page.dart';
 import 'package:salvando_vidas/ui/login/views/login_page.dart';
 import 'package:salvando_vidas/ui/turma/views/turma.dart';
+// IMPORTAÇÕES DAS NOVAS TELAS:
+import 'package:salvando_vidas/ui/Pesquisar-editar-dados-Aluno/pesquisa_alunos_imports.dart'; 
+import 'package:salvando_vidas/ui/configuracao/views/editar_perfil_page.dart';
 
 part 'router.g.dart';
 
@@ -21,6 +24,12 @@ GoRouter router(Ref ref) {
     routes: [
       // ROTAS SEM NAVBAR
       GoRoute(path: Routes.login, builder: (context, state) => LoginPage()),
+      
+      // NOVA ROTA DA TELA DE EDIÇÃO DE PERFIL:
+      GoRoute(
+        path: Routes.editarPerfil, 
+        builder: (context, state) => const EditarPerfilPage(),
+      ),
 
       // ROTAS COM NAVBAR
       ShellRoute(
@@ -59,6 +68,11 @@ GoRouter router(Ref ref) {
           ),
 
           GoRoute(path: Routes.turma, builder: (context, state) => TurmaPage()),
+
+          GoRoute(
+            path: Routes.buscaAluno, 
+            builder: (context, state) => const PesquisaAlunosPage(),
+          ),
         ],
       ),
     ],
