@@ -8,7 +8,7 @@ import '../global/global_service.dart';
 
 part 'aluno_service.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 AlunoService alunoService(Ref ref) {
   return AlunoService(ref.watch(supabaseClientProvider));
 }

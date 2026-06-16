@@ -1,6 +1,8 @@
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
+import 'package:salvando_vidas/ui/global/masks.dart';
 
 class EtapaDadosResponsavel extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -13,6 +15,16 @@ class EtapaDadosResponsavel extends ConsumerStatefulWidget {
 }
 
 class _EtapaDadosResponsavelState extends ConsumerState<EtapaDadosResponsavel> {
+  late final MaskTextInputFormatter formatCPF;
+  late final MaskTextInputFormatter formatTelefone;
+
+  @override
+  void initState() {
+    super.initState();
+    formatCPF = maskCPF();
+    formatTelefone = maskTelefone();
+  }
+
   @override
   Widget build(BuildContext context) {
     final cadastro = ref.watch(cadastroAlunoProvider);
@@ -34,23 +46,30 @@ class _EtapaDadosResponsavelState extends ConsumerState<EtapaDadosResponsavel> {
             ),
             const SizedBox(height: 14),
             InputField(
-              initialValue: cadastro.cpfResponsavel,
-              update: notifier.updateCPFResponsavel,
+              initialValue: formatCPF.maskText(cadastro.cpfResponsavel),
+              update: (_) =>
+                  notifier.updateCPFResponsavel(formatCPF.getUnmaskedText()),
               error: cadastro.cpfResponsavelError,
               label: 'CPF do Responsável*',
               hint: '000.000.000-00',
               keyboardType: TextInputType.number,
               validatorMessage: 'O CPF é obrigatório',
+              inputFormatters: [formatCPF],
             ),
             const SizedBox(height: 14),
             InputField(
-              initialValue: cadastro.contatoResponsavel,
-              update: notifier.updateContatoResponsavel,
+              initialValue: formatTelefone.maskText(
+                cadastro.contatoResponsavel,
+              ),
+              update: (_) => notifier.updateContatoResponsavel(
+                formatTelefone.getUnmaskedText(),
+              ),
               error: cadastro.contatoResponsavelError,
               label: 'Telefone do Responsável*',
               hint: '(00) 00000-0000',
               keyboardType: TextInputType.phone,
               validatorMessage: 'O telefone é obrigatório',
+              inputFormatters: [formatTelefone],
             ),
             const SizedBox(height: 14),
             InputField(

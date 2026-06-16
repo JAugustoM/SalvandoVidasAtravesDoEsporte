@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:salvando_vidas/domain/aluno/aluno.dart';
 
 part 'local_user.mapper.dart';
 
@@ -14,6 +15,8 @@ class LocalUser with LocalUserMappable {
   final String cpf;
   final String email;
   final String? senha;
+  final String funcao;
+  final Faixa faixa;
 
   const LocalUser({
     this.id,
@@ -23,6 +26,8 @@ class LocalUser with LocalUserMappable {
     required this.cpf,
     required this.email,
     this.senha,
+    required this.funcao,
+    required this.faixa,
   });
 
   static final fromMap = LocalUserMapper.fromMap;

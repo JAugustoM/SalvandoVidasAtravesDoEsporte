@@ -22,3 +22,24 @@ class Presenca with PresencaMappable {
   static final fromMap = PresencaMapper.fromMap;
   static final fromJson = PresencaMapper.fromJson;
 }
+
+@MappableClass()
+class UltimaPresenca with UltimaPresencaMappable {
+  final int alunoId;
+  final String alunoNome;
+
+  @MappableField(hook: HookData())
+  final DateTime? dataUltimaPresenca;
+
+  final int? diasDesdeUltimaPresenca;
+
+  UltimaPresenca({
+    required this.alunoId,
+    required this.alunoNome,
+    required this.dataUltimaPresenca,
+    required this.diasDesdeUltimaPresenca,
+  });
+
+  static final fromMap = UltimaPresencaMapper.fromMap;
+  static final fromJson = UltimaPresencaMapper.fromJson;
+}

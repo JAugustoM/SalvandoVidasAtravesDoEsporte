@@ -1,15 +1,32 @@
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
+import 'package:salvando_vidas/ui/global/masks.dart';
 
-class EtapaDadosBasicos extends ConsumerWidget {
+class EtapaDadosBasicos extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
 
   const EtapaDadosBasicos({super.key, required this.formKey});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<EtapaDadosBasicos> createState() => _EtapaDadosBasicosState();
+}
+
+class _EtapaDadosBasicosState extends ConsumerState<EtapaDadosBasicos> {
+  late final MaskTextInputFormatter formatCPF;
+  late final MaskTextInputFormatter formatTelefone;
+
+  @override
+  void initState() {
+    super.initState();
+    formatCPF = maskCPF();
+    formatTelefone = maskTelefone();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cadastro = ref.watch(cadastroAlunoProvider);
     final notifier = ref.read(cadastroAlunoProvider.notifier);
 
@@ -18,7 +35,7 @@ class EtapaDadosBasicos extends ConsumerWidget {
         : '';
 
     return Form(
-      key: formKey,
+      key: widget.formKey,
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,23 +51,26 @@ class EtapaDadosBasicos extends ConsumerWidget {
             ),
             const SizedBox(height: 14),
             InputField(
-              initialValue: cadastro.cpf,
-              update: notifier.updateCPF,
+              initialValue: formatCPF.maskText(cadastro.cpf),
+              update: (_) => notifier.updateCPF(formatCPF.getUnmaskedText()),
               error: cadastro.cpfError,
               label: 'CPF*',
               hint: '000.000.000-00',
               keyboardType: TextInputType.number,
               validatorMessage: 'O CPF é obrigatório',
+              inputFormatters: [formatCPF],
             ),
             const SizedBox(height: 14),
             InputField(
-              initialValue: cadastro.contato,
-              update: notifier.updateContato,
+              initialValue: formatTelefone.maskText(cadastro.contato),
+              update: (_) =>
+                  notifier.updateContato(formatTelefone.getUnmaskedText()),
               error: cadastro.contatoError,
               label: 'Telefone*',
               hint: '(00) 00000-0000',
               keyboardType: TextInputType.phone,
               validatorMessage: 'O telefone é obrigatório',
+              inputFormatters: [formatTelefone],
             ),
             const SizedBox(height: 14),
             InputField(

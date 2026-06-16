@@ -23,7 +23,7 @@ final class AlunoServiceProvider
         argument: null,
         retry: null,
         name: r'alunoServiceProvider',
-        isAutoDispose: true,
+        isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
@@ -50,4 +50,4 @@ final class AlunoServiceProvider
   }
 }
 
-String _$alunoServiceHash() => r'78a26ba93683b2faf32245fcdb87e3aedf991903';
+String _$alunoServiceHash() => r'855c6deaa9f8f4f17ed71cf2df6e74f933286e93';

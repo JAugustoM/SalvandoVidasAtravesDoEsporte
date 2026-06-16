@@ -58,7 +58,8 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
                     IconButton(
                       // EDITAR PERFIL
                       onPressed: () {
-                        /* futura tela editar perfil */
+                        // Navega para a tela de edição
+                        context.push(Routes.editarPerfil);
                       },
                       icon: const Icon(Icons.edit),
                     ),
@@ -78,16 +79,19 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: SwitchListTile(
-                  contentPadding: EdgeInsets.zero,
-                  value: darkMode,
-                  onChanged: (value) {
-                    setState(() {
-                      darkMode = value;
-                    });
-                  },
-                  title: const Text('Modo escuro'),
-                  secondary: const Icon(Icons.dark_mode),
+                child: Material(
+                  color: Colors.transparent,
+                  child: SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: darkMode,
+                    onChanged: (value) {
+                      setState(() {
+                        darkMode = value;
+                      });
+                    },
+                    title: const Text('Modo escuro'),
+                    secondary: const Icon(Icons.dark_mode),
+                  ),
                 ),
               ),
 
