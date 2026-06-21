@@ -1,4 +1,5 @@
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class MenuCard extends StatelessWidget {
   const MenuCard({
@@ -27,11 +28,11 @@ class MenuCard extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: const Color(0xFFD8DDE6),
+            color: AppColors.inputFill,
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(
-                color: Color(0x22000000),
+                color: AppColors.shadowMedium,
                 blurRadius: 16,
                 offset: Offset(0, 8),
               ),
@@ -57,7 +58,7 @@ class MenuCard extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        color: Color(0xFF08216F),
+                        color: AppColors.deepNavy,
                         fontSize: 20,
                         fontWeight: FontWeight.w700,
                       ),
@@ -66,14 +67,14 @@ class MenuCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: const TextStyle(
-                        color: Color(0xFF1E2B61),
+                        color: AppColors.deepNavy,
                         fontSize: 13,
                       ),
                     ),
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: Color(0xFF2457F0)),
+              const Icon(Icons.chevron_right, color: AppColors.royalAzure),
             ],
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:salvando_vidas/data/stores/presenca/presenca_store.dart';
 import 'package:salvando_vidas/domain/turma/turma.dart';
 import 'package:salvando_vidas/domain/local_user/local_user.dart'; // Importamos o modelo explicitamente
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class RegistrarFrequenciaView extends ConsumerStatefulWidget {
   final Turma turma;
@@ -54,7 +55,7 @@ class _RegistrarFrequenciaViewState
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Preencha o Professor e a Data antes de registrar.'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -71,17 +72,17 @@ class _RegistrarFrequenciaViewState
             title: const Text(
               'Registrar Frequência?',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color(0xFF08216F)),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.deepNavy),
             ),
             actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('Cancelar', style: TextStyle(color: Colors.red)),
+                child: const Text('Cancelar', style: TextStyle(color: AppColors.error)),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF08216F),
+                  backgroundColor: AppColors.deepNavy,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -134,13 +135,13 @@ class _RegistrarFrequenciaViewState
           title: const Text(
             'A frequência foi\nregistrada com sucesso!',
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.green),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.success),
           ),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF08216F),
+                backgroundColor: AppColors.deepNavy,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
@@ -192,9 +193,9 @@ class _RegistrarFrequenciaViewState
     }
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F7FB),
+        backgroundColor: AppColors.platinum,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
@@ -202,11 +203,11 @@ class _RegistrarFrequenciaViewState
             FocusManager.instance.primaryFocus?.unfocus();
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF08216F), size: 22),
+          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
           label: const Text(
             'Voltar',
             style: TextStyle(
-              color: Color(0xFF08216F),
+              color: AppColors.deepNavy,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -236,14 +237,14 @@ class _RegistrarFrequenciaViewState
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF08216F),
+                            color: AppColors.deepNavy,
                           ),
                         ),
                         Text(
                           widget.turma.nome,
                           style: const TextStyle(
                             fontSize: 14,
-                            color: Color(0xFF666666),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         const SizedBox(height: 24),
@@ -275,7 +276,7 @@ class _RegistrarFrequenciaViewState
                           decoration: InputDecoration(
                             hintText: 'DD/MM/AAAA',
                             filled: true,
-                            fillColor: const Color(0xFFF5F7FB),
+                            fillColor: AppColors.platinum,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
@@ -285,7 +286,7 @@ class _RegistrarFrequenciaViewState
                               vertical: 14,
                             ),
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.calendar_today, color: Color(0xFF08216F)),
+                              icon: const Icon(Icons.calendar_today, color: AppColors.deepNavy),
                               onPressed: () async {
                                 FocusManager.instance.primaryFocus?.unfocus(); 
                                 DateTime? picked = await showDatePicker(
@@ -337,7 +338,7 @@ class _RegistrarFrequenciaViewState
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: Color(0xFF08216F),
+                            color: AppColors.deepNavy,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -353,7 +354,7 @@ class _RegistrarFrequenciaViewState
                                 child: Row(
                                   children: [
                                     const CircleAvatar(
-                                      backgroundColor: Color(0xFFD8DDE6),
+                                      backgroundColor: AppColors.inputFill,
                                       radius: 18,
                                     ),
                                     const SizedBox(width: 12),
@@ -367,9 +368,9 @@ class _RegistrarFrequenciaViewState
                                     ),
                                     Checkbox(
                                       value: state.presenca[aluno.id!],
-                                      activeColor: const Color(0xFF08216F),
+                                      activeColor: AppColors.deepNavy,
                                       side: const BorderSide(
-                                        color: Color(0xFF999999),
+                                        color: AppColors.textSecondary,
                                       ),
                                       onChanged: (_) {
                                         setState(() {
@@ -404,7 +405,7 @@ class _RegistrarFrequenciaViewState
                     height: 48,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF08216F),
+                        backgroundColor: AppColors.deepNavy,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

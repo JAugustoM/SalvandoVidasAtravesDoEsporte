@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class AlunoTileWidget extends StatelessWidget {
   final String nome;
@@ -10,18 +11,18 @@ class AlunoTileWidget extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       leading: const CircleAvatar(
-        backgroundColor: Color(0xFFD8DDE6), // Azul/Cinza clarinho padrão do projeto
-        child: Icon(Icons.person, color: Color(0xFF08216F), size: 20), // Ícone adicionado
+        backgroundColor: AppColors.inputFill, // Azul/Cinza clarinho padrão do projeto
+        child: Icon(Icons.person, color: AppColors.deepNavy, size: 20), // Ícone adicionado
       ),
       title: Text(
         nome, 
         style: const TextStyle(
           fontWeight: FontWeight.w600,
-          color: Color(0xFF08216F), // Texto no Azul Principal
+          color: AppColors.deepNavy, // Texto no Azul Principal
         ),
       ),
       shape: const Border(
-        bottom: BorderSide(color: Color(0xFFE6E6E6), width: 1), // Linha divisória suave entre os alunos
+        bottom: BorderSide(color: AppColors.divider, width: 1), // Linha divisória suave entre os alunos
       ),
     );
   }

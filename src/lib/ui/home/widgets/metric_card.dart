@@ -1,4 +1,5 @@
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class MetricCard extends StatelessWidget {
   const MetricCard({
@@ -23,7 +24,7 @@ class MetricCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x22000000),
+            color: AppColors.shadowMedium,
             blurRadius: 8,
             offset: Offset(0, 6),
           ),
@@ -40,7 +41,7 @@ class MetricCard extends StatelessWidget {
             // CORREÇÃO: Garante a centralização do próprio texto
             textAlign: TextAlign.center, 
             style: TextStyle(
-              color: colored ? Colors.white : const Color(0xFF08216F),
+              color: colored ? Colors.white : AppColors.deepNavy,
               fontSize: 12,
             ),
           ),
@@ -50,7 +51,7 @@ class MetricCard extends StatelessWidget {
             // CORREÇÃO: Garante a centralização do próprio valor
             textAlign: TextAlign.center, 
             style: TextStyle(
-              color: colored ? Colors.white : const Color(0xFF08216F),
+              color: colored ? Colors.white : AppColors.deepNavy,
               fontWeight: FontWeight.w700,
               fontSize: 16,
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class ExpansionActionCard extends StatelessWidget {
   const ExpansionActionCard({
@@ -24,7 +25,7 @@ class ExpansionActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = backgroundColor ?? const Color(0xFFEAF6FA);
+    final bg = backgroundColor ?? AppColors.cyanPastel.withOpacity(0.2);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
@@ -33,7 +34,7 @@ class ExpansionActionCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: const [
           BoxShadow(
-            color: Color(0x22000000),
+            color: AppColors.shadowMedium,
             blurRadius: 12,
             offset: Offset(0, 8),
           ),
@@ -61,7 +62,7 @@ class ExpansionActionCard extends StatelessWidget {
                     Text(
                       title,
                       style: const TextStyle(
-                        color: Color(0xFF08216F),
+                        color: AppColors.deepNavy,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -70,7 +71,7 @@ class ExpansionActionCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: const TextStyle(
-                        color: Color(0xFF1E2B61),
+                        color: AppColors.deepNavy,
                         fontSize: 13,
                       ),
                     ),
@@ -81,7 +82,7 @@ class ExpansionActionCard extends StatelessWidget {
                 onPressed: onToggle,
                 icon: Icon(
                   expanded ? Icons.expand_less : Icons.expand_more,
-                  color: const Color(0xFF2457F0),
+                  color: AppColors.royalAzure,
                 ),
               ),
             ],

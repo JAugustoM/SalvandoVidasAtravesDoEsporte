@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class EtapaDadosMedicos extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -39,7 +40,7 @@ class EtapaDadosMedicos extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: 'Digite as observações aqui...',
                     filled: true,
-                    fillColor: const Color(0xFFD8DDE6), // Padronizado com o InputField
+                    fillColor: AppColors.inputFill, // Padronizado com o InputField
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -61,7 +62,7 @@ class EtapaDadosMedicos extends StatelessWidget {
       child: Text(
         text,
         style: const TextStyle(
-          color: Color(0xFF08216F),
+          color: AppColors.deepNavy,
           fontWeight: FontWeight.w700,
           fontSize: 14,
         ),
@@ -98,7 +99,7 @@ class EtapaDadosMedicos extends StatelessWidget {
             value: value,
             groupValue: respostas[id],
             onChanged: (bool? v) => onRespostaChanged(id, v),
-            activeColor: const Color(0xFF08216F),
+            activeColor: AppColors.deepNavy,
           ),
           Text(label, style: const TextStyle(fontSize: 14)),
         ],

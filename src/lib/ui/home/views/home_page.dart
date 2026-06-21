@@ -1,6 +1,7 @@
 import 'package:salvando_vidas/data/stores/home/home_store.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import '../home_page_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -15,7 +16,7 @@ class HomePage extends ConsumerWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF8F8F8), Color(0xFFE4E4E4)],
+            colors: [AppColors.platinum, AppColors.bgGradientEnd],
           ),
         ),
         child: SafeArea(
@@ -50,7 +51,7 @@ class HomePage extends ConsumerWidget {
                                 borderRadius: BorderRadius.circular(12),
                                 boxShadow: const [
                                   BoxShadow(
-                                    color: Color(0x18000000),
+                                    color: AppColors.shadowLight,
                                     blurRadius: 8,
                                     offset: Offset(0, 4),
                                   ),
@@ -64,7 +65,7 @@ class HomePage extends ConsumerWidget {
                                     'Próximos aniversariantes',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Color(0xFF555555),
+                                      color: AppColors.textSecondary,
                                     ),
                                   ),
                                   const SizedBox(height: 6),
@@ -78,7 +79,7 @@ class HomePage extends ConsumerWidget {
                                               'Nenhum nos próximos 7 dias',
                                               style: TextStyle(
                                                 fontSize: 11,
-                                                color: Color(0xFF888888),
+                                                color: AppColors.textSecondary,
                                               ),
                                               textAlign: TextAlign.center,
                                             ),
@@ -101,7 +102,7 @@ class HomePage extends ConsumerWidget {
                                                   const Icon(
                                                     Icons.cake_outlined,
                                                     size: 14,
-                                                    color: Color(0xFF11A6BF),
+                                                    color: AppColors.cyanPrimary,
                                                   ),
                                                   const SizedBox(width: 4),
                                                   Expanded(
@@ -119,8 +120,8 @@ class HomePage extends ConsumerWidget {
                                                     style: TextStyle(
                                                       fontSize: 11,
                                                       color: item.dias == 0
-                                                          ? const Color(0xFF2457F0)
-                                                          : const Color(0xFF888888),
+                                                          ? AppColors.royalAzure
+                                                          : AppColors.textSecondary,
                                                       fontWeight: item.dias == 0
                                                           ? FontWeight.w700
                                                           : FontWeight.normal,
@@ -158,7 +159,7 @@ class HomePage extends ConsumerWidget {
                                   child: MetricCard(
                                     title: 'Total de Alunos',
                                     value: '${homeState.value?.alunos.length ?? "..."}',
-                                    color: const Color(0xFF2457F0),
+                                    color: AppColors.royalAzure,
                                   ),
                                 ),
                                 const SizedBox(height: 12),
@@ -166,7 +167,7 @@ class HomePage extends ConsumerWidget {
                                   child: MetricCard(
                                     title: 'Kimonos Disponíveis',
                                     value: '${homeState.value?.kimonosDisponiveis ?? "..."}',
-                                    color: const Color(0xFF11A6BF),
+                                    color: AppColors.cyanPrimary,
                                   ),
                                 ),
                               ],
@@ -181,11 +182,11 @@ class HomePage extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: const Color(0xFFD8DDE6),
+                        color: AppColors.inputFill,
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: const [
                           BoxShadow(
-                            color: Color(0x22000000),
+                            color: AppColors.shadowMedium,
                             blurRadius: 12,
                             offset: Offset(0, 6),
                           ),
@@ -197,7 +198,7 @@ class HomePage extends ConsumerWidget {
                           const Text(
                             'Alunos:',
                             style: TextStyle(
-                              color: Color(0xFF08216F),
+                              color: AppColors.deepNavy,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                             ),
@@ -214,27 +215,27 @@ class HomePage extends ConsumerWidget {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                                   decoration: const BoxDecoration(
-                                    color: Color(0xFFF0F2F5),
+                                    color: AppColors.platinum,
                                     borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-                                    border: Border(bottom: BorderSide(color: Color(0xFFDDDDDD))),
+                                    border: Border(bottom: BorderSide(color: AppColors.divider)),
                                   ),
                                   child: Row(
                                     children: const [
                                       Expanded(
                                         flex: 4,
-                                        child: Text('Nome', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF555555))),
+                                        child: Text('Nome', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
                                       ),
                                       Expanded(
                                         flex: 1,
-                                        child: Text('Turma', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF555555))),
+                                        child: Text('Turma', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
                                       ),
                                       Expanded(
                                         flex: 2,
-                                        child: Text('Kimono', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF555555))),
+                                        child: Text('Kimono', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
                                       ),
                                       Expanded(
                                         flex: 2,
-                                        child: Text('Última\npresença', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Color(0xFF555555))),
+                                        child: Text('Última\npresença', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
                                       ),
                                     ],
                                   ),
@@ -255,7 +256,7 @@ class HomePage extends ConsumerWidget {
                                             return Container(
                                               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                                               decoration: const BoxDecoration(
-                                                border: Border(bottom: BorderSide(color: Color(0xFFE6E6E6))),
+                                                border: Border(bottom: BorderSide(color: AppColors.divider)),
                                               ),
                                               child: Row(
                                                 children: [
@@ -316,7 +317,7 @@ class HomePage extends ConsumerWidget {
                             icon: const Icon(Icons.person_add_alt_1_outlined),
                             label: const Text('Cadastrar Aluno'),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF10A9D0),
+                              backgroundColor: AppColors.cyanPrimary,
                               foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                               shape: RoundedRectangleBorder(

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/services/aluno_service/aluno_service.dart';
 import 'package:salvando_vidas/data/stores/pesquisa_aluno/pesquisa_aluno_store.dart';
@@ -8,6 +6,7 @@ import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/responsavel/responsavel.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/global/masks.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class EditarAlunoPage extends ConsumerStatefulWidget {
   final Aluno aluno;
@@ -69,7 +68,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Preencha os campos obrigatórios corretamente.'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -85,17 +84,17 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
         title: const Text(
           'Deseja salvar as\nalterações?',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF08216F)),
+          style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.deepNavy),
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancelar', style: TextStyle(color: Colors.red)),
+            child: const Text('Cancelar', style: TextStyle(color: AppColors.error)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF08216F),
+              backgroundColor: AppColors.deepNavy,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
@@ -124,7 +123,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Aluno atualizado com sucesso!'),
-                    backgroundColor: Colors.green,
+                    backgroundColor: AppColors.success,
                     behavior: SnackBarBehavior.floating,
                   ),
                 );
@@ -150,9 +149,9 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
     final mostrarResponsavel = state.idade < 18 || widget.aluno.idResponsavel != null;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
+      backgroundColor: AppColors.platinum,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F7FB),
+        backgroundColor: AppColors.platinum,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
@@ -160,11 +159,11 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
             FocusManager.instance.primaryFocus?.unfocus();
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF08216F), size: 22),
+          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
           label: const Text(
             'Voltar',
             style: TextStyle(
-              color: Color(0xFF08216F),
+              color: AppColors.deepNavy,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -186,7 +185,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
               borderRadius: BorderRadius.circular(16),
               boxShadow: const [
                 BoxShadow(
-                  color: Color(0x18000000),
+                  color: AppColors.shadowLight,
                   blurRadius: 12,
                   offset: Offset(0, 4),
                 ),
@@ -204,7 +203,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF08216F),
+                      color: AppColors.deepNavy,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -223,8 +222,8 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                           // Novo Campo: Contato de Emergência
                           _buildTextField(
                             'Contato de Emergência:*', 
-                            notifier.updateContatoEmergencia, // AVISO: Garanta que essa função exista no UpdateAlunoStore
-                            state.contatoEmergencia ?? '', 
+                            (_) => notifier.updateContatoEmergencia(formatTelefone.getUnmaskedText()),
+                            state.contatoEmergencia, 
                             state.contatoEmergenciaError, 
                             formatter: formatTelefone
                           ),
@@ -274,7 +273,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF08216F),
+                        backgroundColor: AppColors.deepNavy,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                       ),
@@ -299,7 +298,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
         style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
-          color: Color(0xFF11A6BF), // Ciano Escuro para separar as seções
+          color: AppColors.cyanPrimary, // Ciano Escuro para separar as seções
         ),
       ),
     );
@@ -314,7 +313,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
         children: [
           const Text(
             'Aniversário:*',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Color(0xFF08216F)),
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.deepNavy),
           ),
           const SizedBox(height: 4),
           TextFormField(
@@ -325,11 +324,11 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
               hintText: 'DD/MM/AAAA',
               errorText: state.nascimentoError,
               filled: true,
-              fillColor: const Color(0xFFF5F7FB),
+              fillColor: AppColors.platinum,
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               suffixIcon: IconButton(
-                icon: const Icon(Icons.calendar_today, color: Color(0xFF08216F)),
+                icon: const Icon(Icons.calendar_today, color: AppColors.deepNavy),
                 onPressed: () async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   DateTime? pickedDate = await showDatePicker(
@@ -377,7 +376,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
         children: [
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Color(0xFF08216F)),
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.deepNavy),
           ),
           const SizedBox(height: 4),
           TextFormField(
@@ -388,7 +387,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
             decoration: InputDecoration(
               errorText: error,
               filled: true,
-              fillColor: const Color(0xFFF5F7FB), // Padronizado
+              fillColor: AppColors.platinum, // Padronizado
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
             ),
@@ -412,15 +411,15 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
         children: [
           Text(
             label,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Color(0xFF08216F)),
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.deepNavy),
           ),
           const SizedBox(height: 4),
           DropdownButtonFormField<T>(
             value: value,
-            icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF08216F)),
+            icon: const Icon(Icons.arrow_drop_down, color: AppColors.deepNavy),
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFFF5F7FB), // Padronizado
+              fillColor: AppColors.platinum, // Padronizado
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
             ),

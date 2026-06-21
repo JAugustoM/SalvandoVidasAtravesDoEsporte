@@ -5,6 +5,7 @@ import 'package:salvando_vidas/data/stores/turmas/turmas_store.dart';
 import 'package:salvando_vidas/domain/turma/turma.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/turma/turma_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class TurmaPage extends ConsumerStatefulWidget {
   const TurmaPage({super.key});
@@ -26,7 +27,7 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
     final turmas = ref.watch(turmasStoreProvider);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: Colors.white,
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 768), // Responsividade fluida no tablet
@@ -37,9 +38,9 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF5F7FB),
+                  color: AppColors.platinum,
                   border: Border(
-                    bottom: BorderSide(color: Color(0xFFD8DDE6), width: 1),
+                    bottom: BorderSide(color: AppColors.inputFill, width: 1),
                   ),
                 ),
                 child: const Text(
@@ -47,7 +48,7 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Color(0xFF08216F),
+                    color: AppColors.deepNavy,
                   ),
                 ),
               ),
@@ -94,11 +95,11 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.group_outlined, size: 48, color: Color(0xFFAAAAAA)),
+          const Icon(Icons.group_outlined, size: 48, color: AppColors.textSecondary),
           const SizedBox(height: 12),
           Text(
             mensagem,
-            style: const TextStyle(color: Color(0xFFAAAAAA), fontSize: 14),
+            style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
           ),
         ],
       ),

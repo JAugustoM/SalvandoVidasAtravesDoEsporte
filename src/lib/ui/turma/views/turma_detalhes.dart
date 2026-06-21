@@ -2,6 +2,7 @@ import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/data/stores/presenca/presenca_store.dart';
 import 'package:salvando_vidas/domain/turma/turma.dart';
 import 'package:salvando_vidas/ui/turma/turma_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class TurmaDetail extends ConsumerWidget {
   final Turma turma;
@@ -13,18 +14,18 @@ class TurmaDetail extends ConsumerWidget {
     final store = ref.watch(presencaStoreProvider(turma.id));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F7FB),
+        backgroundColor: AppColors.platinum,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF08216F), size: 22),
+          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
           label: const Text(
             'Voltar',
             style: TextStyle(
-              color: Color(0xFF08216F),
+              color: AppColors.deepNavy,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -51,20 +52,20 @@ class TurmaDetail extends ConsumerWidget {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF08216F),
+                        color: AppColors.deepNavy,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       turma.descricao,
-                      style: const TextStyle(color: Color(0xFF666666)),
+                      style: const TextStyle(color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 4),
                     Text('Alunos matriculados: ${store.value?.alunos.length ?? 0}'),
                     const SizedBox(height: 24),
                     const Text(
                       'Alunos',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Color(0xFF08216F)),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.deepNavy),
                     ),
                   ],
                 ),
@@ -96,7 +97,7 @@ class TurmaDetail extends ConsumerWidget {
                   height: 48,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF08216F),
+                      backgroundColor: AppColors.deepNavy,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

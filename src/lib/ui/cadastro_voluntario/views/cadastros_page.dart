@@ -9,6 +9,7 @@ import 'package:salvando_vidas/main_imports.dart';
 import '../widgets/etapa_dados_basicos.dart';
 import '../widgets/etapa_dados_medicos.dart';
 import '../widgets/etapa_dados_responsavel.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class CadastrosPage extends ConsumerStatefulWidget {
   const CadastrosPage({super.key});
@@ -68,7 +69,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Preencha todos os campos obrigatórios corretamente.'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -90,16 +91,16 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text('Confirmar Cadastro', style: TextStyle(color: Color(0xFF08216F))),
+        title: const Text('Confirmar Cadastro', style: TextStyle(color: AppColors.deepNavy)),
         content: const Text('Deseja realmente salvar as informações deste aluno?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cancelar', style: TextStyle(color: Colors.red)),
+            child: const Text('Cancelar', style: TextStyle(color: AppColors.error)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF08216F),
+              backgroundColor: AppColors.deepNavy,
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
             ),
@@ -138,7 +139,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Aluno cadastrado com sucesso!'),
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.success,
           behavior: SnackBarBehavior.floating,
           duration: Duration(seconds: 2),
         ),
@@ -160,7 +161,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Erro ao cadastrar aluno. Tente novamente.'),
-          backgroundColor: Colors.red,
+          backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -190,7 +191,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
     return Scaffold(
       // AJUSTE: Novo botão customizado de voltar com texto e navegação explícita
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F7FB),
+        backgroundColor: AppColors.platinum,
         elevation: 0,
         leadingWidth: 110, // Abre espaço para o texto "Voltar" não quebrar
         leading: TextButton.icon(
@@ -198,11 +199,11 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
             FocusManager.instance.primaryFocus?.unfocus(); // Fecha o teclado preventivamente
             context.go(Routes.home); // Manda o app direto para a HomePage
           },
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF08216F), size: 22),
+          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
           label: const Text(
             'Voltar',
             style: TextStyle(
-              color: Color(0xFF08216F),
+              color: AppColors.deepNavy,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -219,7 +220,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF5F7FB), Color(0xFFE4E4E4)],
+            colors: [AppColors.platinum, AppColors.bgGradientEnd],
           ),
         ),
         child: SafeArea(
@@ -234,7 +235,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color(0x22000000),
+                        color: AppColors.shadowMedium,
                         blurRadius: 12,
                         offset: Offset(0, 6),
                       ),
@@ -249,7 +250,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF08216F),
+                          color: AppColors.deepNavy,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -280,11 +281,11 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                           OutlinedButton(
                             onPressed: _etapaAtual == 0 ? null : _voltar,
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: const Color(0xFF08216F),
+                              foregroundColor: AppColors.deepNavy,
                               side: BorderSide(
                                 color: _etapaAtual == 0
-                                    ? Colors.grey
-                                    : const Color(0xFF08216F),
+                                    ? AppColors.textSecondary
+                                    : AppColors.deepNavy,
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -295,7 +296,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                           ElevatedButton(
                             onPressed: _avancar,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF08216F),
+                              backgroundColor: AppColors.deepNavy,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),

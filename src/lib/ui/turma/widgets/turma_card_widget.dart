@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:salvando_vidas/domain/turma/turma.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class TurmaCardWidget extends StatelessWidget {
   final Turma turma;
@@ -32,12 +33,12 @@ class TurmaCardWidget extends StatelessWidget {
                 height: 52,
                 width: 52,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF08216F).withOpacity(0.1),
+                  color: AppColors.deepNavy.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
                   Icons.groups_rounded,
-                  color: Color(0xFF08216F),
+                  color: AppColors.deepNavy,
                   size: 30,
                 ),
               ),
@@ -51,7 +52,7 @@ class TurmaCardWidget extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF08216F),
+                        color: AppColors.deepNavy,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -60,14 +61,14 @@ class TurmaCardWidget extends StatelessWidget {
                         const Icon(
                           Icons.person_outline,
                           size: 14,
-                          color: Color(0xFF666666),
+                          color: AppColors.textSecondary,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           '${turma.qtdAlunos ?? 0} alunos',
                           style: const TextStyle(
                             fontSize: 13,
-                            color: Color(0xFF666666),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                       ],
@@ -81,7 +82,7 @@ class TurmaCardWidget extends StatelessWidget {
                           child: Icon(
                             Icons.schedule,
                             size: 14,
-                            color: Color(0xFF666666),
+                            color: AppColors.textSecondary,
                           ),
                         ),
                         const SizedBox(width: 4),
@@ -90,7 +91,7 @@ class TurmaCardWidget extends StatelessWidget {
                             turma.horarioFormatado,
                             style: const TextStyle(
                               fontSize: 13,
-                              color: Color(0xFF666666),
+                              color: AppColors.textSecondary,
                             ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
@@ -101,7 +102,7 @@ class TurmaCardWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              const Icon(Icons.chevron_right, color: Color(0xFF08216F)),
+              const Icon(Icons.chevron_right, color: AppColors.deepNavy),
             ],
           ),
         ),

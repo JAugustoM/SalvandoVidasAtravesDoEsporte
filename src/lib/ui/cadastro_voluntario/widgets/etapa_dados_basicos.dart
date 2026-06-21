@@ -1,11 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
 import 'package:salvando_vidas/ui/global/masks.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class EtapaDadosBasicos extends ConsumerStatefulWidget {
   final GlobalKey<FormState> formKey;
@@ -137,7 +136,7 @@ class _EtapaDadosBasicosState extends ConsumerState<EtapaDadosBasicos> {
                     hintText: 'DD/MM/AAAA',
                     errorText: cadastro.nascimentoError,
                     filled: true,
-                    fillColor: const Color(0xFFD8DDE6),
+                    fillColor: AppColors.inputFill,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -147,7 +146,7 @@ class _EtapaDadosBasicosState extends ConsumerState<EtapaDadosBasicos> {
                       vertical: 12,
                     ),
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.calendar_today, color: Color(0xFF08216F)),
+                      icon: const Icon(Icons.calendar_today, color: AppColors.deepNavy),
                       onPressed: () async {
                         DateTime? pickedDate = await showDatePicker(
                           context: context,

@@ -1,4 +1,5 @@
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 Widget buildDropdownField<T>({
   required String label,
@@ -16,7 +17,7 @@ Widget buildDropdownField<T>({
         value: value,
         decoration: InputDecoration(
           filled: true,
-          fillColor: const Color(0xFFF5F7FB),
+          fillColor: AppColors.platinum,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
