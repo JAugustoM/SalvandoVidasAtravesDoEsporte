@@ -6,6 +6,7 @@ import '../../cadastro_voluntario/widgets/action_button.dart';
 import '../../cadastro_voluntario/widgets/expansion_action_card.dart';
 import '../../cadastro_voluntario/widgets/input_field.dart';
 import '../widgets/voluntario_input_field.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
@@ -142,7 +143,7 @@ class _AdminPageState extends ConsumerState<AdminPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF8F8F8), Color(0xFFE4E4E4)],
+            colors: [AppColors.platinum, AppColors.bgGradientEnd],
           ),
         ),
         child: SafeArea(
@@ -161,11 +162,11 @@ class _AdminPageState extends ConsumerState<AdminPage> {
                         vertical: 26,
                       ),
                       decoration: BoxDecoration(
-                        color: const Color(0xFF08216F),
+                        color: AppColors.deepNavy,
                         borderRadius: BorderRadius.circular(20),
                         boxShadow: const [
                           BoxShadow(
-                            color: Color(0x2A000000),
+                            color: AppColors.shadowDark,
                             blurRadius: 22,
                             offset: Offset(0, 10),
                           ),
@@ -177,7 +178,7 @@ class _AdminPageState extends ConsumerState<AdminPage> {
                             'Painel do Administrador',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Color(0xFF10A9D0),
+                              color: AppColors.cyanPrimary,
                               fontSize: 23,
                               fontWeight: FontWeight.w700,
                             ),
@@ -196,7 +197,7 @@ class _AdminPageState extends ConsumerState<AdminPage> {
                       title: 'Cadastrar voluntários',
                       subtitle: 'Nome, contato e função do colaborador',
                       icon: Icons.groups_outlined,
-                      accentColor: const Color(0xFF11A6BF),
+                      accentColor: AppColors.cyanPrimary,
                       expanded: _volunteerExpanded,
                       onToggle: () => _togglePanel('volunteer'),
                       child: Form(
@@ -228,7 +229,7 @@ class _AdminPageState extends ConsumerState<AdminPage> {
                       title: 'Cadastrar turmas',
                       subtitle: 'Faixa etária, dias, horários e responsável',
                       icon: Icons.calendar_month_outlined,
-                      accentColor: const Color(0xFF2457F0),
+                      accentColor: AppColors.royalAzure,
                       expanded: _classExpanded,
                       onToggle: () => _togglePanel('class'),
                       child: Form(
