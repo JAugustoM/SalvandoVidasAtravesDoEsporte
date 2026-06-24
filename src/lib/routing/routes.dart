@@ -9,4 +9,5 @@ abstract final class Routes {
   static const editarPerfil = '/editar-perfil';
   static const inventario = '/inventario';
   static const doacoesPerdas = '/doacoes-perdas';
+  static const emprestimoDevolucao = '/emprestimo-devolucao';
 }

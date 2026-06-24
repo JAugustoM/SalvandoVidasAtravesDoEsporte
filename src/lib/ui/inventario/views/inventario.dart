@@ -145,7 +145,7 @@ class Inventario extends ConsumerWidget {
                       child: _ActionCard(
                         title: 'Emprestar/\nPegar de volta',
                         onTap: () {
-                          // TODO: Implementar tela de empréstimo e devolução
+                          context.push(Routes.emprestimoDevolucao);
                         },
                       ),
                     ),

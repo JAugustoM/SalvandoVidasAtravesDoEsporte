@@ -17,14 +17,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   final List<String> tamanhos = ['A0', 'A1', 'A2', 'A3', 'A4', 'A5'];
   final List<String> cores = ['Branco', 'Azul', 'Preto', 'Rosa'];
 
-  // Variáveis mockadas para a lista de Perdas
-  List<Map<String, dynamic>> kimonosParaPerda = [
-    {'desc': 'A3, Branco', 'selected': false},
-    {'desc': 'A2, Azul', 'selected': false},
-    {'desc': 'A4, Preto', 'selected': false},
-    {'desc': 'A1, Rosa', 'selected': false},
-    {'desc': 'A0, Branco', 'selected': false},
-  ];
+  final List<String> kimonosParaPerda = ['A3, Branco', 'A2, Azul', 'A4, Preto', 'A1, Rosa', 'A0, Branco'];
+  int? _kimonoSelecionadoIndex;
 
   // --- MÉTODOS DOS POP-UPS ---
 
@@ -106,11 +100,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   }
 
   void _mostrarConfirmacaoPerda() {
-    final selecionados = kimonosParaPerda.where((k) => k['selected'] == true).toList();
-    if (selecionados.isEmpty) return;
-
-    // Pega o nome do primeiro selecionado apenas para o protótipo
-    String kimonoDesc = selecionados.first['desc'];
+    if (_kimonoSelecionadoIndex == null) return;
+    String kimonoDesc = kimonosParaPerda[_kimonoSelecionadoIndex!];
 
     showDialog(
       context: context,
@@ -173,10 +164,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
               ),
               onPressed: () {
                 setState(() {
-                  // Limpa a seleção após o sucesso
-                  for (var k in kimonosParaPerda) {
-                    k['selected'] = false;
-                  }
+                  _kimonoSelecionadoIndex = null;
                 });
                 Navigator.pop(context);
               },
@@ -325,21 +313,22 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 itemCount: kimonosParaPerda.length,
                                 itemBuilder: (context, index) {
                                   final kimono = kimonosParaPerda[index];
-                                  return CheckboxListTile(
+                                  return RadioListTile<int>(
                                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                                     controlAffinity: ListTileControlAffinity.trailing,
                                     title: Row(
                                       children: [
                                         const Icon(Icons.sports_martial_arts, size: 24, color: Colors.black87),
                                         const SizedBox(width: 12),
-                                        Text(kimono['desc'], style: const TextStyle(fontSize: 15)),
+                                        Text(kimonosParaPerda[index], style: const TextStyle(fontSize: 15)),
                                       ],
                                     ),
-                                    value: kimono['selected'],
+                                    value: index,
+                                    groupValue: _kimonoSelecionadoIndex,
                                     activeColor: Colors.cyan,
-                                    onChanged: (bool? value) {
+                                    onChanged: (int? value) {
                                       setState(() {
-                                        kimono['selected'] = value;
+                                        _kimonoSelecionadoIndex = value;
                                       });
                                     },
                                   );
@@ -356,7 +345,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                 ),
-                                onPressed: kimonosParaPerda.any((k) => k['selected'] == true)
+                                onPressed: _kimonoSelecionadoIndex != null
                                     ? _mostrarConfirmacaoPerda
                                     : null,
                                 child: const Text('Registrar Perda', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
