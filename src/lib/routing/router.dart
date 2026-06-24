@@ -11,6 +11,7 @@ import 'package:salvando_vidas/ui/turma/views/turma.dart';
 import 'package:salvando_vidas/ui/Pesquisar-editar-dados-Aluno/pesquisa_alunos_imports.dart';
 import 'package:salvando_vidas/ui/configuracao/views/editar_perfil_page.dart';
 import 'package:salvando_vidas/ui/inventario/views/inventario.dart';
+import 'package:salvando_vidas/ui/inventario/views/doacoes_perdas_page.dart';
 
 part 'router.g.dart';
 
@@ -73,6 +74,11 @@ GoRouter router(Ref ref) {
           ),
 
           GoRoute(path: Routes.inventario, builder: (context, state) => Inventario()),
+
+          GoRoute(
+            path: Routes.doacoesPerdas,
+            builder: (context, state) => const DoacoesPerdasPage(),
+          ),
         ],
       ),
     ],
