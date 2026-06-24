@@ -14,11 +14,26 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   // Variáveis para o formulário de Doação
   String? tamanhoDoacao;
   String? corDoacao;
+  final TextEditingController _nomeDoadorController = TextEditingController();
+  final TextEditingController _quantidadeDoadaController = TextEditingController();
+  
   final List<String> tamanhos = ['A0', 'A1', 'A2', 'A3', 'A4', 'A5'];
   final List<String> cores = ['Branco', 'Azul', 'Preto', 'Rosa'];
 
+  // Variáveis para o formulário de Perda
   final List<String> kimonosParaPerda = ['A3, Branco', 'A2, Azul', 'A4, Preto', 'A1, Rosa', 'A0, Branco'];
   int? _kimonoSelecionadoIndex;
+  final TextEditingController _motivoPerdaController = TextEditingController();
+  final TextEditingController _quantidadePerdidaController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nomeDoadorController.dispose();
+    _quantidadeDoadaController.dispose();
+    _motivoPerdaController.dispose();
+    _quantidadePerdidaController.dispose();
+    super.dispose();
+  }
 
   // --- MÉTODOS DOS POP-UPS ---
 
@@ -88,6 +103,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 setState(() {
                   tamanhoDoacao = null;
                   corDoacao = null;
+                  _nomeDoadorController.clear();
+                  _quantidadeDoadaController.clear();
                 });
                 Navigator.pop(context);
               },
@@ -165,6 +182,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
               onPressed: () {
                 setState(() {
                   _kimonoSelecionadoIndex = null;
+                  _motivoPerdaController.clear();
+                  _quantidadePerdidaController.clear();
                 });
                 Navigator.pop(context);
               },
@@ -274,6 +293,35 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              controller: _nomeDoadorController,
+                              decoration: InputDecoration(
+                                hintText: 'Nome do doador...',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              onChanged: (_) => setState(() {}),
+                            ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              controller: _quantidadeDoadaController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Quantidade doada...',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              onChanged: (_) => setState(() {}),
+                            ),
                             const SizedBox(height: 16),
                             SizedBox(
                               width: double.infinity,
@@ -284,7 +332,10 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                 ),
-                                onPressed: (tamanhoDoacao != null && corDoacao != null) 
+                                onPressed: (tamanhoDoacao != null && 
+                                            corDoacao != null && 
+                                            _nomeDoadorController.text.isNotEmpty && 
+                                            _quantidadeDoadaController.text.isNotEmpty) 
                                     ? _mostrarConfirmacaoDoacao 
                                     : null, // Fica desabilitado se não preencher tudo
                                 child: const Text('Registrar Doação', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
@@ -320,7 +371,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                       children: [
                                         const Icon(Icons.sports_martial_arts, size: 24, color: Colors.black87),
                                         const SizedBox(width: 12),
-                                        Text(kimonosParaPerda[index], style: const TextStyle(fontSize: 15)),
+                                        Text(kimono, style: const TextStyle(fontSize: 15)),
                                       ],
                                     ),
                                     value: index,
@@ -335,6 +386,35 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 },
                               ),
                             ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              controller: _motivoPerdaController,
+                              decoration: InputDecoration(
+                                hintText: 'Motivo da perda...',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              onChanged: (_) => setState(() {}),
+                            ),
+                            const SizedBox(height: 12),
+                            TextField(
+                              controller: _quantidadePerdidaController,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                hintText: 'Quantidade perdida...',
+                                filled: true,
+                                fillColor: Colors.grey.shade200,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              onChanged: (_) => setState(() {}),
+                            ),
                             const SizedBox(height: 16),
                             SizedBox(
                               width: double.infinity,
@@ -345,7 +425,9 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                                 ),
-                                onPressed: _kimonoSelecionadoIndex != null
+                                onPressed: (_kimonoSelecionadoIndex != null && 
+                                            _motivoPerdaController.text.isNotEmpty && 
+                                            _quantidadePerdidaController.text.isNotEmpty)
                                     ? _mostrarConfirmacaoPerda
                                     : null,
                                 child: const Text('Registrar Perda', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
