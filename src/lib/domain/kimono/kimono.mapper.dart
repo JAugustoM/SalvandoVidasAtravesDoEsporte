@@ -470,11 +470,12 @@ class EmprestimoMapper extends ClassMapperBase<Emprestimo> {
   );
   static DateTime _$data(Emprestimo v) => v.data;
   static const Field<Emprestimo, DateTime> _f$data = Field('data', _$data);
-  static DateTime _$dataDevolucao(Emprestimo v) => v.dataDevolucao;
+  static DateTime? _$dataDevolucao(Emprestimo v) => v.dataDevolucao;
   static const Field<Emprestimo, DateTime> _f$dataDevolucao = Field(
     'dataDevolucao',
     _$dataDevolucao,
     key: r'data_devolucao',
+    opt: true,
   );
 
   @override
@@ -590,7 +591,7 @@ class _EmprestimoCopyWithImpl<$R, $Out>
     TamanhoKimono? tamanho,
     int? quantidade,
     DateTime? data,
-    DateTime? dataDevolucao,
+    Object? dataDevolucao = $none,
   }) => $apply(
     FieldCopyWithData({
       if (id != $none) #id: id,
@@ -599,7 +600,7 @@ class _EmprestimoCopyWithImpl<$R, $Out>
       if (tamanho != null) #tamanho: tamanho,
       if (quantidade != null) #quantidade: quantidade,
       if (data != null) #data: data,
-      if (dataDevolucao != null) #dataDevolucao: dataDevolucao,
+      if (dataDevolucao != $none) #dataDevolucao: dataDevolucao,
     }),
   );
   @override

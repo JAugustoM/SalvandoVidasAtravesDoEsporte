@@ -90,7 +90,7 @@ class Emprestimo with EmprestimoMappable {
   final DateTime data;
 
   @MappableClass(hook: HookData())
-  final DateTime dataDevolucao;
+  final DateTime? dataDevolucao;
 
   Emprestimo({
     this.id,
@@ -99,7 +99,7 @@ class Emprestimo with EmprestimoMappable {
     required this.tamanho,
     required this.quantidade,
     required this.data,
-    required this.dataDevolucao,
+    this.dataDevolucao,
   });
 
   static final fromMap = EmprestimoMapper.fromMap;

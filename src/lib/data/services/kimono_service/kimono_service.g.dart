@@ -11,25 +11,25 @@ part of 'kimono_service.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
-@ProviderFor(alunoService)
-final alunoServiceProvider = AlunoServiceProvider._();
+@ProviderFor(kimonoService)
+final kimonoServiceProvider = KimonoServiceProvider._();
 
-final class AlunoServiceProvider
+final class KimonoServiceProvider
     extends $FunctionalProvider<KimonoService, KimonoService, KimonoService>
     with $Provider<KimonoService> {
-  AlunoServiceProvider._()
+  KimonoServiceProvider._()
     : super(
         from: null,
         argument: null,
         retry: null,
-        name: r'alunoServiceProvider',
+        name: r'kimonoServiceProvider',
         isAutoDispose: false,
         dependencies: null,
         $allTransitiveDependencies: null,
       );
 
   @override
-  String debugGetCreateSourceHash() => _$alunoServiceHash();
+  String debugGetCreateSourceHash() => _$kimonoServiceHash();
 
   @$internal
   @override
@@ -38,7 +38,7 @@ final class AlunoServiceProvider
 
   @override
   KimonoService create(Ref ref) {
-    return alunoService(ref);
+    return kimonoService(ref);
   }
 
   /// {@macro riverpod.override_with_value}
@@ -50,4 +50,4 @@ final class AlunoServiceProvider
   }
 }
 
-String _$alunoServiceHash() => r'e2eb4c78606b875f0e1bf1be25ce9806827e4534';
+String _$kimonoServiceHash() => r'9f67175e79b7e78e6fbf02bd3630daadf2182d6f';

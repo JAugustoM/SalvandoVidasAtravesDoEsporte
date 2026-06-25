@@ -7,7 +7,7 @@ import '../global/global_service.dart';
 part 'kimono_service.g.dart';
 
 @Riverpod(keepAlive: true)
-KimonoService alunoService(Ref ref) {
+KimonoService kimonoService(Ref ref) {
   return KimonoService(ref.watch(supabaseClientProvider));
 }
 
@@ -18,34 +18,34 @@ class KimonoService {
 
   Future<Doacao> cadastrarDoacao(Doacao doacao) {
     return runSupabaseCall(() async {
-      final data = await _supabase
-          .from('doacoes')
-          .insert(doacao.toMap())
-          .select();
+      final data = doacao.toMap();
+      data.remove('id');
 
-      return Doacao.fromMap(data.first);
+      final res = await _supabase.from('doacoes').insert(data).select();
+
+      return Doacao.fromMap(res.first);
     });
   }
 
   Future<Perda> cadastrarPerda(Perda perda) {
     return runSupabaseCall(() async {
-      final data = await _supabase
-          .from('perdas')
-          .insert(perda.toMap())
-          .select();
+      final data = perda.toMap();
+      data.remove('id');
 
-      return Perda.fromMap(data.first);
+      final res = await _supabase.from('perdas').insert(data).select();
+
+      return Perda.fromMap(res.first);
     });
   }
 
   Future<Emprestimo> cadastrarEmprestimo(Emprestimo emprestimo) {
     return runSupabaseCall(() async {
-      final data = await _supabase
-          .from('emprestimos')
-          .insert(emprestimo.toMap())
-          .select();
+      final data = emprestimo.toMap();
+      data.remove('id');
 
-      return Emprestimo.fromMap(data.first);
+      final res = await _supabase.from('emprestimos').insert(data).select();
+
+      return Emprestimo.fromMap(res.first);
     });
   }
 
