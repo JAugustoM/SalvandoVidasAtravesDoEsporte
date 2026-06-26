@@ -1,12 +1,13 @@
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/data/stores/cadastro_voluntario/cadastro_voluntario_form.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 enum InputTypes { nome, email, senha, telefone, cpf, funcao }
 
 final voluntarioInputDecoration = InputDecoration(
-  hintStyle: const TextStyle(color: Color(0xAA000000), fontSize: 13),
+  hintStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
   filled: true,
-  fillColor: const Color(0xFFD8DDE6),
+  fillColor: AppColors.inputFill,
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
     borderSide: BorderSide.none,
@@ -17,7 +18,7 @@ final voluntarioInputDecoration = InputDecoration(
   ),
   focusedBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(12),
-    borderSide: const BorderSide(color: Color(0xFF2457F0), width: 1.2),
+    borderSide: const BorderSide(color: AppColors.royalAzure, width: 1.2),
   ),
   contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
 );
@@ -47,7 +48,7 @@ class CadastroTextField extends ConsumerWidget {
         InputTypes.funcao => (funcao) => notifier.updateFuncao(funcao),
       },
       style: const TextStyle(
-        color: Color(0xFF24304D),
+        color: AppColors.deepNavy,
         fontWeight: FontWeight.w600,
       ),
       decoration: voluntarioInputDecoration.copyWith(
@@ -90,7 +91,7 @@ class VoluntarioInputField extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            color: Color(0xFF10A9D0),
+            color: AppColors.cyanPrimary,
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),

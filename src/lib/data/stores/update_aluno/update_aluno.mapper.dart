@@ -61,6 +61,14 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
     opt: true,
     def: '',
   );
+  static String _$contatoEmergencia(UpdateAlunoState v) => v.contatoEmergencia;
+  static const Field<UpdateAlunoState, String> _f$contatoEmergencia = Field(
+    'contatoEmergencia',
+    _$contatoEmergencia,
+    key: r'contato_emergencia',
+    opt: true,
+    def: '',
+  );
   static String _$email(UpdateAlunoState v) => v.email;
   static const Field<UpdateAlunoState, String> _f$email = Field(
     'email',
@@ -101,6 +109,13 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
     key: r'id_ficha',
     opt: true,
     def: '',
+  );
+  static int? _$idTurma(UpdateAlunoState v) => v.idTurma;
+  static const Field<UpdateAlunoState, int> _f$idTurma = Field(
+    'idTurma',
+    _$idTurma,
+    key: r'id_turma',
+    opt: true,
   );
   static String _$nomeResponsavel(UpdateAlunoState v) => v.nomeResponsavel;
   static const Field<UpdateAlunoState, String> _f$nomeResponsavel = Field(
@@ -150,20 +165,20 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
     #nome: _f$nome,
     #cpf: _f$cpf,
     #contato: _f$contato,
+    #contatoEmergencia: _f$contatoEmergencia,
     #email: _f$email,
     #nascimento: _f$nascimento,
     #tipoSanguineo: _f$tipoSanguineo,
     #faixa: _f$faixa,
     #grau: _f$grau,
     #idFicha: _f$idFicha,
+    #idTurma: _f$idTurma,
     #nomeResponsavel: _f$nomeResponsavel,
     #cpfResponsavel: _f$cpfResponsavel,
     #contatoResponsavel: _f$contatoResponsavel,
     #emailResponsavel: _f$emailResponsavel,
     #dirty: _f$dirty,
   };
-  @override
-  final bool ignoreNull = true;
 
   static UpdateAlunoState _instantiate(DecodingData data) {
     return UpdateAlunoState(
@@ -172,12 +187,14 @@ class UpdateAlunoStateMapper extends ClassMapperBase<UpdateAlunoState> {
       nome: data.dec(_f$nome),
       cpf: data.dec(_f$cpf),
       contato: data.dec(_f$contato),
+      contatoEmergencia: data.dec(_f$contatoEmergencia),
       email: data.dec(_f$email),
       nascimento: data.dec(_f$nascimento),
       tipoSanguineo: data.dec(_f$tipoSanguineo),
       faixa: data.dec(_f$faixa),
       grau: data.dec(_f$grau),
       idFicha: data.dec(_f$idFicha),
+      idTurma: data.dec(_f$idTurma),
       nomeResponsavel: data.dec(_f$nomeResponsavel),
       cpfResponsavel: data.dec(_f$cpfResponsavel),
       contatoResponsavel: data.dec(_f$contatoResponsavel),
@@ -256,12 +273,14 @@ abstract class UpdateAlunoStateCopyWith<$R, $In extends UpdateAlunoState, $Out>
     String? nome,
     String? cpf,
     String? contato,
+    String? contatoEmergencia,
     String? email,
     DateTime? nascimento,
     TipoSanguineo? tipoSanguineo,
     Faixa? faixa,
     int? grau,
     String? idFicha,
+    int? idTurma,
     String? nomeResponsavel,
     String? cpfResponsavel,
     String? contatoResponsavel,
@@ -296,12 +315,14 @@ class _UpdateAlunoStateCopyWithImpl<$R, $Out>
     String? nome,
     String? cpf,
     String? contato,
+    String? contatoEmergencia,
     String? email,
     Object? nascimento = $none,
     Object? tipoSanguineo = $none,
     Object? faixa = $none,
     int? grau,
     String? idFicha,
+    Object? idTurma = $none,
     String? nomeResponsavel,
     String? cpfResponsavel,
     String? contatoResponsavel,
@@ -315,12 +336,14 @@ class _UpdateAlunoStateCopyWithImpl<$R, $Out>
       if (nome != null) #nome: nome,
       if (cpf != null) #cpf: cpf,
       if (contato != null) #contato: contato,
+      if (contatoEmergencia != null) #contatoEmergencia: contatoEmergencia,
       if (email != null) #email: email,
       if (nascimento != $none) #nascimento: nascimento,
       if (tipoSanguineo != $none) #tipoSanguineo: tipoSanguineo,
       if (faixa != $none) #faixa: faixa,
       if (grau != null) #grau: grau,
       if (idFicha != null) #idFicha: idFicha,
+      if (idTurma != $none) #idTurma: idTurma,
       if (nomeResponsavel != null) #nomeResponsavel: nomeResponsavel,
       if (cpfResponsavel != null) #cpfResponsavel: cpfResponsavel,
       if (contatoResponsavel != null) #contatoResponsavel: contatoResponsavel,
@@ -338,12 +361,17 @@ class _UpdateAlunoStateCopyWithImpl<$R, $Out>
     nome: data.get(#nome, or: $value.nome),
     cpf: data.get(#cpf, or: $value.cpf),
     contato: data.get(#contato, or: $value.contato),
+    contatoEmergencia: data.get(
+      #contatoEmergencia,
+      or: $value.contatoEmergencia,
+    ),
     email: data.get(#email, or: $value.email),
     nascimento: data.get(#nascimento, or: $value.nascimento),
     tipoSanguineo: data.get(#tipoSanguineo, or: $value.tipoSanguineo),
     faixa: data.get(#faixa, or: $value.faixa),
     grau: data.get(#grau, or: $value.grau),
     idFicha: data.get(#idFicha, or: $value.idFicha),
+    idTurma: data.get(#idTurma, or: $value.idTurma),
     nomeResponsavel: data.get(#nomeResponsavel, or: $value.nomeResponsavel),
     cpfResponsavel: data.get(#cpfResponsavel, or: $value.cpfResponsavel),
     contatoResponsavel: data.get(

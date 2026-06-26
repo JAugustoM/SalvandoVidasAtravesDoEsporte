@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 enum TurmaMenuOption { editar, excluir }
 
@@ -17,8 +18,8 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<TurmaMenuOption>(
-      icon: const Icon(Icons.more_vert, color: Color(0xFFAAAAAA)),
-      color: const Color(0xFFFFFFFF),
+      icon: const Icon(Icons.more_vert, color: AppColors.textSecondary),
+      color: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       onSelected: (TurmaMenuOption option) {
         switch (option) {
@@ -37,7 +38,7 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
             children: [
               const Icon(
                 Icons.edit_outlined,
-                color: Color(0xFF0097B2),
+                color: AppColors.cyanPrimary,
                 size: 18,
               ),
               const SizedBox(width: 8),
@@ -49,9 +50,9 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
           value: TurmaMenuOption.excluir,
           child: Row(
             children: [
-              const Icon(Icons.delete_outline, color: Colors.red, size: 18),
+              const Icon(Icons.delete_outline, color: AppColors.error, size: 18),
               const SizedBox(width: 8),
-              const Text('Excluir', style: TextStyle(color: Colors.red)),
+              const Text('Excluir', style: TextStyle(color: AppColors.error)),
             ],
           ),
         ),

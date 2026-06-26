@@ -6,6 +6,7 @@ import 'package:salvando_vidas/domain/responsavel/responsavel.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/Pesquisar-editar-dados-Aluno/views/editar_aluno_page.dart';
 import 'package:salvando_vidas/ui/global/masks.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class AlunoExpandableCard extends ConsumerStatefulWidget {
   final Aluno aluno;
@@ -40,7 +41,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: isInativo ? 0 : 2,
-      color: isInativo ? Colors.grey[200] : Colors.white,
+      color: isInativo ? AppColors.textSecondary.withOpacity(0.4) : Colors.white,
       child: InkWell(
         onTap: () => setState(() => _isExpanded = !_isExpanded),
         borderRadius: BorderRadius.circular(12),
@@ -64,7 +65,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
-                                color: isInativo ? Colors.grey[500] : Colors.black,
+                                color: isInativo ? AppColors.textSecondary : Colors.black,
                               ),
                             ),
                             if (isInativo) ...[
@@ -75,7 +76,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                                   vertical: 2,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[400],
+                                  color: AppColors.textSecondary,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Text(
@@ -95,14 +96,14 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                           'Turma: ${widget.aluno.idTurma ?? "N/A"}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: isInativo ? Colors.grey[400] : Colors.black87,
+                            color: isInativo ? AppColors.textSecondary : AppColors.black1,
                           ),
                         ),
                         Text(
                           'Faixa: ${widget.aluno.faixa.nomeVisivel}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: isInativo ? Colors.grey[400] : Colors.black87,
+                            color: isInativo ? AppColors.textSecondary : AppColors.black1,
                           ),
                         ),
                       ],
@@ -137,7 +138,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                             value: 'inativar',
                             child: Row(
                               children: [
-                                Icon(Icons.block, size: 18, color: Colors.red),
+                                Icon(Icons.block, size: 18, color: AppColors.error),
                                 SizedBox(width: 8),
                                 Text('Inativar'),
                               ],
@@ -148,7 +149,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                             value: 'reativar',
                             child: Row(
                               children: [
-                                Icon(Icons.check_circle_outline, size: 18, color: Colors.green),
+                                Icon(Icons.check_circle_outline, size: 18, color: AppColors.success),
                                 SizedBox(width: 8),
                                 Text('Reativar'),
                               ],
@@ -207,7 +208,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF00BCD4),
+                        backgroundColor: AppColors.cyanPrimary,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -244,7 +245,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
       padding: const EdgeInsets.only(bottom: 2.0),
       child: RichText(
         text: TextSpan(
-          style: const TextStyle(color: Colors.black87, fontSize: 13),
+          style: const TextStyle(color: AppColors.black1, fontSize: 13),
           children: [
             TextSpan(
               text: label,

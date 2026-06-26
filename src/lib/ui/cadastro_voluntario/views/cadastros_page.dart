@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salvando_vidas/data/services/aluno_service/aluno_service.dart';
 import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/responsavel/responsavel.dart';
 import 'package:salvando_vidas/main_imports.dart';
 
-import '../widgets/cadastro_dialogs.dart';
 import '../widgets/etapa_dados_basicos.dart';
 import '../widgets/etapa_dados_medicos.dart';
 import '../widgets/etapa_dados_responsavel.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class CadastrosPage extends ConsumerStatefulWidget {
   const CadastrosPage({super.key});
@@ -23,6 +25,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
   final _formKeyEtapa2 = GlobalKey<FormState>();
   final _formKeyEtapa3 = GlobalKey<FormState>();
   late final _formKeys = [_formKeyEtapa1, _formKeyEtapa2, _formKeyEtapa3];
+
   // Controllers - Etapa 2
   final _obsMedicasController = TextEditingController();
   final Map<int, bool?> _respostasMedicas = {
@@ -52,15 +55,24 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
   }
 
   void _avancar() {
+    // if (_formKeys[_etapaAtual].currentState?.validate() ?? false) {
     if (cadastro.estaValido) {
       if (_etapaAtual == 0 || (_etapaAtual == 1 && cadastro.idade < 18)) {
         _pageController.nextPage(
           duration: const Duration(milliseconds: 300),
           curve: Curves.ease,
         );
-      } else if (cadastro.temResponsavel) {
+      } else if (cadastro.temResponsavel || cadastro.idade >= 18) {
         _mostrarDialogConfirmacao();
       }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Preencha todos os campos obrigatórios corretamente.'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
     }
   }
 
@@ -74,46 +86,94 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
   }
 
   void _mostrarDialogConfirmacao() {
-    showConfirmationDialog(
+    showDialog(
       context: context,
-      onConfirm: () async {
-        Aluno aluno = cadastro.aluno;
-        Responsavel responsavel = cadastro.responsavel;
-
-        try {
-          if (cadastro.idade < 18) {
-            final res = await service.cadastrarResponsavel(responsavel);
-            aluno = aluno.copyWith(idResponsavel: res.id!);
-          }
-
-          await service.cadastrarAluno(aluno);
-          showSuccessDialog(
-            context: context,
-            onFechar: () {
-              setState(() {
-                _pageController.jumpToPage(0);
-                _etapaAtual = 0;
-                notifier.reset();
-                _obsMedicasController.clear();
-                _respostasMedicas.updateAll((key, value) => null);
-              });
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Confirmar Cadastro',
+          style: TextStyle(color: AppColors.deepNavy),
+        ),
+        content: const Text(
+          'Deseja realmente salvar as informações deste aluno?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(color: AppColors.error),
+            ),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.deepNavy,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              _salvarAluno();
             },
-          );
-        } on AppApiException catch (e) {
-          logger.e(e.message, error: e.error);
-
-          showFailureDialog(
-            context: context,
-            onFechar: () {
-              setState(() {
-                _pageController.jumpToPage(0);
-                _etapaAtual = 0;
-              });
-            },
-          );
-        }
-      },
+            child: const Text('Confirmar'),
+          ),
+        ],
+      ),
     );
+  }
+
+  Future<void> _salvarAluno() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => const Center(child: CircularProgressIndicator()),
+    );
+
+    Aluno aluno = cadastro.aluno;
+    Responsavel responsavel = cadastro.responsavel;
+
+    try {
+      if (cadastro.idade < 18) {
+        final res = await service.cadastrarResponsavel(responsavel);
+        aluno = aluno.copyWith(idResponsavel: res.id!);
+      }
+
+      await service.cadastrarAluno(aluno);
+
+      if (!mounted) return;
+      Navigator.of(context, rootNavigator: true).pop();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Aluno cadastrado com sucesso!'),
+          backgroundColor: AppColors.success,
+          behavior: SnackBarBehavior.floating,
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      await Future.delayed(const Duration(seconds: 1));
+      if (mounted) {
+        notifier.reset();
+        // AJUSTE: Redireciona de forma segura para a home page após salvar
+        context.go(Routes.home);
+      }
+    } on AppApiException catch (e) {
+      if (!mounted) return;
+      Navigator.of(context, rootNavigator: true).pop();
+
+      logger.e(e.message, error: e.error);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao cadastrar aluno. Tente novamente.'),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    }
   }
 
   String _tituloEtapa() {
@@ -121,7 +181,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
       case 0:
         return 'Cadastrar Aluno:';
       case 1:
-        return 'Cadastrar Aluno (Observações Médicas):';
+        return 'Cadastrar Aluno (Dados Médicos):';
       case 2:
         return 'Cadastrar Aluno (< 18 anos):';
       default:
@@ -135,13 +195,45 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
     notifier = this.ref.read(cadastroAlunoProvider.notifier);
     service = this.ref.read(alunoServiceProvider);
     logger = this.ref.read(loggerProvider);
+
     return Scaffold(
+      // AJUSTE: Novo botão customizado de voltar com texto e navegação explícita
+      appBar: AppBar(
+        backgroundColor: AppColors.platinum,
+        elevation: 0,
+        leadingWidth: 110, // Abre espaço para o texto "Voltar" não quebrar
+        leading: TextButton.icon(
+          onPressed: () {
+            FocusManager.instance.primaryFocus
+                ?.unfocus(); // Fecha o teclado preventivamente
+            context.go(Routes.home); // Manda o app direto para a HomePage
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: AppColors.deepNavy,
+            size: 22,
+          ),
+          label: const Text(
+            'Voltar',
+            style: TextStyle(
+              color: AppColors.deepNavy,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.only(left: 8),
+            alignment: Alignment.centerLeft,
+          ),
+        ),
+      ),
       body: Container(
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF5F7FB), Color(0xFFE4E4E4)],
+            colors: [AppColors.platinum, AppColors.bgGradientEnd],
           ),
         ),
         child: SafeArea(
@@ -156,7 +248,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: const [
                       BoxShadow(
-                        color: Color(0x22000000),
+                        color: AppColors.shadowMedium,
                         blurRadius: 12,
                         offset: Offset(0, 6),
                       ),
@@ -171,7 +263,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF08216F),
+                          color: AppColors.deepNavy,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -202,22 +294,22 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                           OutlinedButton(
                             onPressed: _etapaAtual == 0 ? null : _voltar,
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: const Color(0xFF08216F),
+                              foregroundColor: AppColors.deepNavy,
                               side: BorderSide(
                                 color: _etapaAtual == 0
-                                    ? Colors.grey
-                                    : const Color(0xFF08216F),
+                                    ? AppColors.textSecondary
+                                    : AppColors.deepNavy,
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text('Voltar'),
+                            child: const Text('Voltar Etapa'),
                           ),
                           ElevatedButton(
                             onPressed: _avancar,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF08216F),
+                              backgroundColor: AppColors.deepNavy,
                               foregroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),

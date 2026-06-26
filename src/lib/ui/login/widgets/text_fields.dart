@@ -1,6 +1,7 @@
 import 'package:salvando_vidas/main_imports.dart';
 
 import '../login_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class EmailTextField extends ConsumerWidget {
   const EmailTextField({super.key});
@@ -28,10 +29,10 @@ class EmailTextField extends ConsumerWidget {
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Color(0xFF11A6BF), Color(0xFF6EC8D6)],
+                colors: [AppColors.cyanPrimary, AppColors.cyanPastel],
               ),
             ),
-            child: const Icon(Icons.email_outlined, color: Color(0xFF1E2B61)),
+            child: const Icon(Icons.email_outlined, color: AppColors.deepNavy),
           ),
         ),
       ),
@@ -72,10 +73,10 @@ class _SenhaTextFieldState extends ConsumerState<SenhaTextField> {
               gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Color(0xFF11A6BF), Color(0xFF6EC8D6)],
+                colors: [AppColors.cyanPrimary, AppColors.cyanPastel],
               ),
             ),
-            child: const Icon(Icons.lock_outline, color: Color(0xFF1E2B61)),
+            child: const Icon(Icons.lock_outline, color: AppColors.deepNavy),
           ),
           suffixIcon: IconButton(
             onPressed: () {

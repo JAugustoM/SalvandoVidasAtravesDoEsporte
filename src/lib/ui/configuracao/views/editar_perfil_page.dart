@@ -8,6 +8,7 @@ import 'package:salvando_vidas/main_imports.dart';
 // Importações dos seus componentes customizados
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/action_button.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class EditarPerfilPage extends ConsumerStatefulWidget {
   const EditarPerfilPage({super.key});
@@ -49,7 +50,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFF00BCD4),
+        backgroundColor: AppColors.cyanPrimary,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -66,7 +67,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xFFF8F8F8), Color(0xFFE4E4E4)],
+            colors: [AppColors.platinum, AppColors.bgGradientEnd],
           ),
         ),
         child: SafeArea(
@@ -91,7 +92,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: const [
                             BoxShadow(
-                              color: Color(0x0A000000),
+                              color: AppColors.shadowLight,
                               blurRadius: 22,
                               offset: Offset(0, 10),
                             ),
@@ -101,10 +102,10 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                           children: [
                             const CircleAvatar(
                               radius: 36,
-                              backgroundColor: Color(0xFFE2E6FA),
+                              backgroundColor: AppColors.white2,
                               child: Icon(
                                 Icons.person,
-                                color: Color(0xFF4A55A2),
+                                color: AppColors.royalAzure,
                                 size: 36,
                               ),
                             ),
@@ -114,7 +115,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF333333),
+                                color: AppColors.black1,
                               ),
                             ),
                             const SizedBox(height: 8),
@@ -122,7 +123,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                               'Atualize suas informações pessoais abaixo.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.grey,
+                                color: AppColors.textSecondary,
                                 fontSize: 14,
                               ),
                             ),

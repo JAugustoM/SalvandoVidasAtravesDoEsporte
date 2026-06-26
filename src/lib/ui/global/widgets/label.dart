@@ -1,4 +1,5 @@
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 Widget buildLabel(String text) {
   final bool temAsterisco = text.endsWith('*');
@@ -18,7 +19,7 @@ Widget buildLabel(String text) {
           if (temAsterisco)
             const TextSpan(
               text: '*',
-              style: TextStyle(color: Colors.red), // Asterisco vermelho
+              style: TextStyle(color: AppColors.error), // Asterisco vermelho
             ),
         ],
       ),
