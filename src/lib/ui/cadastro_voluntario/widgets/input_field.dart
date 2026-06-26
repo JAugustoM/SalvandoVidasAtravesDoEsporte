@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:salvando_vidas/ui/global/widgets/label.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class InputField extends StatelessWidget {
   const InputField({
@@ -17,7 +18,6 @@ class InputField extends StatelessWidget {
   });
 
   final Color? fillColor;
-
   final void Function(String) update;
   final String? error;
   final String initialValue;
@@ -39,16 +39,17 @@ class InputField extends StatelessWidget {
           initialValue: initialValue,
           keyboardType: keyboardType,
           inputFormatters: inputFormatters,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           style: const TextStyle(
-            color: Color(0xFF24304D),
+            color: AppColors.deepNavy,
             fontWeight: FontWeight.w600,
           ),
           decoration: InputDecoration(
             hintText: hint,
             errorText: error,
-            hintStyle: const TextStyle(color: Color(0xAA000000), fontSize: 13),
+            hintStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
             filled: true,
-            fillColor: fillColor ?? const Color(0xFFD8DDE6),
+            fillColor: fillColor ?? AppColors.platinum,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,
@@ -60,7 +61,7 @@ class InputField extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(
-                color: Color(0xFF2457F0),
+                color: AppColors.royalAzure,
                 width: 1.2,
               ),
             ),

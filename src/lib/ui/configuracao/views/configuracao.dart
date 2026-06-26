@@ -1,23 +1,24 @@
 // Pagina de configuração onde pode ser acessado edição de perfil voluntário, dark mode, deslogar
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
+import 'package:salvando_vidas/data/stores/theme/theme_store.dart';
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
-class Configuracao extends ConsumerStatefulWidget {
+class Configuracao extends ConsumerWidget {
   const Configuracao({super.key});
 
   @override
-  ConsumerState<Configuracao> createState() => _ConfiguracaoState();
-}
-
-class _ConfiguracaoState extends ConsumerState<Configuracao> {
-  bool darkMode = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final user = this.ref.read(userServiceProvider).localUser!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.read(userServiceProvider).localUser!;
+    final themeAsync = ref.watch(themeStoreProvider);
+    final isDark = themeAsync.when(
+      data: (v) => v,
+      loading: () => false,
+      error: (_, __) => false,
+    );
+    final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F7FB),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -25,10 +26,9 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                // PERFIL
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: scheme.surface,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
@@ -41,26 +41,20 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
                         children: [
                           Text(
                             user.nome,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
                             user.email,
-                            style: TextStyle(color: Colors.grey),
+                            style: TextStyle(
+                              color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                            ),
                           ),
                         ],
                       ),
                     ),
-
                     IconButton(
-                      // EDITAR PERFIL
-                      onPressed: () {
-                        // Navega para a tela de edição
-                        context.push(Routes.editarPerfil);
-                      },
+                      onPressed: () => context.push(Routes.editarPerfil),
                       icon: const Icon(Icons.edit),
                     ),
                   ],
@@ -70,38 +64,33 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
               const SizedBox(height: 20),
 
               Container(
-                // TEMA
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 6,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: scheme.surface,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Material(
                   color: Colors.transparent,
                   child: SwitchListTile(
                     contentPadding: EdgeInsets.zero,
-                    value: darkMode,
-                    onChanged: (value) {
-                      setState(() {
-                        darkMode = value;
-                      });
-                    },
+                    value: isDark,
+                    onChanged: (_) => ref.read(themeStoreProvider.notifier).toggle(),
                     title: const Text('Modo escuro'),
-                    secondary: const Icon(Icons.dark_mode),
+                    secondary: Icon(
+                      isDark ? Icons.dark_mode : Icons.light_mode,
+                      color: isDark ? AppColors.cyanPastel : AppColors.royalAzure,
+                    ),
                   ),
                 ),
               ),
 
               const Expanded(child: SizedBox()),
+
               SizedBox(
-                // LOGOUT
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   onPressed: () async {
-                    await this.ref.read(userServiceProvider).logout();
+                    await ref.read(userServiceProvider).logout();
                     if (!context.mounted) return;
                     context.go(Routes.login);
                   },
@@ -109,10 +98,12 @@ class _ConfiguracaoState extends ConsumerState<Configuracao> {
                   label: const Text('Deslogar'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
+                    backgroundColor: AppColors.error,
+                    foregroundColor: Colors.white,
                   ),
                 ),
               ),
-              const SizedBox(height: 5), // espaço extra da navbar
+              const SizedBox(height: 5),
             ],
           ),
         ),

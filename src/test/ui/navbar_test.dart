@@ -6,7 +6,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
 import 'package:salvando_vidas/routing/routes.dart';
-import 'package:salvando_vidas/ui/global/widgets/navbar.dart';
+import 'package:salvando_vidas/ui/global/widgets/navbar2.dart';
 
 import 'navbar_test.mocks.dart';
 

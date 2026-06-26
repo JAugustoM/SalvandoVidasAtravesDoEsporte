@@ -20,10 +20,9 @@ class AlunoService {
 
   Future<Aluno> cadastrarAluno(Aluno aluno) {
     return runSupabaseCall(() async {
-      final data = await _supabase
-          .from('alunos')
-          .insert(aluno.toMap())
-          .select();
+      final novo = aluno.toMap();
+      novo.remove('id');
+      final data = await _supabase.from('alunos').insert(novo).select();
       final res = Aluno.fromMap(data.first);
 
       return res;
@@ -32,9 +31,12 @@ class AlunoService {
 
   Future<Responsavel> cadastrarResponsavel(Responsavel responsavel) {
     return runSupabaseCall(() async {
+      final map = responsavel.toMap();
+      map.remove('id');
+
       final data = await _supabase
           .from('responsaveis')
-          .upsert(responsavel.toMap(), onConflict: 'cpf')
+          .upsert(map, onConflict: 'cpf')
           .select();
       final res = Responsavel.fromMap(data.first);
 
