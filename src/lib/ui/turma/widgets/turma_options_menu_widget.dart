@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
-enum TurmaMenuOption { editar, excluir }
+enum TurmaMenuOption { editar, historico }
 
 class TurmaOptionsMenuWidget extends StatelessWidget {
   final int turmaId;
   final VoidCallback? onEditar;
-  final VoidCallback? onExcluir;
 
   const TurmaOptionsMenuWidget({
     super.key,
     required this.turmaId,
     this.onEditar,
-    this.onExcluir,
   });
 
   @override
@@ -26,8 +24,8 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
           case TurmaMenuOption.editar:
             onEditar?.call();
             break;
-          case TurmaMenuOption.excluir:
-            onExcluir?.call();
+          case TurmaMenuOption.historico:
+            // Futura implementação
             break;
         }
       },
@@ -47,12 +45,16 @@ class TurmaOptionsMenuWidget extends StatelessWidget {
           ),
         ),
         PopupMenuItem<TurmaMenuOption>(
-          value: TurmaMenuOption.excluir,
+          value: TurmaMenuOption.historico,
           child: Row(
             children: [
-              const Icon(Icons.delete_outline, color: AppColors.error, size: 18),
+              const Icon(
+                Icons.history,
+                color: AppColors.deepNavy,
+                size: 18,
+              ),
               const SizedBox(width: 8),
-              const Text('Excluir', style: TextStyle(color: AppColors.error)),
+              const Text('Histórico de Frequência'),
             ],
           ),
         ),
