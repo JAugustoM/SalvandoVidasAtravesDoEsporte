@@ -16,7 +16,7 @@ extension CorKimonoExt on CorKimono {
   };
 }
 
-@MappableEnum()
+@MappableEnum(caseStyle: CaseStyle.upperCase)
 enum TamanhoKimono { a0, a1, a2, a3, a4, a5 }
 
 extension TamanhoKimonoExt on TamanhoKimono {
@@ -84,7 +84,6 @@ class Emprestimo with EmprestimoMappable {
   final int alunoId;
   final CorKimono cor;
   final TamanhoKimono tamanho;
-  final int quantidade;
 
   @MappableClass(hook: HookData())
   final DateTime data;
@@ -97,7 +96,6 @@ class Emprestimo with EmprestimoMappable {
     required this.alunoId,
     required this.cor,
     required this.tamanho,
-    required this.quantidade,
     required this.data,
     this.dataDevolucao,
   });
@@ -110,8 +108,12 @@ class Emprestimo with EmprestimoMappable {
 class Estoque with EstoqueMappable {
   final CorKimono cor;
   final TamanhoKimono tamanho;
-  final int quantidade;
-  Estoque({required this.cor, required this.tamanho, required this.quantidade});
+  final int quantidadeDisponivel;
+  Estoque({
+    required this.cor,
+    required this.tamanho,
+    required this.quantidadeDisponivel,
+  });
 
   static final fromMap = EstoqueMapper.fromMap;
   static final fromJson = EstoqueMapper.fromJson;

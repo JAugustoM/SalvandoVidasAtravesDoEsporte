@@ -81,17 +81,17 @@ class TamanhoKimonoMapper extends EnumMapper<TamanhoKimono> {
   @override
   TamanhoKimono decode(dynamic value) {
     switch (value) {
-      case r'a0':
+      case r'A0':
         return TamanhoKimono.a0;
-      case r'a1':
+      case r'A1':
         return TamanhoKimono.a1;
-      case r'a2':
+      case r'A2':
         return TamanhoKimono.a2;
-      case r'a3':
+      case r'A3':
         return TamanhoKimono.a3;
-      case r'a4':
+      case r'A4':
         return TamanhoKimono.a4;
-      case r'a5':
+      case r'A5':
         return TamanhoKimono.a5;
       default:
         throw MapperException.unknownEnumValue(value);
@@ -102,17 +102,17 @@ class TamanhoKimonoMapper extends EnumMapper<TamanhoKimono> {
   dynamic encode(TamanhoKimono self) {
     switch (self) {
       case TamanhoKimono.a0:
-        return r'a0';
+        return r'A0';
       case TamanhoKimono.a1:
-        return r'a1';
+        return r'A1';
       case TamanhoKimono.a2:
-        return r'a2';
+        return r'A2';
       case TamanhoKimono.a3:
-        return r'a3';
+        return r'A3';
       case TamanhoKimono.a4:
-        return r'a4';
+        return r'A4';
       case TamanhoKimono.a5:
-        return r'a5';
+        return r'A5';
     }
   }
 }
@@ -459,11 +459,6 @@ class EmprestimoMapper extends ClassMapperBase<Emprestimo> {
     'tamanho',
     _$tamanho,
   );
-  static int _$quantidade(Emprestimo v) => v.quantidade;
-  static const Field<Emprestimo, int> _f$quantidade = Field(
-    'quantidade',
-    _$quantidade,
-  );
   static DateTime _$data(Emprestimo v) => v.data;
   static const Field<Emprestimo, DateTime> _f$data = Field('data', _$data);
   static DateTime? _$dataDevolucao(Emprestimo v) => v.dataDevolucao;
@@ -480,7 +475,6 @@ class EmprestimoMapper extends ClassMapperBase<Emprestimo> {
     #alunoId: _f$alunoId,
     #cor: _f$cor,
     #tamanho: _f$tamanho,
-    #quantidade: _f$quantidade,
     #data: _f$data,
     #dataDevolucao: _f$dataDevolucao,
   };
@@ -491,7 +485,6 @@ class EmprestimoMapper extends ClassMapperBase<Emprestimo> {
       alunoId: data.dec(_f$alunoId),
       cor: data.dec(_f$cor),
       tamanho: data.dec(_f$tamanho),
-      quantidade: data.dec(_f$quantidade),
       data: data.dec(_f$data),
       dataDevolucao: data.dec(_f$dataDevolucao),
     );
@@ -562,7 +555,6 @@ abstract class EmprestimoCopyWith<$R, $In extends Emprestimo, $Out>
     int? alunoId,
     CorKimono? cor,
     TamanhoKimono? tamanho,
-    int? quantidade,
     DateTime? data,
     DateTime? dataDevolucao,
   });
@@ -583,7 +575,6 @@ class _EmprestimoCopyWithImpl<$R, $Out>
     int? alunoId,
     CorKimono? cor,
     TamanhoKimono? tamanho,
-    int? quantidade,
     DateTime? data,
     Object? dataDevolucao = $none,
   }) => $apply(
@@ -592,7 +583,6 @@ class _EmprestimoCopyWithImpl<$R, $Out>
       if (alunoId != null) #alunoId: alunoId,
       if (cor != null) #cor: cor,
       if (tamanho != null) #tamanho: tamanho,
-      if (quantidade != null) #quantidade: quantidade,
       if (data != null) #data: data,
       if (dataDevolucao != $none) #dataDevolucao: dataDevolucao,
     }),
@@ -603,7 +593,6 @@ class _EmprestimoCopyWithImpl<$R, $Out>
     alunoId: data.get(#alunoId, or: $value.alunoId),
     cor: data.get(#cor, or: $value.cor),
     tamanho: data.get(#tamanho, or: $value.tamanho),
-    quantidade: data.get(#quantidade, or: $value.quantidade),
     data: data.get(#data, or: $value.data),
     dataDevolucao: data.get(#dataDevolucao, or: $value.dataDevolucao),
   );
@@ -637,24 +626,25 @@ class EstoqueMapper extends ClassMapperBase<Estoque> {
     'tamanho',
     _$tamanho,
   );
-  static int _$quantidade(Estoque v) => v.quantidade;
-  static const Field<Estoque, int> _f$quantidade = Field(
-    'quantidade',
-    _$quantidade,
+  static int _$quantidadeDisponivel(Estoque v) => v.quantidadeDisponivel;
+  static const Field<Estoque, int> _f$quantidadeDisponivel = Field(
+    'quantidadeDisponivel',
+    _$quantidadeDisponivel,
+    key: r'quantidade_disponivel',
   );
 
   @override
   final MappableFields<Estoque> fields = const {
     #cor: _f$cor,
     #tamanho: _f$tamanho,
-    #quantidade: _f$quantidade,
+    #quantidadeDisponivel: _f$quantidadeDisponivel,
   };
 
   static Estoque _instantiate(DecodingData data) {
     return Estoque(
       cor: data.dec(_f$cor),
       tamanho: data.dec(_f$tamanho),
-      quantidade: data.dec(_f$quantidade),
+      quantidadeDisponivel: data.dec(_f$quantidadeDisponivel),
     );
   }
 
@@ -715,7 +705,7 @@ extension EstoqueValueCopy<$R, $Out> on ObjectCopyWith<$R, Estoque, $Out> {
 
 abstract class EstoqueCopyWith<$R, $In extends Estoque, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  $R call({CorKimono? cor, TamanhoKimono? tamanho, int? quantidade});
+  $R call({CorKimono? cor, TamanhoKimono? tamanho, int? quantidadeDisponivel});
   EstoqueCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(Then<$Out2, $R2> t);
 }
 
@@ -728,18 +718,26 @@ class _EstoqueCopyWithImpl<$R, $Out>
   late final ClassMapperBase<Estoque> $mapper =
       EstoqueMapper.ensureInitialized();
   @override
-  $R call({CorKimono? cor, TamanhoKimono? tamanho, int? quantidade}) => $apply(
+  $R call({
+    CorKimono? cor,
+    TamanhoKimono? tamanho,
+    int? quantidadeDisponivel,
+  }) => $apply(
     FieldCopyWithData({
       if (cor != null) #cor: cor,
       if (tamanho != null) #tamanho: tamanho,
-      if (quantidade != null) #quantidade: quantidade,
+      if (quantidadeDisponivel != null)
+        #quantidadeDisponivel: quantidadeDisponivel,
     }),
   );
   @override
   Estoque $make(CopyWithData data) => Estoque(
     cor: data.get(#cor, or: $value.cor),
     tamanho: data.get(#tamanho, or: $value.tamanho),
-    quantidade: data.get(#quantidade, or: $value.quantidade),
+    quantidadeDisponivel: data.get(
+      #quantidadeDisponivel,
+      or: $value.quantidadeDisponivel,
+    ),
   );
 
   @override

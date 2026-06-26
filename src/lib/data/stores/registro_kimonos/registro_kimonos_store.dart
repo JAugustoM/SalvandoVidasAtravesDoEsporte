@@ -35,7 +35,7 @@ class RegistroKimonosState with RegistroKimonosStateMappable {
   }
 
   String? get doadorError {
-    return doador.isEmpty ? null : "Deve informar o nome do doador";
+    return doador.isNotEmpty ? null : "Deve informar o nome do doador";
   }
 
   String? get qtdDoadaError {
@@ -51,7 +51,7 @@ class RegistroKimonosState with RegistroKimonosStateMappable {
   }
 
   String? get motivoError {
-    return motivo.isEmpty ? null : "Deve informar o motivo da perda";
+    return motivo.isNotEmpty ? null : "Deve informar o motivo da perda";
   }
 
   String? get qtdPerdidaError {
@@ -95,11 +95,11 @@ class RegistroKimonosStore extends _$RegistroKimonosStore {
     return RegistroKimonosState();
   }
 
-  void updateTamanhoDoacao(TamanhoKimono tamanho) {
+  void updateTamanhoDoacao(TamanhoKimono? tamanho) {
     state = state.copyWith(tamanhoDoacao: tamanho);
   }
 
-  void updateCorDoacao(CorKimono cor) {
+  void updateCorDoacao(CorKimono? cor) {
     state = state.copyWith(corDoacao: cor);
   }
 
@@ -111,7 +111,7 @@ class RegistroKimonosStore extends _$RegistroKimonosStore {
     state = state.copyWith(qtdDoada: qtd);
   }
 
-  void updateKimonoPerdido(Estoque kimono) {
+  void updateKimonoPerdido(Estoque? kimono) {
     state = state.copyWith(kimonoPerdido: kimono);
   }
 
@@ -121,5 +121,9 @@ class RegistroKimonosStore extends _$RegistroKimonosStore {
 
   void updateQtdPerdida(String qtd) {
     state = state.copyWith(qtdPerdida: qtd);
+  }
+
+  void reset() {
+    state = RegistroKimonosState();
   }
 }

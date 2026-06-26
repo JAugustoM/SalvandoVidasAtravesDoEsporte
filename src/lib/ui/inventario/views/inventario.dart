@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:salvando_vidas/data/services/global/global_service.dart';
+import 'package:salvando_vidas/data/stores/gestao_kimonos/gestao_kimonos_store.dart';
+import 'package:salvando_vidas/data/supabase_call.dart';
+import 'package:salvando_vidas/domain/kimono/kimono.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart'; // Ajuste o import se necessário
 import 'package:go_router/go_router.dart';
 import 'package:salvando_vidas/routing/routes.dart';
@@ -16,6 +20,21 @@ class Inventario extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final store = ref.watch(gestaoKimonosStoreProvider);
+
+    int kimonoDisponives = 0;
+    int kimonosEmprestados = 0;
+
+    if (store.value != null) {
+      for (final estoque in store.value!.estoque) {
+        kimonoDisponives += estoque.quantidadeDisponivel;
+      }
+
+      kimonosEmprestados = store.value!.emprestimos
+          .where((e) => e.dataDevolucao == null)
+          .length;
+    }
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -23,8 +42,9 @@ class Inventario extends ConsumerWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.platinum, 
-              AppColors.bgGradientEnd, // Caso não tenha essa, use Color(0xFFB0BEC5) provisoriamente
+              AppColors.platinum,
+              AppColors
+                  .bgGradientEnd, // Caso não tenha essa, use Color(0xFFB0BEC5) provisoriamente
             ],
           ),
         ),
@@ -39,7 +59,7 @@ class Inventario extends ConsumerWidget {
                     Expanded(
                       child: _StatCard(
                         title: 'Kimonos\nDisponíveis',
-                        value: '5',
+                        value: '$kimonoDisponives',
                         onTap: () => _abrirPopUpKimonos(context),
                       ),
                     ),
@@ -47,7 +67,7 @@ class Inventario extends ConsumerWidget {
                     Expanded(
                       child: _StatCard(
                         title: 'Kimonos\nEmprestados',
-                        value: '25',
+                        value: '$kimonosEmprestados',
                         onTap: () {
                           // TODO: Implementar depois, se necessário
                         },
@@ -84,43 +104,78 @@ class Inventario extends ConsumerWidget {
                         ),
                         const SizedBox(height: 16),
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: 6, // Quantidade mockada para o protótipo
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 16.0),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 24,
-                                      backgroundColor: Colors.grey.shade300,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    const Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                          child: store.when(
+                            data: ((data) {
+                              final emprestimos = data.emprestimos
+                                  .where((e) => e.dataDevolucao == null)
+                                  .toList();
+
+                              return RefreshIndicator(
+                                onRefresh: () => ref.refresh(
+                                  gestaoKimonosStoreProvider.future,
+                                ),
+                                child: ListView.builder(
+                                  itemCount: emprestimos.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 16.0,
+                                      ),
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            'Pedro Ramos Sousa Reis',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
-                                            ),
+                                          CircleAvatar(
+                                            radius: 24,
+                                            backgroundColor:
+                                                Colors.grey.shade300,
                                           ),
-                                          Text(
-                                            'A3, Branco',
-                                            style: TextStyle(
-                                              color: Colors.black87,
-                                              fontSize: 14,
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  data
+                                                      .alunos[emprestimos[index]
+                                                          .alunoId]!
+                                                      .nome,
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  '${emprestimos[index].tamanho.nomeVisivel}, ${emprestimos[index].cor.nomeVisivel}',
+                                                  style: TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                ),
+                              );
+                            }),
+                            error: (error, stack) {
+                              if (error is AppApiException) {
+                                ref
+                                    .read(loggerProvider)
+                                    .e(error.message, error: error.error);
+                              }
+                              return const Center(
+                                child: Text(
+                                  'Ocorreu algum erro inesperado ao carregar o estoque de kimonos',
                                 ),
                               );
                             },
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
                           ),
                         ),
                       ],
@@ -216,10 +271,7 @@ class _ActionCard extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
 
-  const _ActionCard({
-    required this.title,
-    required this.onTap,
-  });
+  const _ActionCard({required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -255,7 +307,8 @@ class _PopUpKimonosDisponiveis extends StatefulWidget {
   const _PopUpKimonosDisponiveis();
 
   @override
-  State<_PopUpKimonosDisponiveis> createState() => _PopUpKimonosDisponiveisState();
+  State<_PopUpKimonosDisponiveis> createState() =>
+      _PopUpKimonosDisponiveisState();
 }
 
 class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
@@ -345,7 +398,7 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    
+
                     // Lista de Kimonos disponíveis
                     Expanded(
                       child: ListView.builder(
@@ -375,7 +428,7 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
               ),
             ),
             const SizedBox(height: 16),
-            
+
             // Botão Ok
             SizedBox(
               width: 120,
