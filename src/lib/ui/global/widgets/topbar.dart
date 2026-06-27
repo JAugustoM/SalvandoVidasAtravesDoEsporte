@@ -33,22 +33,17 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Material(
-                  color: isDark ? AppColors.darkSurface : Colors.white,
-                  child: InkWell(
-                    onTap: () => context.go(Routes.home),
-                    splashColor: logoSplash,
-                    highlightColor: logoSplash.withOpacity(0.1),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                      child: Text(
-                        'Logo',
-                        key: const ValueKey('logoText'),
-                        style: TextStyle(color: logoTextColor, fontWeight: FontWeight.w700),
-                      ),
-                    ),
+              InkWell(
+                onTap: () => context.go(Routes.home),
+                splashColor: logoSplash,
+                highlightColor: logoSplash.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  child: Image.asset(
+                    'assets/images/logoMestre.png',
+                    height: 40,
+                    fit: BoxFit.contain,
                   ),
                 ),
               ),
