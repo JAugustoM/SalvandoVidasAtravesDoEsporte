@@ -89,10 +89,39 @@ class Configuracao extends ConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  onPressed: () async {
-                    await ref.read(userServiceProvider).logout();
-                    if (!context.mounted) return;
-                    context.go(Routes.login);
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        title: const Text(
+                          'Deseja deslogar do sistema?',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.deepNavy),
+                        ),
+                        actionsAlignment: MainAxisAlignment.spaceEvenly,
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(ctx),
+                            child: const Text('Cancelar', style: TextStyle(color: AppColors.textSecondary)),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.error,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            onPressed: () async {
+                              await ref.read(userServiceProvider).logout();
+                              if (!context.mounted) return;
+                              Navigator.pop(ctx);
+                              context.go(Routes.login);
+                            },
+                            child: const Text('Deslogar'),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.logout),
                   label: const Text('Deslogar'),
