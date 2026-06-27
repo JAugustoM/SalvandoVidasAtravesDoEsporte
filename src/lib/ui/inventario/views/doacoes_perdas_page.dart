@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:salvando_vidas/data/services/kimono_service/kimono_service.dart';
+import 'package:salvando_vidas/data/stores/gestao_kimonos/gestao_kimonos_store.dart';
+import 'package:salvando_vidas/data/stores/registro_kimonos/registro_kimonos_store.dart';
+import 'package:salvando_vidas/data/supabase_call.dart';
+import 'package:salvando_vidas/domain/kimono/kimono.dart';
+import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class DoacoesPerdasPage extends ConsumerStatefulWidget {
@@ -11,42 +17,19 @@ class DoacoesPerdasPage extends ConsumerStatefulWidget {
 }
 
 class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
-  // Variáveis para o formulário de Doação
-  String? tamanhoDoacao;
-  String? corDoacao;
-  final TextEditingController _nomeDoadorController = TextEditingController();
-  final TextEditingController _quantidadeDoadaController = TextEditingController();
-  
-  final List<String> tamanhos = ['A0', 'A1', 'A2', 'A3', 'A4', 'A5'];
-  final List<String> cores = ['Branco', 'Azul', 'Preto', 'Rosa'];
-
-  // Variáveis para o formulário de Perda
-  final List<String> kimonosParaPerda = ['A3, Branco', 'A2, Azul', 'A4, Preto', 'A1, Rosa', 'A0, Branco'];
-  int? _kimonoSelecionadoIndex;
-  final TextEditingController _motivoPerdaController = TextEditingController();
-  final TextEditingController _quantidadePerdidaController = TextEditingController();
-
-  @override
-  void dispose() {
-    _nomeDoadorController.dispose();
-    _quantidadeDoadaController.dispose();
-    _motivoPerdaController.dispose();
-    _quantidadePerdidaController.dispose();
-    super.dispose();
-  }
+  late RegistroKimonosState state;
+  late RegistroKimonosStore store;
 
   // --- MÉTODOS DOS POP-UPS ---
 
   void _mostrarConfirmacaoDoacao() {
-    if (tamanhoDoacao == null || corDoacao == null) return;
-
     showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.6), // Fundo escurecido
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          'Deseja registrar este\nkimono ($tamanhoDoacao, $corDoacao)?',
+          'Deseja registrar este\nkimono (${state.tamanhoDoacao!.nomeVisivel}, ${state.corDoacao!.nomeVisivel})?',
           textAlign: TextAlign.center,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -56,7 +39,9 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey.shade300,
               foregroundColor: Colors.black87,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             onPressed: () => Navigator.pop(context), // Cancela e fecha
             child: const Text('Cancelar'),
@@ -65,11 +50,22 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.cyan,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
-            onPressed: () {
-              Navigator.pop(context); // Fecha confirmação
-              _mostrarSucessoDoacao(); // Abre sucesso
+            onPressed: () async {
+              try {
+                await ref
+                    .read(kimonoServiceProvider)
+                    .cadastrarDoacao(state.doacao);
+                store.reset();
+                ref.refresh(gestaoKimonosStoreProvider.future);
+                Navigator.pop(context); // Fecha confirmação
+                _mostrarSucessoDoacao(); // Abre sucesso
+              } on AppApiException catch (e) {
+                ref.read(loggerProvider).e(e.message, error: e.error);
+              }
             },
             child: const Text('Confirmar'),
           ),
@@ -97,15 +93,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
               onPressed: () {
-                setState(() {
-                  tamanhoDoacao = null;
-                  corDoacao = null;
-                  _nomeDoadorController.clear();
-                  _quantidadeDoadaController.clear();
-                });
                 Navigator.pop(context);
               },
               child: const Text('Fechar'),
@@ -117,16 +109,14 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   }
 
   void _mostrarConfirmacaoPerda() {
-    if (_kimonoSelecionadoIndex == null) return;
-    String kimonoDesc = kimonosParaPerda[_kimonoSelecionadoIndex!];
-
+    final kimono = state.kimonoPerdido!;
     showDialog(
       context: context,
       barrierColor: Colors.black.withOpacity(0.6),
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          'Deseja registrar a perda\ndo kimono ($kimonoDesc)?',
+          'Deseja registrar a perda\nde ${state.qtdPerdida} kimonos (${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel})?',
           textAlign: TextAlign.center,
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
@@ -136,7 +126,9 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.grey.shade300,
               foregroundColor: Colors.black87,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
             onPressed: () => Navigator.pop(context),
             child: const Text('Cancelar'),
@@ -145,11 +137,22 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.cyan,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
             ),
-            onPressed: () {
-              Navigator.pop(context);
-              _mostrarSucessoPerda();
+            onPressed: () async {
+              try {
+                await ref
+                    .read(kimonoServiceProvider)
+                    .cadastrarPerda(state.perda);
+                store.reset();
+                ref.refresh(gestaoKimonosStoreProvider.future);
+                Navigator.pop(context); // Fecha confirmação
+                _mostrarSucessoPerda(); // Abre sucesso
+              } on AppApiException catch (e) {
+                ref.read(loggerProvider).e(e.message, error: e.error);
+              }
             },
             child: const Text('Confirmar'),
           ),
@@ -177,14 +180,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.cyan,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
               onPressed: () {
-                setState(() {
-                  _kimonoSelecionadoIndex = null;
-                  _motivoPerdaController.clear();
-                  _quantidadePerdidaController.clear();
-                });
                 Navigator.pop(context);
               },
               child: const Text('Fechar'),
@@ -199,6 +199,24 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
 
   @override
   Widget build(BuildContext context) {
+    final estoque = ref.watch(gestaoKimonosStoreProvider);
+
+    state = ref.watch(registroKimonosStoreProvider);
+    store = ref.read(registroKimonosStoreProvider.notifier);
+
+    int doacoes = 0;
+    int perdas = 0;
+
+    if (estoque.value != null) {
+      for (final perda in estoque.value!.perdas) {
+        perdas += perda.quantidade;
+      }
+
+      for (final doacao in estoque.value!.doacoes) {
+        doacoes += doacao.quantidade;
+      }
+    }
+
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -217,28 +235,41 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 padding: const EdgeInsets.only(left: 8.0, top: 16.0),
                 child: TextButton.icon(
                   onPressed: () => context.pop(), // Volta para a tela anterior
-                  icon: const Icon(Icons.arrow_back_ios, color: Colors.black87, size: 18),
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black87,
+                    size: 18,
+                  ),
                   label: const Text(
                     'Voltar',
                     style: TextStyle(color: Colors.black87, fontSize: 16),
                   ),
                 ),
               ),
-              
+
               Expanded(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
                   child: Column(
                     children: [
                       // Cards de Totais
                       Row(
                         children: [
                           Expanded(
-                            child: _StatCardInfo(title: 'Doações\nTotais', value: '30'),
+                            child: _StatCardInfo(
+                              title: 'Doações\nTotais',
+                              value: '$doacoes',
+                            ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
-                            child: _StatCardInfo(title: 'Perdas\nTotais', value: '0'),
+                            child: _StatCardInfo(
+                              title: 'Perdas\nTotais',
+                              value: '$perdas',
+                            ),
                           ),
                         ],
                       ),
@@ -255,19 +286,24 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
                               child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
+                                child: DropdownButton<TamanhoKimono>(
                                   isExpanded: true,
                                   hint: const Text('Tamanho...'),
-                                  value: tamanhoDoacao,
-                                  items: tamanhos.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                  onChanged: (val) => setState(() => tamanhoDoacao = val),
+                                  value: state.tamanhoDoacao,
+                                  items: TamanhoKimono.values
+                                      .map(
+                                        (c) => DropdownMenuItem<TamanhoKimono>(
+                                          value: c,
+                                          child: Text(c.nomeVisivel),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (val) =>
+                                      store.updateTamanhoDoacao(val),
                                 ),
                               ),
                             ),
@@ -277,25 +313,30 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                              ),
                               child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
+                                child: DropdownButton<CorKimono>(
                                   isExpanded: true,
                                   hint: const Text('Cor...'),
-                                  value: corDoacao,
-                                  items: cores.map((String value) {
-                                    return DropdownMenuItem<String>(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                  onChanged: (val) => setState(() => corDoacao = val),
+                                  value: state.corDoacao,
+                                  items: CorKimono.values
+                                      .map(
+                                        (c) => DropdownMenuItem<CorKimono>(
+                                          value: c,
+                                          child: Text(c.nomeVisivel),
+                                        ),
+                                      )
+                                      .toList(),
+                                  onChanged: (val) =>
+                                      store.updateCorDoacao(val),
                                 ),
                               ),
                             ),
                             const SizedBox(height: 12),
-                            TextField(
-                              controller: _nomeDoadorController,
+                            TextFormField(
+                              initialValue: state.doador,
                               decoration: InputDecoration(
                                 hintText: 'Nome do doador...',
                                 filled: true,
@@ -305,11 +346,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
-                              onChanged: (_) => setState(() {}),
+                              onChanged: store.updateDoador,
                             ),
                             const SizedBox(height: 12),
-                            TextField(
-                              controller: _quantidadeDoadaController,
+                            TextFormField(
+                              initialValue: state.qtdDoada,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: 'Quantidade doada...',
@@ -320,7 +361,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
-                              onChanged: (_) => setState(() {}),
+                              onChanged: store.updateQtdDoada,
                             ),
                             const SizedBox(height: 16),
                             SizedBox(
@@ -330,15 +371,20 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.cyan,
                                   foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                                onPressed: (tamanhoDoacao != null && 
-                                            corDoacao != null && 
-                                            _nomeDoadorController.text.isNotEmpty && 
-                                            _quantidadeDoadaController.text.isNotEmpty) 
-                                    ? _mostrarConfirmacaoDoacao 
+                                onPressed: (state.doacaoValida)
+                                    ? _mostrarConfirmacaoDoacao
                                     : null, // Fica desabilitado se não preencher tudo
-                                child: const Text('Registrar Doação', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                child: const Text(
+                                  'Registrar Doação',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -358,37 +404,66 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 color: Colors.grey.shade200,
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: kimonosParaPerda.length,
-                                itemBuilder: (context, index) {
-                                  final kimono = kimonosParaPerda[index];
-                                  return RadioListTile<int>(
-                                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
-                                    controlAffinity: ListTileControlAffinity.trailing,
-                                    title: Row(
-                                      children: [
-                                        const Icon(Icons.sports_martial_arts, size: 24, color: Colors.black87),
-                                        const SizedBox(width: 12),
-                                        Text(kimono, style: const TextStyle(fontSize: 15)),
-                                      ],
+                              child: estoque.when(
+                                data: (data) => ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: data.estoque.length,
+                                  itemBuilder: (context, index) {
+                                    final kimono = data.estoque[index];
+                                    return RadioGroup<Estoque>(
+                                      groupValue: state.kimonoPerdido,
+                                      onChanged: (v) =>
+                                          store.updateKimonoPerdido(v),
+                                      child: RadioListTile<Estoque>(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                              horizontal: 8,
+                                            ),
+                                        controlAffinity:
+                                            ListTileControlAffinity.trailing,
+                                        title: Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.sports_martial_arts,
+                                              size: 24,
+                                              color: Colors.black87,
+                                            ),
+                                            const SizedBox(width: 12),
+                                            Text(
+                                              '${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel}',
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        value: kimono,
+                                        activeColor: Colors.cyan,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                error: (error, stack) {
+                                  if (error is AppApiException) {
+                                    ref
+                                        .read(loggerProvider)
+                                        .e(error.message, error: error.error);
+                                  }
+                                  return const Center(
+                                    child: Text(
+                                      'Ocorreu algum erro inesperado ao carregar o estoque de kimonos',
                                     ),
-                                    value: index,
-                                    groupValue: _kimonoSelecionadoIndex,
-                                    activeColor: Colors.cyan,
-                                    onChanged: (int? value) {
-                                      setState(() {
-                                        _kimonoSelecionadoIndex = value;
-                                      });
-                                    },
                                   );
                                 },
+                                loading: () => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
                             ),
                             const SizedBox(height: 12),
-                            TextField(
-                              controller: _motivoPerdaController,
+                            TextFormField(
+                              initialValue: state.motivo,
                               decoration: InputDecoration(
                                 hintText: 'Motivo da perda...',
                                 filled: true,
@@ -398,11 +473,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
-                              onChanged: (_) => setState(() {}),
+                              onChanged: store.updateMotivo,
                             ),
                             const SizedBox(height: 12),
-                            TextField(
-                              controller: _quantidadePerdidaController,
+                            TextFormField(
+                              initialValue: state.qtdPerdida,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: 'Quantidade perdida...',
@@ -413,7 +488,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                   borderSide: BorderSide.none,
                                 ),
                               ),
-                              onChanged: (_) => setState(() {}),
+                              onChanged: store.updateQtdPerdida,
                             ),
                             const SizedBox(height: 16),
                             SizedBox(
@@ -423,14 +498,20 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.cyan,
                                   foregroundColor: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
                                 ),
-                                onPressed: (_kimonoSelecionadoIndex != null && 
-                                            _motivoPerdaController.text.isNotEmpty && 
-                                            _quantidadePerdidaController.text.isNotEmpty)
+                                onPressed: (state.perdaValida)
                                     ? _mostrarConfirmacaoPerda
                                     : null,
-                                child: const Text('Registrar Perda', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                                child: const Text(
+                                  'Registrar Perda',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -467,17 +548,30 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
         ],
       ),
       child: Theme(
-        data: Theme.of(context).copyWith(dividerColor: Colors.transparent), // Remove as linhas padrão do ExpansionTile
+        data: Theme.of(context).copyWith(
+          dividerColor: Colors.transparent,
+        ), // Remove as linhas padrão do ExpansionTile
         child: ExpansionTile(
-          title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black87)),
-          subtitle: Text(subtitle, style: const TextStyle(fontSize: 13, color: Colors.black54)),
+          title: Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.black87,
+            ),
+          ),
+          subtitle: Text(
+            subtitle,
+            style: const TextStyle(fontSize: 13, color: Colors.black54),
+          ),
           iconColor: Colors.black87,
           collapsedIconColor: Colors.black87,
-          childrenPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-          children: [
-            const SizedBox(height: 8),
-            isExpandedContent,
-          ],
+          childrenPadding: const EdgeInsets.only(
+            left: 16,
+            right: 16,
+            bottom: 16,
+          ),
+          children: [const SizedBox(height: 8), isExpandedContent],
         ),
       ),
     );
@@ -511,12 +605,20 @@ class _StatCardInfo extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: Colors.black87),
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Colors.black87,
+            ),
           ),
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.black),
+            style: const TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
