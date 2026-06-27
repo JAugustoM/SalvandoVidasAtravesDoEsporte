@@ -41,11 +41,37 @@ class HomeStateMapper extends ClassMapperBase<HomeState> {
     _$totalTurmas,
     key: r'total_turmas',
   );
+  static int _$totalAlunos(HomeState v) => v.totalAlunos;
+  static const Field<HomeState, int> _f$totalAlunos = Field(
+    'totalAlunos',
+    _$totalAlunos,
+    key: r'total_alunos',
+    opt: true,
+    def: 0,
+  );
+  static int _$totalAtivos(HomeState v) => v.totalAtivos;
+  static const Field<HomeState, int> _f$totalAtivos = Field(
+    'totalAtivos',
+    _$totalAtivos,
+    key: r'total_ativos',
+    opt: true,
+    def: 0,
+  );
+  static int _$totalInativos(HomeState v) => v.totalInativos;
+  static const Field<HomeState, int> _f$totalInativos = Field(
+    'totalInativos',
+    _$totalInativos,
+    key: r'total_inativos',
+    opt: true,
+    def: 0,
+  );
   static int _$kimonosDisponiveis(HomeState v) => v.kimonosDisponiveis;
   static const Field<HomeState, int> _f$kimonosDisponiveis = Field(
     'kimonosDisponiveis',
     _$kimonosDisponiveis,
     key: r'kimonos_disponiveis',
+    opt: true,
+    def: 0,
   );
   static int _$alertasEvasao(HomeState v) => v.alertasEvasao;
   static const Field<HomeState, int> _f$alertasEvasao = Field(
@@ -76,6 +102,9 @@ class HomeStateMapper extends ClassMapperBase<HomeState> {
     #alunos: _f$alunos,
     #alunosHome: _f$alunosHome,
     #totalTurmas: _f$totalTurmas,
+    #totalAlunos: _f$totalAlunos,
+    #totalAtivos: _f$totalAtivos,
+    #totalInativos: _f$totalInativos,
     #kimonosDisponiveis: _f$kimonosDisponiveis,
     #alertasEvasao: _f$alertasEvasao,
     #orderBy: _f$orderBy,
@@ -87,6 +116,9 @@ class HomeStateMapper extends ClassMapperBase<HomeState> {
       alunos: data.dec(_f$alunos),
       alunosHome: data.dec(_f$alunosHome),
       totalTurmas: data.dec(_f$totalTurmas),
+      totalAlunos: data.dec(_f$totalAlunos),
+      totalAtivos: data.dec(_f$totalAtivos),
+      totalInativos: data.dec(_f$totalInativos),
       kimonosDisponiveis: data.dec(_f$kimonosDisponiveis),
       alertasEvasao: data.dec(_f$alertasEvasao),
       orderBy: data.dec(_f$orderBy),
@@ -160,6 +192,9 @@ abstract class HomeStateCopyWith<$R, $In extends HomeState, $Out>
     List<Aluno>? alunos,
     List<AlunoHome>? alunosHome,
     int? totalTurmas,
+    int? totalAlunos,
+    int? totalAtivos,
+    int? totalInativos,
     int? kimonosDisponiveis,
     int? alertasEvasao,
     OrderBy? orderBy,
@@ -195,6 +230,9 @@ class _HomeStateCopyWithImpl<$R, $Out>
     List<Aluno>? alunos,
     List<AlunoHome>? alunosHome,
     int? totalTurmas,
+    int? totalAlunos,
+    int? totalAtivos,
+    int? totalInativos,
     int? kimonosDisponiveis,
     int? alertasEvasao,
     OrderBy? orderBy,
@@ -204,6 +242,9 @@ class _HomeStateCopyWithImpl<$R, $Out>
       if (alunos != null) #alunos: alunos,
       if (alunosHome != null) #alunosHome: alunosHome,
       if (totalTurmas != null) #totalTurmas: totalTurmas,
+      if (totalAlunos != null) #totalAlunos: totalAlunos,
+      if (totalAtivos != null) #totalAtivos: totalAtivos,
+      if (totalInativos != null) #totalInativos: totalInativos,
       if (kimonosDisponiveis != null) #kimonosDisponiveis: kimonosDisponiveis,
       if (alertasEvasao != null) #alertasEvasao: alertasEvasao,
       if (orderBy != null) #orderBy: orderBy,
@@ -215,6 +256,9 @@ class _HomeStateCopyWithImpl<$R, $Out>
     alunos: data.get(#alunos, or: $value.alunos),
     alunosHome: data.get(#alunosHome, or: $value.alunosHome),
     totalTurmas: data.get(#totalTurmas, or: $value.totalTurmas),
+    totalAlunos: data.get(#totalAlunos, or: $value.totalAlunos),
+    totalAtivos: data.get(#totalAtivos, or: $value.totalAtivos),
+    totalInativos: data.get(#totalInativos, or: $value.totalInativos),
     kimonosDisponiveis: data.get(
       #kimonosDisponiveis,
       or: $value.kimonosDisponiveis,
