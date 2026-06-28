@@ -25,9 +25,14 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
   @override
   Widget build(BuildContext context) {
     final turmas = ref.watch(turmasStoreProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkBg : Colors.white;
+    final headerBg = isDark ? AppColors.darkSurface : AppColors.platinum;
+    final headerBorder = isDark ? AppColors.darkDivider : AppColors.inputFill;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bg,
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 768), // Responsividade fluida no tablet
@@ -37,18 +42,18 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                decoration: const BoxDecoration(
-                  color: AppColors.platinum,
+                decoration: BoxDecoration(
+                  color: headerBg,
                   border: Border(
-                    bottom: BorderSide(color: AppColors.inputFill, width: 1),
+                    bottom: BorderSide(color: headerBorder, width: 1),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Turmas Abertas',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.deepNavy,
+                    color: textColor,
                   ),
                 ),
               ),

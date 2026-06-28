@@ -237,10 +237,17 @@ class _RegistrarFrequenciaViewState
       }
     }
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkBg : Colors.white;
+    final appBarBg = isDark ? AppColors.darkTopbar : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+    final inputBg = isDark ? AppColors.darkInputFill : AppColors.platinum;
+    final avatarBg = isDark ? AppColors.darkInputFill : AppColors.inputFill;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bg,
       appBar: AppBar(
-        backgroundColor: AppColors.platinum,
+        backgroundColor: appBarBg,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
@@ -248,11 +255,11 @@ class _RegistrarFrequenciaViewState
             FocusManager.instance.primaryFocus?.unfocus();
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
-          label: const Text(
+          icon: Icon(Icons.arrow_back, color: textColor, size: 22),
+          label: Text(
             'Voltar',
             style: TextStyle(
-              color: AppColors.deepNavy,
+              color: textColor,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -277,12 +284,12 @@ class _RegistrarFrequenciaViewState
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Registrar Frequência',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.deepNavy,
+                            color: textColor,
                           ),
                         ),
                         Text(
@@ -318,10 +325,12 @@ class _RegistrarFrequenciaViewState
                           controller: _dataController,
                           keyboardType: TextInputType.number,
                           inputFormatters: [formatData],
+                          style: TextStyle(color: isDark ? Colors.white : Colors.black),
                           decoration: InputDecoration(
                             hintText: 'DD/MM/AAAA',
+                            hintStyle: TextStyle(color: isDark ? Colors.white54 : Colors.black54),
                             filled: true,
-                            fillColor: AppColors.platinum,
+                            fillColor: inputBg,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide.none,
@@ -331,7 +340,7 @@ class _RegistrarFrequenciaViewState
                               vertical: 14,
                             ),
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.calendar_today, color: AppColors.deepNavy),
+                              icon: Icon(Icons.calendar_today, color: textColor),
                               onPressed: () async {
                                 FocusManager.instance.primaryFocus?.unfocus(); 
                                 DateTime? picked = await showDatePicker(
@@ -378,12 +387,12 @@ class _RegistrarFrequenciaViewState
                         ),
                         const SizedBox(height: 24),
 
-                        const Text(
+                        Text(
                           'Alunos',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
-                            color: AppColors.deepNavy,
+                            color: textColor,
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -398,22 +407,24 @@ class _RegistrarFrequenciaViewState
                                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Row(
                                   children: [
-                                    const CircleAvatar(
-                                      backgroundColor: AppColors.inputFill,
+                                    CircleAvatar(
+                                      backgroundColor: avatarBg,
                                       radius: 18,
+                                      child: Icon(Icons.person, color: textColor, size: 20),
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
                                         aluno.nome,
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                           fontWeight: FontWeight.w500,
+                                          color: isDark ? Colors.white : Colors.black87,
                                         ),
                                       ),
                                     ),
                                     Checkbox(
                                       value: state.presenca[aluno.id!],
-                                      activeColor: AppColors.deepNavy,
+                                      activeColor: AppColors.royalAzure,
                                       side: const BorderSide(
                                         color: AppColors.textSecondary,
                                       ),

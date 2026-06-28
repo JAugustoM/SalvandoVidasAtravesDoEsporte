@@ -25,20 +25,27 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
     logger = ref.read(loggerProvider);
 
     final alunosAsync = ref.watch(pesquisaAlunoProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkBg : Colors.white;
+    final appBarBg = isDark ? AppColors.darkTopbar : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+    final inputBg = isDark ? AppColors.darkInputFill : AppColors.platinum;
+    final cardBg = isDark ? AppColors.darkSurface : Colors.white;
+    final dividerColor = isDark ? AppColors.darkDivider : AppColors.divider;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bg,
       appBar: AppBar(
-        backgroundColor: AppColors.platinum,
+        backgroundColor: appBarBg,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
-          label: const Text(
+          icon: Icon(Icons.arrow_back, color: textColor, size: 22),
+          label: Text(
             'Voltar',
             style: TextStyle(
-              color: AppColors.deepNavy,
+              color: textColor,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -62,23 +69,24 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                   children: [
                     Text(
                       'Matricular Aluno',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.deepNavy,
+                        color: textColor,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'Turma: ${widget.turma.nome}',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.cyanPrimary,
+                        color: isDark ? AppColors.cyanPastel : AppColors.cyanPrimary,
                       ),
                     ),
                     const SizedBox(height: 16),
                     TextField(
+                      style: TextStyle(color: isDark ? Colors.white : Colors.black),
                       onChanged: (value) {
                         setState(() {
                           _searchQuery = value.toLowerCase();
@@ -86,9 +94,10 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                       },
                       decoration: InputDecoration(
                         hintText: 'Buscar aluno...',
-                        prefixIcon: const Icon(Icons.search, color: AppColors.deepNavy),
+                        hintStyle: TextStyle(color: isDark ? Colors.white54 : Colors.black54),
+                        prefixIcon: Icon(Icons.search, color: textColor),
                         filled: true,
-                        fillColor: AppColors.platinum,
+                        fillColor: inputBg,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                           borderSide: BorderSide.none,
@@ -112,17 +121,11 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
 
                     if (alunosFiltrados.isEmpty) {
                       return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            _searchQuery.isEmpty
-                                ? 'Nenhum aluno disponível para matrícula'
-                                : 'Nenhum aluno encontrado',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: AppColors.textSecondary,
-                              fontSize: 14,
-                            ),
+                        child: Text(
+                          'Nenhum aluno elegível encontrado',
+                          style: TextStyle(
+                            color: isDark ? Colors.white70 : AppColors.textSecondary,
+                            fontSize: 16,
                           ),
                         ),
                       );
@@ -136,19 +139,20 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           child: Card(
                             elevation: 0,
+                            color: cardBg,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
-                              side: const BorderSide(
-                                color: AppColors.divider,
+                              side: BorderSide(
+                                color: dividerColor,
                                 width: 1,
                               ),
                             ),
                             child: ListTile(
                               title: Text(
                                 aluno.nome,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.deepNavy,
+                                  color: textColor,
                                 ),
                               ),
                               subtitle: Text(

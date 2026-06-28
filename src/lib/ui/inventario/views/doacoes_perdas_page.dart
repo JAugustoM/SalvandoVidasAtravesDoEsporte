@@ -217,13 +217,19 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       }
     }
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final gradientColors = isDark 
+        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
+        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final textColor = isDark ? Colors.white : Colors.black87;
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.platinum, AppColors.bgGradientEnd],
+            colors: gradientColors,
           ),
         ),
         child: SafeArea(
@@ -235,14 +241,14 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 padding: const EdgeInsets.only(left: 8.0, top: 16.0),
                 child: TextButton.icon(
                   onPressed: () => context.pop(), // Volta para a tela anterior
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.black87,
+                    color: textColor,
                     size: 18,
                   ),
-                  label: const Text(
+                  label: Text(
                     'Voltar',
-                    style: TextStyle(color: Colors.black87, fontSize: 16),
+                    style: TextStyle(color: textColor, fontSize: 16),
                   ),
                 ),
               ),
@@ -535,13 +541,18 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
     required String subtitle,
     required Widget isExpandedContent,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.darkSurface : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black87;
+    final subColor = isDark ? Colors.white70 : Colors.black54;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBg,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -554,18 +565,18 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
         child: ExpansionTile(
           title: Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
-              color: Colors.black87,
+              color: textColor,
             ),
           ),
           subtitle: Text(
             subtitle,
-            style: const TextStyle(fontSize: 13, color: Colors.black54),
+            style: TextStyle(fontSize: 13, color: subColor),
           ),
-          iconColor: Colors.black87,
-          collapsedIconColor: Colors.black87,
+          iconColor: textColor,
+          collapsedIconColor: textColor,
           childrenPadding: const EdgeInsets.only(
             left: 16,
             right: 16,
@@ -587,14 +598,18 @@ class _StatCardInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.darkSurface : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black87;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBg,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -605,19 +620,19 @@ class _StatCardInfo extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w500,
-              color: Colors.black87,
+              color: textColor,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: isDark ? Colors.white : Colors.black,
             ),
           ),
         ],

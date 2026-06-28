@@ -24,9 +24,12 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
   Widget build(BuildContext context) {
     final state = ref.watch(pesquisaAlunoProvider);
     final notifier = ref.read(pesquisaAlunoProvider.notifier);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkBg : AppColors.textSecondary.withValues(alpha: 0.3);
+    final searchBg = isDark ? AppColors.darkSurface : Colors.white;
 
     return Scaffold(
-      backgroundColor: AppColors.textSecondary.withOpacity(0.3),
+      backgroundColor: bg,
       body: Column(
         children: [
           Padding(
@@ -38,7 +41,7 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: searchBg,
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
@@ -49,6 +52,7 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
                 ],
               ),
               child: TextField(
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 enabled: state.maybeWhen(
                   data: (_) => true,
                   orElse: () => false,
@@ -56,8 +60,8 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
                 onChanged: notifier.filtrarAlunos,
                 decoration: InputDecoration(
                   hintText: 'Insira o nome do aluno',
-                  hintStyle: const TextStyle(
-                    color: AppColors.textSecondary,
+                  hintStyle: TextStyle(
+                    color: isDark ? Colors.white54 : AppColors.textSecondary,
                     fontSize: 15,
                     fontWeight: FontWeight.w400,
                   ),

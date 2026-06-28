@@ -84,20 +84,25 @@ class TurmaDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final store = ref.watch(presencaStoreProvider(turma.id));
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkBg : Colors.white;
+    final appBarBg = isDark ? AppColors.darkTopbar : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+    final outlineColor = isDark ? AppColors.cyanPastel : AppColors.deepNavy;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bg,
       appBar: AppBar(
-        backgroundColor: AppColors.platinum,
+        backgroundColor: appBarBg,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back, color: AppColors.deepNavy, size: 22),
-          label: const Text(
+          icon: Icon(Icons.arrow_back, color: textColor, size: 22),
+          label: Text(
             'Voltar',
             style: TextStyle(
-              color: AppColors.deepNavy,
+              color: textColor,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -125,10 +130,10 @@ class TurmaDetail extends ConsumerWidget {
                         Expanded(
                           child: Text(
                             turma.nome,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.deepNavy,
+                              color: textColor,
                             ),
                           ),
                         ),
@@ -143,11 +148,11 @@ class TurmaDetail extends ConsumerWidget {
                       style: const TextStyle(color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 4),
-                    Text('Alunos matriculados: ${store.value?.alunos.length ?? 0}'),
+                    Text('Alunos matriculados: ${store.value?.alunos.length ?? 0}', style: TextStyle(color: isDark ? Colors.white70 : Colors.black87)),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       'Alunos',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.deepNavy),
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: textColor),
                     ),
                   ],
                 ),
@@ -211,9 +216,9 @@ class TurmaDetail extends ConsumerWidget {
                       height: 48,
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.deepNavy,
-                          side: const BorderSide(
-                            color: AppColors.deepNavy,
+                          foregroundColor: outlineColor,
+                          side: BorderSide(
+                            color: outlineColor,
                             width: 2,
                           ),
                           shape: RoundedRectangleBorder(

@@ -36,12 +36,18 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
   @override
   Widget build(BuildContext context) {
     final bool isInativo = !widget.aluno.ativo;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isInativo
+        ? AppColors.textSecondary.withValues(alpha: 0.4)
+        : (isDark ? AppColors.darkSurface : Colors.white);
+    final mainText = isInativo ? AppColors.textSecondary : (isDark ? Colors.white : Colors.black);
+    final subText = isInativo ? AppColors.textSecondary : (isDark ? Colors.white70 : AppColors.black1);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: isInativo ? 0 : 2,
-      color: isInativo ? AppColors.textSecondary.withOpacity(0.4) : Colors.white,
+      color: cardBg,
       child: InkWell(
         onTap: () => setState(() => _isExpanded = !_isExpanded),
         borderRadius: BorderRadius.circular(12),
@@ -65,7 +71,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
-                                color: isInativo ? AppColors.textSecondary : Colors.black,
+                                color: mainText,
                               ),
                             ),
                             if (isInativo) ...[
@@ -96,14 +102,14 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                           'Turma: ${widget.aluno.idTurma ?? "N/A"}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: isInativo ? AppColors.textSecondary : AppColors.black1,
+                            color: subText,
                           ),
                         ),
                         Text(
                           'Faixa: ${widget.aluno.faixa.nomeVisivel}',
                           style: TextStyle(
                             fontSize: 14,
-                            color: isInativo ? AppColors.textSecondary : AppColors.black1,
+                            color: subText,
                           ),
                         ),
                       ],
@@ -241,20 +247,25 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
   }
 
   Widget _buildInfoRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 2.0),
-      child: RichText(
-        text: TextSpan(
-          style: const TextStyle(color: AppColors.black1, fontSize: 13),
-          children: [
-            TextSpan(
-              text: label,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+    return Builder(
+      builder: (context) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: RichText(
+            text: TextSpan(
+              style: TextStyle(color: isDark ? Colors.white70 : AppColors.black1, fontSize: 13),
+              children: [
+                TextSpan(
+                  text: label,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                TextSpan(text: value),
+              ],
             ),
-            TextSpan(text: value),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

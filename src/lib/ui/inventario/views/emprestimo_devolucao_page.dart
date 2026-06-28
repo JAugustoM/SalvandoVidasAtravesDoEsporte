@@ -62,22 +62,28 @@ class _EmprestimoDevolucaoPageState
 
   // Widget de botão voltar padronizado
   Widget _buildBackButton({required VoidCallback onPressed}) {
-    return InkWell(
-      onTap: onPressed,
-      child: const Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.arrow_back_ios, size: 18, color: AppColors.deepNavy),
-          Text(
-            'Voltar',
-            style: TextStyle(
-              color: AppColors.deepNavy,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+    return Builder(
+      builder: (context) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final textColor = isDark ? Colors.white : AppColors.deepNavy;
+        return InkWell(
+          onTap: onPressed,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(Icons.arrow_back_ios, size: 18, color: textColor),
+              Text(
+                'Voltar',
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -88,13 +94,18 @@ class _EmprestimoDevolucaoPageState
     final state = ref.watch(gestaoEmprestimosStoreProvider);
     final store = ref.read(gestaoEmprestimosStoreProvider.notifier);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final gradientColors = isDark 
+        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
+        : [AppColors.platinum, AppColors.bgGradientEnd];
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.platinum, AppColors.bgGradientEnd],
+            colors: gradientColors,
           ),
         ),
         child: SafeArea(child: _buildCurrentView()),
@@ -191,9 +202,13 @@ class _EmprestimoDevolucaoPageState
       builder: (context, ref, child) {
         final state = ref.watch(gestaoEmprestimosStoreProvider);
         final store = ref.read(gestaoEmprestimosStoreProvider.notifier);
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final inputBg = isDark ? AppColors.darkInputFill : Colors.white;
+        final listBg = isDark ? AppColors.darkSurface : Colors.white;
+        final textColor = isDark ? Colors.white : Colors.black87;
 
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -203,18 +218,21 @@ class _EmprestimoDevolucaoPageState
               const SizedBox(height: 16),
               Text(
                 isEmprestar ? 'Emprestar Kimono para:' : 'Pegar kimono de:',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  color: textColor,
                 ),
               ),
               const SizedBox(height: 16),
               TextField(
+                style: TextStyle(color: textColor),
                 decoration: InputDecoration(
                   hintText: 'Buscar aluno...',
-                  prefixIcon: const Icon(Icons.search),
+                  hintStyle: TextStyle(color: isDark ? Colors.white54 : Colors.black54),
+                  prefixIcon: Icon(Icons.search, color: textColor),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: inputBg,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -226,7 +244,7 @@ class _EmprestimoDevolucaoPageState
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: listBg,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: state.when(
