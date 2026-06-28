@@ -31,7 +31,7 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
-    final defaultFillColor = isDark ? AppColors.darkSurface : AppColors.platinum;
+    final defaultFillColor = isDark ? AppColors.darkInputFill : AppColors.platinum;
     final hintColor = isDark ? Colors.white54 : AppColors.textSecondary;
 
     return Column(

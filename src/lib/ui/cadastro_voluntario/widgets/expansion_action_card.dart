@@ -29,7 +29,7 @@ class ExpansionActionCard extends StatelessWidget {
     final bg = backgroundColor ?? (isDark ? AppColors.darkSurface : AppColors.cyanPastel.withValues(alpha: 0.2));
     final titleColor = isDark ? Colors.white : AppColors.deepNavy;
     final subColor = isDark ? Colors.white70 : AppColors.deepNavy;
-    final expandedBg = isDark ? const Color(0xFF161B22) : Colors.white;
+    final expandedBg = isDark ? const Color(0xFF0A0E14) : Colors.white;
 
     return Container(
       width: double.infinity,
@@ -100,6 +100,7 @@ class ExpansionActionCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: expandedBg,
                 borderRadius: BorderRadius.circular(12),
+                border: isDark ? Border.all(color: AppColors.darkDivider) : null,
               ),
               child: child,
             ),

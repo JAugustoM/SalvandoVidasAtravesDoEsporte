@@ -92,35 +92,42 @@ class Configuracao extends ConsumerWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (ctx) => AlertDialog(
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                        title: const Text(
-                          'Deseja deslogar do sistema?',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.deepNavy),
-                        ),
-                        actionsAlignment: MainAxisAlignment.spaceEvenly,
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(ctx),
-                            child: const Text('Cancelar', style: TextStyle(color: AppColors.textSecondary)),
+                      builder: (ctx) {
+                        final dialogBg = isDark ? AppColors.darkSurface : Colors.white;
+                        final textColor = isDark ? Colors.white : AppColors.deepNavy;
+                        final cancelColor = isDark ? Colors.white70 : AppColors.textSecondary;
+
+                        return AlertDialog(
+                          backgroundColor: dialogBg,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          title: Text(
+                            'Deseja deslogar do sistema?',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontWeight: FontWeight.bold, color: textColor),
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.error,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          actionsAlignment: MainAxisAlignment.spaceEvenly,
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(ctx),
+                              child: Text('Cancelar', style: TextStyle(color: cancelColor)),
                             ),
-                            onPressed: () async {
-                              await ref.read(userServiceProvider).logout();
-                              if (!context.mounted) return;
-                              Navigator.pop(ctx);
-                              context.go(Routes.login);
-                            },
-                            child: const Text('Deslogar'),
-                          ),
-                        ],
-                      ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.error,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                              ),
+                              onPressed: () async {
+                                await ref.read(userServiceProvider).logout();
+                                if (!context.mounted) return;
+                                Navigator.pop(ctx);
+                                context.go(Routes.login);
+                              },
+                              child: const Text('Deslogar'),
+                            ),
+                          ],
+                        );
+                      },
                     );
                   },
                   icon: const Icon(Icons.logout),

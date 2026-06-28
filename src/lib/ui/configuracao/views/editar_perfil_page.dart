@@ -48,9 +48,19 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
     notifier = ref.read(updateVoluntarioProvider.notifier);
     logger = ref.read(loggerProvider);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final topbarBg = isDark ? AppColors.darkTopbar : AppColors.cyanPrimary;
+    final gradientColors = isDark
+        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
+        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final containerBg = isDark ? AppColors.darkSurface : Colors.white;
+    final avatarBg = isDark ? const Color(0xFF161B22) : AppColors.white2;
+    final textColor = isDark ? Colors.white : AppColors.black1;
+    final shadowColor = isDark ? AppColors.darkShadow : AppColors.shadowLight;
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.cyanPrimary,
+        backgroundColor: topbarBg,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
@@ -63,11 +73,11 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.platinum, AppColors.bgGradientEnd],
+            colors: gradientColors,
           ),
         ),
         child: SafeArea(
@@ -88,42 +98,42 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                           vertical: 26,
                         ),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: containerBg,
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
+                          boxShadow: [
                             BoxShadow(
-                              color: AppColors.shadowLight,
+                              color: shadowColor,
                               blurRadius: 22,
-                              offset: Offset(0, 10),
+                              offset: const Offset(0, 10),
                             ),
                           ],
                         ),
                         child: Column(
                           children: [
-                            const CircleAvatar(
+                            CircleAvatar(
                               radius: 36,
-                              backgroundColor: AppColors.white2,
-                              child: Icon(
+                              backgroundColor: avatarBg,
+                              child: const Icon(
                                 Icons.person,
                                 color: AppColors.royalAzure,
                                 size: 36,
                               ),
                             ),
                             const SizedBox(height: 16),
-                            const Text(
+                            Text(
                               'Seus Dados',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.black1,
+                                color: textColor,
                               ),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
+                            Text(
                               'Atualize suas informações pessoais abaixo.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: AppColors.textSecondary,
+                                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
                                 fontSize: 14,
                               ),
                             ),

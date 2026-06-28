@@ -32,7 +32,7 @@ class CadastroTextField extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
-    final fillColor = isDark ? AppColors.darkSurface : AppColors.inputFill;
+    final fillColor = isDark ? AppColors.darkInputFill : AppColors.inputFill;
     final hintColor = isDark ? Colors.white54 : AppColors.textSecondary;
 
     final notifier = ref.read(cadastroVoluntarioProvider.notifier);
@@ -92,13 +92,16 @@ class VoluntarioInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final labelColor = isDark ? Colors.white : AppColors.cyanPrimary;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            color: AppColors.cyanPrimary,
+          style: TextStyle(
+            color: labelColor,
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
