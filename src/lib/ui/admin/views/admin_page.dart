@@ -137,13 +137,18 @@ class _AdminPageState extends ConsumerState<AdminPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final gradientColors = isDark 
+        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
+        : [AppColors.platinum, AppColors.bgGradientEnd];
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.platinum, AppColors.bgGradientEnd],
+            colors: gradientColors,
           ),
         ),
         child: SafeArea(

@@ -20,52 +20,58 @@ class HomePage extends ConsumerWidget {
 
     showDialog(
       context: context,
-      builder: (ctx) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
-          'Informações do Aluno',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.deepNavy),
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _buildInfoRow('Nome:', aluno.nome),
-              _buildInfoRow('CPF:', aluno.cpf),
-              _buildInfoRow('Telefone:', aluno.contato ?? 'N/A'),
-              _buildInfoRow('Aniversário:', dateFormat.format(aluno.nascimento)),
-              _buildInfoRow('Tipo Sanguíneo:', aluno.tipoSanguineo.nomeVisivel),
-              _buildInfoRow('ID da Ficha:', aluno.idFicha?.toString() ?? 'N/A'),
-              if (responsavel != null) ...[
-                const Divider(height: 24),
-                const Text('Responsável:', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.cyanPrimary)),
-                _buildInfoRow('Nome:', responsavel.nome),
-                _buildInfoRow('CPF:', responsavel.cpf),
-                _buildInfoRow('Telefone:', responsavel.contato),
-              ],
-            ],
+      builder: (ctx) {
+        final isDark = Theme.of(ctx).brightness == Brightness.dark;
+        final dialogBg = isDark ? AppColors.darkSurface : Colors.white;
+        final titleColor = isDark ? Colors.white : AppColors.deepNavy;
+        return AlertDialog(
+          backgroundColor: dialogBg,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Text(
+            'Informações do Aluno',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold, color: titleColor),
           ),
-        ),
-        actions: [
-          Center(
-            child: TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('Fechar', style: TextStyle(color: AppColors.deepNavy, fontWeight: FontWeight.bold)),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildInfoRow('Nome:', aluno.nome, isDark),
+                _buildInfoRow('CPF:', aluno.cpf, isDark),
+                _buildInfoRow('Telefone:', aluno.contato ?? 'N/A', isDark),
+                _buildInfoRow('Aniversário:', dateFormat.format(aluno.nascimento), isDark),
+                _buildInfoRow('Tipo Sanguíneo:', aluno.tipoSanguineo.nomeVisivel, isDark),
+                _buildInfoRow('ID da Ficha:', aluno.idFicha?.toString() ?? 'N/A', isDark),
+                if (responsavel != null) ...[
+                  const Divider(height: 24),
+                  const Text('Responsável:', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.cyanPrimary)),
+                  _buildInfoRow('Nome:', responsavel.nome, isDark),
+                  _buildInfoRow('CPF:', responsavel.cpf, isDark),
+                  _buildInfoRow('Telefone:', responsavel.contato, isDark),
+                ],
+              ],
             ),
           ),
-        ],
-      ),
+          actions: [
+            Center(
+              child: TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: Text('Fechar', style: TextStyle(color: titleColor, fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(String label, String value, bool isDark) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: RichText(
         text: TextSpan(
-          style: const TextStyle(color: Colors.black, fontSize: 14),
+          style: TextStyle(color: isDark ? Colors.white : Colors.black, fontSize: 14),
           children: [
             TextSpan(text: '$label ', style: const TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: value),
@@ -79,13 +85,23 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homeState = ref.watch(homeStoreProvider);
 
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final gradientColors = isDark 
+        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
+        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final cardBg = isDark ? AppColors.darkSurface : Colors.white;
+    final outerContainerBg = isDark ? AppColors.darkInputFill : AppColors.inputFill;
+    final headerBg = isDark ? const Color(0xFF1E293B) : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+    final subColor = isDark ? Colors.white70 : AppColors.textSecondary;
+
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [AppColors.platinum, AppColors.bgGradientEnd],
+            colors: gradientColors,
           ),
         ),
         child: SafeArea(
@@ -116,13 +132,13 @@ class HomePage extends ConsumerWidget {
                           Expanded(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: cardBg,
                                 borderRadius: BorderRadius.circular(12),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.shadowLight,
+                                    color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
                                     blurRadius: 8,
-                                    offset: Offset(0, 4),
+                                    offset: const Offset(0, 4),
                                   ),
                                 ],
                               ),
@@ -130,11 +146,11 @@ class HomePage extends ConsumerWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
+                                  Text(
                                     'Próximos aniversariantes',
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: AppColors.textSecondary,
+                                      color: subColor,
                                     ),
                                   ),
                                   const SizedBox(height: 6),
@@ -177,9 +193,10 @@ class HomePage extends ConsumerWidget {
                                                   Expanded(
                                                     child: Text(
                                                       item.aluno.nome,
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
                                                         fontSize: 12,
                                                         fontWeight: FontWeight.w600,
+                                                        color: isDark ? Colors.white : Colors.black87,
                                                       ),
                                                       overflow: TextOverflow.ellipsis,
                                                     ),
@@ -190,7 +207,7 @@ class HomePage extends ConsumerWidget {
                                                       fontSize: 11,
                                                       color: item.dias == 0
                                                           ? AppColors.royalAzure
-                                                          : AppColors.textSecondary,
+                                                          : subColor,
                                                       fontWeight: item.dias == 0
                                                           ? FontWeight.w700
                                                           : FontWeight.normal,
@@ -252,23 +269,23 @@ class HomePage extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppColors.inputFill,
+                        color: outerContainerBg,
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: const [
+                        boxShadow: [
                           BoxShadow(
-                            color: AppColors.shadowMedium,
+                            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
                             blurRadius: 12,
-                            offset: Offset(0, 6),
+                            offset: const Offset(0, 6),
                           ),
                         ],
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Alunos:',
                             style: TextStyle(
-                              color: AppColors.deepNavy,
+                              color: textColor,
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                             ),
@@ -276,7 +293,7 @@ class HomePage extends ConsumerWidget {
                           const SizedBox(height: 8),
                           Container(
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: cardBg,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Column(
@@ -284,10 +301,10 @@ class HomePage extends ConsumerWidget {
                                 // Cabeçalho da tabela de alunos
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.platinum,
-                                    borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
-                                    border: Border(bottom: BorderSide(color: AppColors.divider)),
+                                  decoration: BoxDecoration(
+                                    color: headerBg,
+                                    borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                                    border: const Border(bottom: BorderSide(color: AppColors.divider)),
                                   ),
                                   child: Row(
                                     children: [
@@ -350,11 +367,11 @@ class HomePage extends ConsumerWidget {
                                                   children: [
                                                     Expanded(
                                                       flex: 4,
-                                                      child: Text(aluno.nome, overflow: TextOverflow.ellipsis),
+                                                      child: Text(aluno.nome, style: TextStyle(color: isDark ? Colors.white : Colors.black87), overflow: TextOverflow.ellipsis),
                                                     ),
                                                     Expanded(
                                                       flex: 2,
-                                                      child: Text('${alunoHome.$2 ?? "N/A"}', textAlign: TextAlign.center),
+                                                      child: Text('${alunoHome.$2 ?? "N/A"}', style: TextStyle(color: isDark ? Colors.white70 : Colors.black87), textAlign: TextAlign.center),
                                                     ),
                                                     Expanded(
                                                       flex: 3,
@@ -370,7 +387,7 @@ class HomePage extends ConsumerWidget {
                                                           fontSize: 11,
                                                           color: (alunoHome.$3 ?? 1000) >= 14
                                                               ? AppColors.error
-                                                              : Colors.black,
+                                                              : (isDark ? Colors.white : Colors.black),
                                                           fontWeight: (alunoHome.$3 ?? 1000) >= 14
                                                               ? FontWeight.w700
                                                               : FontWeight.normal,

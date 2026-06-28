@@ -17,18 +17,23 @@ class MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final bool colored = color != Colors.white;
+    final cardBg = colored ? color : (isDark ? AppColors.darkSurface : Colors.white);
+    final textColor = colored ? Colors.white : (isDark ? Colors.white : AppColors.deepNavy);
+    final subColor = colored ? Colors.white.withValues(alpha: 0.9) : (isDark ? Colors.white70 : AppColors.textSecondary);
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: colored ? color : Colors.white,
+        color: cardBg,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: AppColors.shadowMedium,
+            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
             blurRadius: 8,
-            offset: Offset(0, 6),
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -42,7 +47,7 @@ class MetricCard extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              color: colored ? Colors.white : AppColors.deepNavy,
+              color: textColor,
               fontSize: 11, // Reduzido levemente para ganhar espaço
             ),
           ),
@@ -53,7 +58,7 @@ class MetricCard extends StatelessWidget {
               value,
               textAlign: TextAlign.center, 
               style: TextStyle(
-                color: colored ? Colors.white : AppColors.deepNavy,
+                color: textColor,
                 fontWeight: FontWeight.w900,
                 fontSize: 20,
               ),
@@ -67,7 +72,7 @@ class MetricCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: colored ? Colors.white.withOpacity(0.9) : AppColors.textSecondary,
+                color: subColor,
                 fontSize: 9, // Reduzido levemente para ganhar espaço
                 fontWeight: FontWeight.w500,
               ),
