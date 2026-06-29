@@ -95,9 +95,7 @@ class _EmprestimoDevolucaoPageState
     final store = ref.read(gestaoEmprestimosStoreProvider.notifier);
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDark 
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
 
     return Scaffold(
       body: Container(
@@ -252,6 +250,7 @@ class _EmprestimoDevolucaoPageState
                   decoration: BoxDecoration(
                     color: listBg,
                     borderRadius: BorderRadius.circular(12),
+                    boxShadow: AppColors.cardShadow(isDark),
                   ),
                   child: state.when(
                     data: (data) {

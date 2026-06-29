@@ -25,14 +25,21 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
     final state = ref.watch(pesquisaAlunoProvider);
     final notifier = ref.read(pesquisaAlunoProvider.notifier);
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = isDark ? AppColors.darkBg : AppColors.textSecondary.withValues(alpha: 0.3);
     final searchBg = isDark ? AppColors.darkSurface : Colors.white;
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
 
     return Scaffold(
-      backgroundColor: bg,
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 800),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: gradientColors,
+          ),
+        ),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
           child: Column(
         children: [
           Padding(
@@ -46,13 +53,7 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
               decoration: BoxDecoration(
                 color: searchBg,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha:0.15),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+                boxShadow: AppColors.cardShadow(isDark),
               ),
               child: TextField(
                 style: TextStyle(color: isDark ? Colors.white : Colors.black),
@@ -165,6 +166,7 @@ class _PesquisaAlunosPageState extends ConsumerState<PesquisaAlunosPage> {
           ),
         ],
       ),
+          ),
         ),
       ),
     );

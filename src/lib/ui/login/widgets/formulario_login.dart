@@ -15,19 +15,11 @@ class FormularioLogin extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.fromLTRB(18, 24, 18, 20),
-      decoration: isDark
-          ? BoxDecoration(
-              color: AppColors.darkSurface,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.3),
-                  blurRadius: 12,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            )
-          : LoginDecorations.formContainer,
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: AppColors.cardShadow(isDark),
+      ),
       child: Form(
         key: formKey,
         // Só valida automaticamente DEPOIS do primeiro clique no botão entrar

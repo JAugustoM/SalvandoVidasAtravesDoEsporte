@@ -50,13 +50,11 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final topbarBg = isDark ? AppColors.darkTopbar : AppColors.cyanPrimary;
-    final gradientColors = isDark
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
     final containerBg = isDark ? AppColors.darkSurface : Colors.white;
     final avatarBg = isDark ? const Color(0xFF161B22) : AppColors.white2;
     final textColor = isDark ? Colors.white : AppColors.black1;
-    final shadowColor = isDark ? AppColors.darkShadow : AppColors.shadowLight;
+    final cardShadows = AppColors.cardShadow(isDark);
 
     return Scaffold(
       appBar: AppBar(
@@ -100,13 +98,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                         decoration: BoxDecoration(
                           color: containerBg,
                           borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: shadowColor,
-                              blurRadius: 22,
-                              offset: const Offset(0, 10),
-                            ),
-                          ],
+                          boxShadow: cardShadows,
                         ),
                         child: Column(
                           children: [

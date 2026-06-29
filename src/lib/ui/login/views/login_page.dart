@@ -18,7 +18,13 @@ class _LoginPageState extends State<LoginPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       body: Container(
-        decoration: isDark ? BoxDecoration(color: AppColors.darkBg) : LoginDecorations.pageBackground,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight,
+          ),
+        ),
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(

@@ -20,6 +20,14 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   late RegistroKimonosState state;
   late RegistroKimonosStore store;
 
+  bool get isDark => Theme.of(context).brightness == Brightness.dark;
+  Color get cardBg => isDark ? AppColors.darkSurface : Colors.white;
+  Color get textColor => isDark ? Colors.white : Colors.black87;
+  Color get inputFill => isDark ? AppColors.darkInputFill : Colors.grey.shade200;
+  Color get hintColor => isDark ? Colors.white54 : Colors.black54;
+  Color get cancelBtnBg => isDark ? Colors.grey.shade800 : Colors.grey.shade300;
+  Color get cancelBtnText => isDark ? Colors.white : Colors.black87;
+
   // --- MÉTODOS DOS POP-UPS ---
 
   void _mostrarConfirmacaoDoacao() {
@@ -27,18 +35,19 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       context: context,
       barrierColor: Colors.black.withOpacity(0.6), // Fundo escurecido
       builder: (context) => AlertDialog(
+        backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           'Deseja registrar este\nkimono (${state.tamanhoDoacao!.nomeVisivel}, ${state.corDoacao!.nomeVisivel})?',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey.shade300,
-              foregroundColor: Colors.black87,
+              backgroundColor: cancelBtnBg,
+              foregroundColor: cancelBtnText,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -79,11 +88,12 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       context: context,
       barrierColor: Colors.black.withOpacity(0.6),
       builder: (context) => AlertDialog(
+        backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
+        title: Text(
           'A doação do kimono foi\nregistrada com sucesso!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
         ),
         actionsAlignment: MainAxisAlignment.center,
         actions: [
@@ -114,18 +124,19 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       context: context,
       barrierColor: Colors.black.withOpacity(0.6),
       builder: (context) => AlertDialog(
+        backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           'Deseja registrar a perda\nde ${state.qtdPerdida} kimonos (${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel})?',
           textAlign: TextAlign.center,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey.shade300,
-              foregroundColor: Colors.black87,
+              backgroundColor: cancelBtnBg,
+              foregroundColor: cancelBtnText,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -166,11 +177,12 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       context: context,
       barrierColor: Colors.black.withOpacity(0.6),
       builder: (context) => AlertDialog(
+        backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: const Text(
+        title: Text(
           'A perda do kimono foi\nregistrada com sucesso!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
         ),
         actionsAlignment: MainAxisAlignment.center,
         actions: [
@@ -217,11 +229,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       }
     }
 
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDark 
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
-    final textColor = isDark ? Colors.white : Colors.black87;
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
 
     return Scaffold(
       body: Container(
@@ -292,7 +300,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
+                                color: inputFill,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               padding: const EdgeInsets.symmetric(
@@ -301,13 +309,16 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<TamanhoKimono>(
                                   isExpanded: true,
-                                  hint: const Text('Tamanho...'),
+                                  dropdownColor: cardBg,
+                                  icon: Icon(Icons.arrow_drop_down, color: textColor),
+                                  style: TextStyle(color: textColor, fontSize: 16),
+                                  hint: Text('Tamanho...', style: TextStyle(color: hintColor)),
                                   value: state.tamanhoDoacao,
                                   items: TamanhoKimono.values
                                       .map(
                                         (c) => DropdownMenuItem<TamanhoKimono>(
                                           value: c,
-                                          child: Text(c.nomeVisivel),
+                                          child: Text(c.nomeVisivel, style: TextStyle(color: textColor)),
                                         ),
                                       )
                                       .toList(),
@@ -319,7 +330,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                             const SizedBox(height: 12),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
+                                color: inputFill,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               padding: const EdgeInsets.symmetric(
@@ -328,13 +339,16 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                               child: DropdownButtonHideUnderline(
                                 child: DropdownButton<CorKimono>(
                                   isExpanded: true,
-                                  hint: const Text('Cor...'),
+                                  dropdownColor: cardBg,
+                                  icon: Icon(Icons.arrow_drop_down, color: textColor),
+                                  style: TextStyle(color: textColor, fontSize: 16),
+                                  hint: Text('Cor...', style: TextStyle(color: hintColor)),
                                   value: state.corDoacao,
                                   items: CorKimono.values
                                       .map(
                                         (c) => DropdownMenuItem<CorKimono>(
                                           value: c,
-                                          child: Text(c.nomeVisivel),
+                                          child: Text(c.nomeVisivel, style: TextStyle(color: textColor)),
                                         ),
                                       )
                                       .toList(),
@@ -346,10 +360,12 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                             const SizedBox(height: 12),
                             TextFormField(
                               initialValue: state.doador,
+                              style: TextStyle(color: textColor),
                               decoration: InputDecoration(
                                 hintText: 'Nome do doador...',
+                                hintStyle: TextStyle(color: hintColor),
                                 filled: true,
-                                fillColor: Colors.grey.shade200,
+                                fillColor: inputFill,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none,
@@ -361,10 +377,12 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                             TextFormField(
                               initialValue: state.qtdDoada,
                               keyboardType: TextInputType.number,
+                              style: TextStyle(color: textColor),
                               decoration: InputDecoration(
                                 hintText: 'Quantidade doada...',
+                                hintStyle: TextStyle(color: hintColor),
                                 filled: true,
-                                fillColor: Colors.grey.shade200,
+                                fillColor: inputFill,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none,
@@ -410,7 +428,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
+                                color: inputFill,
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: estoque.when(
@@ -433,16 +451,17 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                             ListTileControlAffinity.trailing,
                                         title: Row(
                                           children: [
-                                            const Icon(
+                                            Icon(
                                               Icons.sports_martial_arts,
                                               size: 24,
-                                              color: Colors.black87,
+                                              color: textColor,
                                             ),
                                             const SizedBox(width: 12),
                                             Text(
                                               '${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel}',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                 fontSize: 15,
+                                                color: textColor,
                                               ),
                                             ),
                                           ],
@@ -473,10 +492,12 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                             const SizedBox(height: 12),
                             TextFormField(
                               initialValue: state.motivo,
+                              style: TextStyle(color: textColor),
                               decoration: InputDecoration(
                                 hintText: 'Motivo da perda...',
+                                hintStyle: TextStyle(color: hintColor),
                                 filled: true,
-                                fillColor: Colors.grey.shade200,
+                                fillColor: inputFill,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none,
@@ -488,10 +509,12 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                             TextFormField(
                               initialValue: state.qtdPerdida,
                               keyboardType: TextInputType.number,
+                              style: TextStyle(color: textColor),
                               decoration: InputDecoration(
                                 hintText: 'Quantidade perdida...',
+                                hintStyle: TextStyle(color: hintColor),
                                 filled: true,
-                                fillColor: Colors.grey.shade200,
+                                fillColor: inputFill,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                   borderSide: BorderSide.none,
@@ -555,13 +578,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: AppColors.cardShadow(isDark),
       ),
       child: Theme(
         data: Theme.of(context).copyWith(
@@ -612,13 +629,7 @@ class _StatCardInfo extends StatelessWidget {
       decoration: BoxDecoration(
         color: cardBg,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        boxShadow: AppColors.cardShadow(isDark),
       ),
       child: Column(
         children: [

@@ -86,9 +86,7 @@ class HomePage extends ConsumerWidget {
     final homeState = ref.watch(homeStoreProvider);
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDark 
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
     final outerContainerBg = isDark ? AppColors.darkInputFill : AppColors.inputFill;
     final headerBg = isDark ? const Color(0xFF1E293B) : AppColors.platinum;
@@ -132,13 +130,7 @@ class HomePage extends ConsumerWidget {
                       decoration: BoxDecoration(
                         color: outerContainerBg,
                         borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
-                            blurRadius: 12,
-                            offset: const Offset(0, 6),
-                          ),
-                        ],
+                        boxShadow: AppColors.cardShadow(isDark),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,13 +318,7 @@ class HomePage extends ConsumerWidget {
           decoration: BoxDecoration(
             color: cardBg,
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.25 : 0.08),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
+            boxShadow: AppColors.cardShadow(isDark),
           ),
           padding: const EdgeInsets.all(12),
           child: Column(

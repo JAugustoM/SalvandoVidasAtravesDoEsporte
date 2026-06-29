@@ -36,9 +36,7 @@ class Inventario extends ConsumerWidget {
     }
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDark 
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
 
     return Scaffold(
@@ -89,13 +87,7 @@ class Inventario extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: cardBg,
                       borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.05),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
+                      boxShadow: AppColors.cardShadow(isDark),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

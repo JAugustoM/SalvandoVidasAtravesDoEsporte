@@ -202,9 +202,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = isDark ? Colors.white : AppColors.deepNavy;
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
-    final gradientColors = isDark
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
 
     return Scaffold(
       // AJUSTE: Novo botão customizado de voltar com texto e navegação explícita
@@ -256,13 +254,7 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
                   decoration: BoxDecoration(
                     color: cardBg,
                     borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.08),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
+                    boxShadow: AppColors.cardShadow(isDark),
                   ),
                   padding: const EdgeInsets.all(24.0),
                   child: Column(

@@ -7,9 +7,7 @@ class AdminPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDark
-        ? [AppColors.darkBg, const Color(0xFF0D1B2A)]
-        : [AppColors.platinum, AppColors.bgGradientEnd];
+    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
 
     return Scaffold(
       body: Container(
@@ -27,31 +25,31 @@ class AdminPage extends ConsumerWidget {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 500),
                 child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _AdminCard(
-                    icon: Icons.person_add_alt_1_outlined,
-                    title: 'Cadastrar Voluntário',
-                    subtitle: 'Cadastre novos voluntários\npara acessar a aplicação',
-                    onTap: () => context.push(Routes.cadastrarVoluntario),
-                  ),
-                  const SizedBox(height: 16),
-                  _AdminCard(
-                    icon: Icons.edit_outlined,
-                    title: 'Editar Voluntário',
-                    subtitle: 'Edite as informações dos\nvoluntários',
-                    onTap: () => context.push(Routes.editarVoluntario),
-                  ),
-                  const SizedBox(height: 16),
-                  _AdminCard(
-                    icon: Icons.manage_history,
-                    title: 'Histórico de Empréstimos',
-                    subtitle: 'Visualize as informações de\ncada emprestimo',
-                    onTap: () => context.push(Routes.emprestimoDevolucao),
-                  ),
-                ],
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _AdminCard(
+                      icon: Icons.person_add_alt_1_outlined,
+                      title: 'Cadastrar Voluntário',
+                      subtitle: 'Cadastre novos voluntários\npara acessar a aplicação',
+                      onTap: () => context.push(Routes.cadastrarVoluntario),
+                    ),
+                    const SizedBox(height: 16),
+                    _AdminCard(
+                      icon: Icons.edit_outlined,
+                      title: 'Editar Voluntário',
+                      subtitle: 'Edite as informações dos\nvoluntários',
+                      onTap: () => context.push(Routes.editarVoluntario),
+                    ),
+                    const SizedBox(height: 16),
+                    _AdminCard(
+                      icon: Icons.manage_history,
+                      title: 'Histórico de Empréstimos',
+                      subtitle: 'Visualize as informações de\ncada emprestimo',
+                      onTap: () => context.push(Routes.emprestimoDevolucao),
+                    ),
+                  ],
+                ),
               ),
-            ),
             ),
           ),
         ),
@@ -80,59 +78,64 @@ class _AdminCard extends StatelessWidget {
     final titleColor = isDark ? Colors.white : AppColors.deepNavy;
     final subtitleColor = isDark ? Colors.white70 : AppColors.textSecondary;
 
-    return Material(
-      color: cardBg,
-      borderRadius: BorderRadius.circular(16),
-      elevation: 2,
-      shadowColor: isDark ? Colors.black54 : AppColors.shadowMedium,
-      child: InkWell(
-        onTap: onTap,
+    return Container(
+      decoration: BoxDecoration(
+        color: cardBg,
         borderRadius: BorderRadius.circular(16),
-        splashColor: AppColors.splashBlue,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-          child: Row(
-            children: [
-              Container(
-                width: 52,
-                height: 52,
-                decoration: BoxDecoration(
+        boxShadow: AppColors.cardShadow(isDark),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          splashColor: AppColors.splashBlue,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+            child: Row(
+              children: [
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: AppColors.cyanPrimary,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 26),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: titleColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          color: subtitleColor,
+                          fontSize: 13,
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Icon(
+                  Icons.keyboard_arrow_down_rounded,
                   color: AppColors.cyanPrimary,
-                  borderRadius: BorderRadius.circular(14),
+                  size: 28,
                 ),
-                child: Icon(icon, color: Colors.white, size: 26),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: titleColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        color: subtitleColor,
-                        fontSize: 13,
-                        height: 1.4,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                color: AppColors.cyanPrimary,
-                size: 28,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

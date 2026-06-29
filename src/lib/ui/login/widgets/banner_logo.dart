@@ -1,4 +1,5 @@
 import 'package:salvando_vidas/main_imports.dart';
+import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
 class BannerLogo extends StatelessWidget {
   const BannerLogo({super.key});
@@ -14,13 +15,7 @@ class BannerLogo extends StatelessWidget {
           ? BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.white.withOpacity(0.12),
-                  blurRadius: 16,
-                  spreadRadius: 1,
-                ),
-              ],
+              boxShadow: AppColors.cardShadow(true),
             )
           : null,
       child: Image.asset(

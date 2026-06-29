@@ -46,7 +46,8 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: isInativo ? 0 : 2,
+      elevation: isInativo ? 0 : 4,
+      shadowColor: AppColors.royalAzure.withOpacity(isDark ? 0.35 : 0.18),
       color: cardBg,
       child: InkWell(
         onTap: () => setState(() => _isExpanded = !_isExpanded),

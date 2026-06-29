@@ -22,8 +22,8 @@ class TurmaCardWidget extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.only(left: 16, right: 16, bottom: 12),
-      elevation: 2,
-      shadowColor: Colors.black.withValues(alpha: 0.15),
+      elevation: 4,
+      shadowColor: AppColors.royalAzure.withOpacity(isDark ? 0.35 : 0.18),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: cardBg,
       surfaceTintColor: cardBg,
