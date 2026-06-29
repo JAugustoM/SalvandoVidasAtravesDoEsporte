@@ -60,7 +60,7 @@ final class UpdateAlunoProvider
   }
 }
 
-String _$updateAlunoHash() => r'93dd741dc3ed4c18d30227a8c5f2d8b83ef52877';
+String _$updateAlunoHash() => r'4ebc1bc9ee33ef409757b30bc240360a3742294a';
 
 final class UpdateAlunoFamily extends $Family
     with

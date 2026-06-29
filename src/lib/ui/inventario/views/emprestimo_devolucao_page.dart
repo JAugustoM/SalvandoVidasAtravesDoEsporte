@@ -107,8 +107,9 @@ class _EmprestimoDevolucaoPageState
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors =
-        isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
+    final gradientColors = isDark
+        ? AppColors.bgGradientDark
+        : AppColors.bgGradientLight;
 
     return Scaffold(
       body: Container(
@@ -140,10 +141,7 @@ class _EmprestimoDevolucaoPageState
   Widget _buildEscolhaView() {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: _buildAppBar(
-        context: context,
-        onBack: () => context.pop(),
-      ),
+      appBar: _buildAppBar(context: context, onBack: () => context.pop()),
       body: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 600),
@@ -268,23 +266,20 @@ class _EmprestimoDevolucaoPageState
                         ),
                         child: state.when(
                           data: (data) {
-                            final alunosEmprestimos =
-                                data.emprestimos.map((e) {
+                            final alunosEmprestimos = data.emprestimos.map((e) {
                               if (e.dataDevolucao == null) return e.alunoId;
                             }).toList();
                             late final List<Aluno> alunos;
                             if (isEmprestar) {
                               alunos = data.alunosFiltrados
                                   .where(
-                                    (a) =>
-                                        !alunosEmprestimos.contains(a.id),
+                                    (a) => !alunosEmprestimos.contains(a.id),
                                   )
                                   .toList();
                             } else {
                               alunos = data.alunosFiltrados
                                   .where(
-                                    (a) =>
-                                        alunosEmprestimos.contains(a.id),
+                                    (a) => alunosEmprestimos.contains(a.id),
                                   )
                                   .toList();
                             }
@@ -388,7 +383,7 @@ class _EmprestimoDevolucaoPageState
                                 items: [
                                   const DropdownMenuItem<TamanhoKimono?>(
                                     value: null,
-                                    child: Text('Qualquer tamanho'),
+                                    child: Text('Qualquer'),
                                   ),
                                   ...TamanhoKimono.values.map(
                                     (t) => DropdownMenuItem(
@@ -397,8 +392,7 @@ class _EmprestimoDevolucaoPageState
                                     ),
                                   ),
                                 ],
-                                onChanged: (v) =>
-                                    store.updateFiltroTamanho(v),
+                                onChanged: (v) => store.updateFiltroTamanho(v),
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -410,7 +404,7 @@ class _EmprestimoDevolucaoPageState
                                 items: [
                                   const DropdownMenuItem<CorKimono?>(
                                     value: null,
-                                    child: Text('Qualquer cor'),
+                                    child: Text('Qualquer'),
                                   ),
                                   ...CorKimono.values.map(
                                     (c) => DropdownMenuItem(
@@ -442,8 +436,7 @@ class _EmprestimoDevolucaoPageState
                                   trailing: RadioGroup<Estoque>(
                                     groupValue: state.value!.kimono,
                                     child: Radio<Estoque>(value: k),
-                                    onChanged: (v) =>
-                                        store.updateKimono(v!),
+                                    onChanged: (v) => store.updateKimono(v!),
                                   ),
                                 );
                               },
@@ -516,10 +509,7 @@ class _EmprestimoDevolucaoPageState
             Text(
               'Deseja emprestar este kimono para o aluno ${aluno.nome}?',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
             Row(
@@ -586,10 +576,7 @@ class _EmprestimoDevolucaoPageState
             Text(
               'Deseja pegar o kimono de ${aluno.nome}?',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
             Row(
@@ -646,10 +633,7 @@ class _EmprestimoDevolucaoPageState
             Text(
               mensagem,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
             ElevatedButton(

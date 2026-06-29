@@ -38,10 +38,11 @@ class Inventario extends ConsumerWidget {
     }
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
+    final gradientColors = isDark
+        ? AppColors.bgGradientDark
+        : AppColors.bgGradientLight;
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
 
-    // Fundo: cyanPrimary no light (igual ao protótipo), gradient dark no dark
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -87,8 +88,14 @@ class Inventario extends ConsumerWidget {
                               buttonText: 'Ver Estoque',
                               buttonIcon: Icons.checkroom_outlined,
                               gradientColors: isDark
-                                  ? const [Color(0xFF071F3F), Color(0xFF006B85)] // Escuro vibrante
-                                  : const [Color(0xFF1976D2), Color(0xFF26C6DA)], // Claro vivo
+                                  ? const [
+                                      Color(0xFF071F3F),
+                                      Color(0xFF006B85),
+                                    ] // Escuro vibrante
+                                  : const [
+                                      Color(0xFF1976D2),
+                                      Color(0xFF26C6DA),
+                                    ], // Claro vivo
                               onConsultar: () => _abrirPopUpKimonos(context),
                             ),
                           ),
@@ -101,9 +108,16 @@ class Inventario extends ConsumerWidget {
                               buttonText: 'Ver Histórico',
                               buttonIcon: Icons.history_rounded,
                               gradientColors: isDark
-                                  ? const [Color(0xFF140D36), Color(0xFF45229E)] // Escuro vibrante
-                                  : const [Color(0xFF3F51B5), Color(0xFF7986CB)], // Claro vivo
-                              onConsultar: () => context.push(Routes.historicoEmprestimos),
+                                  ? const [
+                                      Color(0xFF140D36),
+                                      Color(0xFF45229E),
+                                    ] // Escuro vibrante
+                                  : const [
+                                      Color(0xFF3F51B5),
+                                      Color(0xFF7986CB),
+                                    ], // Claro vivo
+                              onConsultar: () =>
+                                  context.push(Routes.historicoEmprestimos),
                             ),
                           ),
                         ],
@@ -116,9 +130,12 @@ class Inventario extends ConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: isDark ? AppColors.darkSurface : Colors.white,
+                          color: cardBg,
                           borderRadius: BorderRadius.circular(14),
-                          border: Border.all(color: AppColors.royalAzure.withOpacity(0.35), width: 1.5),
+                          border: Border.all(
+                            color: AppColors.royalAzure.withOpacity(0.35),
+                            width: 1.5,
+                          ),
                           boxShadow: AppColors.cardShadow(isDark),
                         ),
                         child: Column(
@@ -129,7 +146,9 @@ class Inventario extends ConsumerWidget {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
-                                color: isDark ? Colors.white : AppColors.deepNavy,
+                                color: isDark
+                                    ? Colors.white
+                                    : AppColors.deepNavy,
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -168,23 +187,36 @@ class Inventario extends ConsumerWidget {
                                         final emp = emprestimos[index];
                                         final aluno = data.alunos[emp.alunoId]!;
                                         return InkWell(
-                                          onTap: () => mostrarHistoricoEmprestimoAlunoDialog(context, aluno),
-                                          borderRadius: BorderRadius.circular(12),
+                                          onTap: () =>
+                                              mostrarHistoricoEmprestimoAlunoDialog(
+                                                context,
+                                                aluno,
+                                              ),
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 8),
+                                              vertical: 10,
+                                              horizontal: 8,
+                                            ),
                                             child: Row(
                                               children: [
                                                 Container(
                                                   width: 44,
                                                   height: 44,
                                                   decoration: BoxDecoration(
-                                                    color: AppColors.cyanPrimary.withOpacity(0.15),
-                                                    borderRadius: BorderRadius.circular(12),
+                                                    color: AppColors.cyanPrimary
+                                                        .withOpacity(0.15),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          12,
+                                                        ),
                                                   ),
                                                   child: const Icon(
                                                     Icons.checkroom_outlined,
-                                                    color: AppColors.cyanPrimary,
+                                                    color:
+                                                        AppColors.cyanPrimary,
                                                     size: 24,
                                                   ),
                                                 ),
@@ -192,7 +224,8 @@ class Inventario extends ConsumerWidget {
                                                 Expanded(
                                                   child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                         aluno.nome,
@@ -202,7 +235,8 @@ class Inventario extends ConsumerWidget {
                                                           fontSize: 14,
                                                           color: isDark
                                                               ? Colors.white
-                                                              : AppColors.deepNavy,
+                                                              : AppColors
+                                                                    .deepNavy,
                                                         ),
                                                       ),
                                                       const SizedBox(height: 2),
@@ -260,7 +294,10 @@ class Inventario extends ConsumerWidget {
                         Expanded(
                           child: _ActionButton(
                             title: 'Emprestar\nKimono',
-                            onTap: () => context.push(Routes.emprestimoDevolucao, extra: true),
+                            onTap: () => context.push(
+                              Routes.emprestimoDevolucao,
+                              extra: true,
+                            ),
                             color: AppColors.royalAzure,
                           ),
                         ),
@@ -268,7 +305,10 @@ class Inventario extends ConsumerWidget {
                         Expanded(
                           child: _ActionButton(
                             title: 'Devolver\nKimono',
-                            onTap: () => context.push(Routes.emprestimoDevolucao, extra: false),
+                            onTap: () => context.push(
+                              Routes.emprestimoDevolucao,
+                              extra: false,
+                            ),
                             color: AppColors.cyanPrimary,
                           ),
                         ),
@@ -423,7 +463,10 @@ class _StatCardSimples extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.4), width: 1.5),
+        border: Border.all(
+          color: AppColors.cyanPrimary.withOpacity(0.4),
+          width: 1.5,
+        ),
         boxShadow: AppColors.cardShadow(isDark),
       ),
       child: Column(
@@ -473,7 +516,8 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final bg = color ?? (outlined ? AppColors.cyanPrimary : AppColors.royalAzure);
+    final bg =
+        color ?? (outlined ? AppColors.cyanPrimary : AppColors.royalAzure);
 
     return Material(
       color: bg,
@@ -504,15 +548,16 @@ class _ActionButton extends StatelessWidget {
 // ─────────────────────────────────────────────────────────────────────────────
 // Popup de kimonos disponíveis
 // ─────────────────────────────────────────────────────────────────────────────
-class _PopUpKimonosDisponiveis extends StatefulWidget {
+class _PopUpKimonosDisponiveis extends ConsumerStatefulWidget {
   const _PopUpKimonosDisponiveis();
 
   @override
-  State<_PopUpKimonosDisponiveis> createState() =>
+  ConsumerState<_PopUpKimonosDisponiveis> createState() =>
       _PopUpKimonosDisponiveisState();
 }
 
-class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
+class _PopUpKimonosDisponiveisState
+    extends ConsumerState<_PopUpKimonosDisponiveis> {
   TamanhoKimono? tamanhoSelecionado;
   CorKimono? corSelecionada;
 
@@ -625,14 +670,15 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                       Expanded(
                         child: Consumer(
                           builder: (context, ref, _) {
-                            final store =
-                                ref.watch(gestaoKimonosStoreProvider);
+                            final store = ref.watch(gestaoKimonosStoreProvider);
                             return store.when(
                               data: (data) {
                                 final filtrado = data.estoque.where((e) {
-                                  final tamanhoOk = tamanhoSelecionado == null ||
+                                  final tamanhoOk =
+                                      tamanhoSelecionado == null ||
                                       e.tamanho == tamanhoSelecionado;
-                                  final corOk = corSelecionada == null ||
+                                  final corOk =
+                                      corSelecionada == null ||
                                       e.cor == corSelecionada;
                                   return tamanhoOk &&
                                       corOk &&
@@ -642,13 +688,21 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                                 if (filtrado.isEmpty) {
                                   return Center(
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.inbox_outlined, size: 40, color: hintColor),
+                                        Icon(
+                                          Icons.inbox_outlined,
+                                          size: 40,
+                                          color: hintColor,
+                                        ),
                                         const SizedBox(height: 8),
                                         Text(
                                           'Nenhum kimono com este filtro',
-                                          style: TextStyle(color: hintColor, fontSize: 14),
+                                          style: TextStyle(
+                                            color: hintColor,
+                                            fontSize: 14,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -662,19 +716,27 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                                     return Container(
                                       margin: const EdgeInsets.only(bottom: 8),
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 14, vertical: 12),
+                                        horizontal: 14,
+                                        vertical: 12,
+                                      ),
                                       decoration: BoxDecoration(
-                                        color: isDark ? AppColors.darkSurface : Colors.white,
+                                        color: isDark
+                                            ? AppColors.darkSurface
+                                            : Colors.white,
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(isDark ? 0.2 : 0.04),
+                                            color: Colors.black.withOpacity(
+                                              isDark ? 0.2 : 0.04,
+                                            ),
                                             blurRadius: 6,
                                             offset: const Offset(0, 2),
                                           ),
                                         ],
                                         border: Border.all(
-                                          color: isDark ? Colors.white12 : Colors.grey.shade200,
+                                          color: isDark
+                                              ? Colors.white12
+                                              : Colors.grey.shade200,
                                         ),
                                       ),
                                       child: Row(
@@ -682,8 +744,10 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                                           Container(
                                             padding: const EdgeInsets.all(8),
                                             decoration: BoxDecoration(
-                                              color: AppColors.cyanPrimary.withOpacity(0.12),
-                                              borderRadius: BorderRadius.circular(8),
+                                              color: AppColors.cyanPrimary
+                                                  .withOpacity(0.12),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
                                             ),
                                             child: const Icon(
                                               Icons.sports_martial_arts,
@@ -694,7 +758,8 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                                           const SizedBox(width: 12),
                                           Expanded(
                                             child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   kimono.tamanho.nomeVisivel,
@@ -717,12 +782,18 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                                           ),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 6),
+                                              horizontal: 12,
+                                              vertical: 6,
+                                            ),
                                             decoration: BoxDecoration(
                                               gradient: const LinearGradient(
-                                                colors: [Color(0xFF0083B0), Color(0xFF00B4DB)],
+                                                colors: [
+                                                  Color(0xFF0083B0),
+                                                  Color(0xFF00B4DB),
+                                                ],
                                               ),
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                             ),
                                             child: Text(
                                               '${kimono.quantidadeDisponivel} un.',
@@ -775,10 +846,7 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                   onPressed: () => Navigator.of(context).pop(),
                   child: const Text(
                     'Entendido',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -836,18 +904,24 @@ class _FilterDropdown<T> extends StatelessWidget {
         child: DropdownButton<T>(
           isExpanded: true,
           dropdownColor: isDark ? AppColors.darkSurface : Colors.white,
-          hint: Text(hint,
-              style: TextStyle(color: hintColor, fontSize: 13)),
+          hint: Text(hint, style: TextStyle(color: hintColor, fontSize: 13)),
           value: value,
-          icon: Icon(Icons.keyboard_arrow_down_rounded,
-              color: hintColor, size: 18),
+          icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: hintColor,
+            size: 18,
+          ),
           style: TextStyle(color: textColor, fontSize: 13),
           items: items
-              .map((item) => DropdownMenuItem<T>(
-                    value: item,
-                    child: Text(labelOf(item),
-                        style: TextStyle(color: textColor, fontSize: 13)),
-                  ))
+              .map(
+                (item) => DropdownMenuItem<T>(
+                  value: item,
+                  child: Text(
+                    labelOf(item),
+                    style: TextStyle(color: textColor, fontSize: 13),
+                  ),
+                ),
+              )
               .toList(),
           onChanged: onChanged,
         ),

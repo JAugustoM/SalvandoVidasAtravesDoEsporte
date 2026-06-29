@@ -23,7 +23,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   bool get isDark => Theme.of(context).brightness == Brightness.dark;
   Color get cardBg => isDark ? AppColors.darkSurface : Colors.white;
   Color get textColor => isDark ? Colors.white : Colors.black87;
-  Color get inputFill => isDark ? AppColors.darkInputFill : Colors.grey.shade200;
+  Color get inputFill =>
+      isDark ? AppColors.darkInputFill : Colors.grey.shade200;
   Color get hintColor => isDark ? Colors.white54 : Colors.black54;
   Color get cancelBtnBg => isDark ? Colors.grey.shade800 : Colors.grey.shade300;
   Color get cancelBtnText => isDark ? Colors.white : Colors.black87;
@@ -33,14 +34,18 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   void _mostrarConfirmacaoDoacao() {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6), // Fundo escurecido
+      barrierColor: Colors.black.withOpacity(0.6),
       builder: (context) => AlertDialog(
         backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           'Deseja registrar este\nkimono (${state.tamanhoDoacao!.nomeVisivel}, ${state.corDoacao!.nomeVisivel})?',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: textColor,
+          ),
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
@@ -52,7 +57,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            onPressed: () => Navigator.pop(context), // Cancela e fecha
+            onPressed: () => Navigator.pop(context),
             child: const Text('Cancelar'),
           ),
           ElevatedButton(
@@ -70,8 +75,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                     .cadastrarDoacao(state.doacao);
                 store.reset();
                 ref.refresh(gestaoKimonosStoreProvider.future);
-                Navigator.pop(context); // Fecha confirmação
-                _mostrarSucessoDoacao(); // Abre sucesso
+                Navigator.pop(context);
+                _mostrarSucessoDoacao();
               } on AppApiException catch (e) {
                 ref.read(loggerProvider).e(e.message, error: e.error);
               }
@@ -93,7 +98,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
         title: Text(
           'A doação do kimono foi\nregistrada com sucesso!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: textColor,
+          ),
         ),
         actionsAlignment: MainAxisAlignment.center,
         actions: [
@@ -129,7 +138,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
         title: Text(
           'Deseja registrar a perda\nde ${state.qtdPerdida} kimonos (${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel})?',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: textColor,
+          ),
         ),
         actionsAlignment: MainAxisAlignment.spaceEvenly,
         actions: [
@@ -159,8 +172,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                     .cadastrarPerda(state.perda);
                 store.reset();
                 ref.refresh(gestaoKimonosStoreProvider.future);
-                Navigator.pop(context); // Fecha confirmação
-                _mostrarSucessoPerda(); // Abre sucesso
+                Navigator.pop(context);
+                _mostrarSucessoPerda();
               } on AppApiException catch (e) {
                 ref.read(loggerProvider).e(e.message, error: e.error);
               }
@@ -182,7 +195,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
         title: Text(
           'A perda do kimono foi\nregistrada com sucesso!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+            color: textColor,
+          ),
         ),
         actionsAlignment: MainAxisAlignment.center,
         actions: [
@@ -229,7 +246,9 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
       }
     }
 
-    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
+    final gradientColors = isDark
+        ? AppColors.bgGradientDark
+        : AppColors.bgGradientLight;
 
     return Scaffold(
       body: Container(
@@ -249,11 +268,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 padding: const EdgeInsets.only(left: 8.0, top: 16.0),
                 child: TextButton.icon(
                   onPressed: () => context.pop(),
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: textColor,
-                    size: 18,
-                  ),
+                  icon: Icon(Icons.arrow_back_ios, color: textColor, size: 18),
                   label: Text(
                     'Voltar',
                     style: TextStyle(color: textColor, fontSize: 16),
@@ -271,7 +286,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                         color: AppColors.cyanPrimary.withOpacity(0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(Icons.volunteer_activism, color: AppColors.cyanPrimary, size: 28),
+                      child: const Icon(
+                        Icons.volunteer_activism,
+                        color: AppColors.cyanPrimary,
+                        size: 28,
+                      ),
                     ),
                     const SizedBox(width: 14),
                     Text(
@@ -296,391 +315,653 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                         vertical: 8.0,
                       ),
                       child: Column(
-                    children: [
-                      // Cards de Totais
-                      Row(
                         children: [
-                          Expanded(
-                            child: _StatCardInfo(
-                              title: 'Doações\nTotais',
-                              value: '$doacoes',
-                              icon: Icons.card_giftcard,
-                              gradientColors: isDark
-                                  ? const [Color(0xFF041E42), Color(0xFF006680)]
-                                  : const [Color(0xFF1976D2), Color(0xFF26C6DA)],
-                            ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _StatCardInfo(
+                                  title: 'Doações\nTotais',
+                                  value: '$doacoes',
+                                  icon: Icons.card_giftcard,
+                                  gradientColors: isDark
+                                      ? const [
+                                          Color(0xFF041E42),
+                                          Color(0xFF006680),
+                                        ]
+                                      : const [
+                                          Color(0xFF1976D2),
+                                          Color(0xFF26C6DA),
+                                        ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: _StatCardInfo(
+                                  title: 'Perdas\nTotais',
+                                  value: '$perdas',
+                                  icon: Icons.warning_amber_rounded,
+                                  gradientColors: isDark
+                                      ? const [
+                                          Color(0xFF4E1400),
+                                          Color(0xFFB71C1C),
+                                        ]
+                                      : const [
+                                          Color(0xFFE64A19),
+                                          Color(0xFFFF8A65),
+                                        ],
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _StatCardInfo(
-                              title: 'Perdas\nTotais',
-                              value: '$perdas',
-                              icon: Icons.warning_amber_rounded,
-                              gradientColors: isDark
-                                  ? const [Color(0xFF4E1400), Color(0xFFB71C1C)]
-                                  : const [Color(0xFFE64A19), Color(0xFFFF8A65)],
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 24),
+                          const SizedBox(height: 24),
 
-                      // Card Expansível: Registrar Doação
-                      _buildExpandableCard(
-                        title: 'Registrar uma doação',
-                        subtitle: 'Escolha o tamanho e a cor',
-                        leadingIcon: Icons.card_giftcard,
-                        isExpandedContent: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            // Linha com Tamanho e Cor lado a lado
-                            Row(
+                          // Card Expansível: Registrar Doação
+                          _buildExpandableCard(
+                            title: 'Registrar uma doação',
+                            subtitle: 'Escolha o tamanho e a cor',
+                            leadingIcon: Icons.card_giftcard,
+                            isExpandedContent: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: inputFill,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<TamanhoKimono>(
-                                        isExpanded: true,
-                                        dropdownColor: cardBg,
-                                        icon: Icon(Icons.arrow_drop_down, color: textColor),
-                                        style: TextStyle(color: textColor, fontSize: 15),
-                                        hint: Row(
-                                          children: [
-                                            Icon(Icons.straighten, size: 18, color: hintColor),
-                                            const SizedBox(width: 8),
-                                            Text('Tamanho', style: TextStyle(color: hintColor, fontSize: 14)),
-                                          ],
+                                // Linha com Tamanho e Cor lado a lado
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: inputFill,
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          border: Border.all(
+                                            color: isDark
+                                                ? Colors.white12
+                                                : Colors.grey.shade300,
+                                          ),
                                         ),
-                                        value: state.tamanhoDoacao,
-                                        items: TamanhoKimono.values
-                                            .map(
-                                              (c) => DropdownMenuItem<TamanhoKimono>(
-                                                value: c,
-                                                child: Text(c.nomeVisivel, style: TextStyle(color: textColor)),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (val) => store.updateTamanhoDoacao(val),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: inputFill,
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                    ),
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                                    child: DropdownButtonHideUnderline(
-                                      child: DropdownButton<CorKimono>(
-                                        isExpanded: true,
-                                        dropdownColor: cardBg,
-                                        icon: Icon(Icons.arrow_drop_down, color: textColor),
-                                        style: TextStyle(color: textColor, fontSize: 15),
-                                        hint: Row(
-                                          children: [
-                                            Icon(Icons.palette_outlined, size: 18, color: hintColor),
-                                            const SizedBox(width: 8),
-                                            Text('Cor', style: TextStyle(color: hintColor, fontSize: 14)),
-                                          ],
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 4,
                                         ),
-                                        value: state.corDoacao,
-                                        items: CorKimono.values
-                                            .map(
-                                              (c) => DropdownMenuItem<CorKimono>(
-                                                value: c,
-                                                child: Text(c.nomeVisivel, style: TextStyle(color: textColor)),
-                                              ),
-                                            )
-                                            .toList(),
-                                        onChanged: (val) => store.updateCorDoacao(val),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 14),
-                            TextFormField(
-                              initialValue: state.doador,
-                              style: TextStyle(color: textColor, fontSize: 15),
-                              decoration: InputDecoration(
-                                hintText: 'Nome do doador...',
-                                hintStyle: TextStyle(color: hintColor, fontSize: 14),
-                                prefixIcon: const Icon(Icons.person_outline, color: AppColors.cyanPrimary, size: 22),
-                                filled: true,
-                                fillColor: inputFill,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: AppColors.cyanPrimary, width: 1.5),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                              ),
-                              onChanged: store.updateDoador,
-                            ),
-                            const SizedBox(height: 14),
-                            TextFormField(
-                              initialValue: state.qtdDoada,
-                              keyboardType: TextInputType.number,
-                              style: TextStyle(color: textColor, fontSize: 15),
-                              decoration: InputDecoration(
-                                hintText: 'Quantidade doada...',
-                                hintStyle: TextStyle(color: hintColor, fontSize: 14),
-                                prefixIcon: const Icon(Icons.numbers, color: AppColors.cyanPrimary, size: 22),
-                                filled: true,
-                                fillColor: inputFill,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: AppColors.cyanPrimary, width: 1.5),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                              ),
-                              onChanged: store.updateQtdDoada,
-                            ),
-                            const SizedBox(height: 18),
-                            SizedBox(
-                              height: 48,
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.cyanPrimary,
-                                  foregroundColor: Colors.white,
-                                  disabledBackgroundColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
-                                  ),
-                                  elevation: state.doacaoValida ? 2 : 0,
-                                ),
-                                onPressed: state.doacaoValida ? _mostrarConfirmacaoDoacao : null,
-                                icon: const Icon(Icons.check_circle_outline, size: 20),
-                                label: const Text(
-                                  'Confirmar Doação',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Card Expansível: Registrar Perda
-                      _buildExpandableCard(
-                        title: 'Registrar uma perda',
-                        subtitle: 'Escolha o kimono perdido',
-                        leadingIcon: Icons.warning_amber_rounded,
-                        isExpandedContent: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(Icons.check_box_outlined, size: 18, color: AppColors.cyanPrimary),
-                                const SizedBox(width: 6),
-                                Text(
-                                  'Selecione o Kimono no Estoque:',
-                                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14, color: textColor),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Container(
-                              constraints: const BoxConstraints(maxHeight: 220),
-                              decoration: BoxDecoration(
-                                color: isDark ? AppColors.darkBg : Colors.grey.shade50,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: isDark ? Colors.white12 : Colors.grey.shade200),
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              child: estoque.when(
-                                data: (data) {
-                                  if (data.estoque.isEmpty) {
-                                    return Center(child: Text('Nenhum kimono no estoque', style: TextStyle(color: hintColor)));
-                                  }
-                                  return Scrollbar(
-                                    thumbVisibility: true,
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: data.estoque.length,
-                                      itemBuilder: (context, index) {
-                                        final kimono = data.estoque[index];
-                                        final isSelected = state.kimonoPerdido == kimono;
-                                        return InkWell(
-                                          onTap: () => store.updateKimonoPerdido(kimono),
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Container(
-                                            margin: const EdgeInsets.only(bottom: 6),
-                                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                            decoration: BoxDecoration(
-                                              color: isSelected
-                                                  ? AppColors.cyanPrimary.withOpacity(isDark ? 0.25 : 0.12)
-                                                  : (isDark ? AppColors.darkInputFill : Colors.white),
-                                              borderRadius: BorderRadius.circular(10),
-                                              border: Border.all(
-                                                color: isSelected
-                                                    ? AppColors.cyanPrimary
-                                                    : (isDark ? Colors.white12 : Colors.grey.shade200),
-                                                width: isSelected ? 1.5 : 1,
-                                              ),
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<TamanhoKimono>(
+                                            isExpanded: true,
+                                            dropdownColor: cardBg,
+                                            icon: Icon(
+                                              Icons.arrow_drop_down,
+                                              color: textColor,
                                             ),
-                                            child: Row(
+                                            style: TextStyle(
+                                              color: textColor,
+                                              fontSize: 15,
+                                            ),
+                                            hint: Row(
                                               children: [
                                                 Icon(
-                                                  Icons.sports_martial_arts,
-                                                  size: 22,
-                                                  color: isSelected ? AppColors.cyanPrimary : textColor,
+                                                  Icons.straighten,
+                                                  size: 18,
+                                                  color: hintColor,
                                                 ),
-                                                const SizedBox(width: 10),
-                                                Expanded(
-                                                  child: Text(
-                                                    '${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel}',
-                                                    style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                                                      color: textColor,
-                                                    ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'Tamanho',
+                                                  style: TextStyle(
+                                                    color: hintColor,
+                                                    fontSize: 14,
                                                   ),
-                                                ),
-                                                Container(
-                                                  width: 20,
-                                                  height: 20,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                      color: isSelected ? AppColors.cyanPrimary : hintColor,
-                                                      width: 2,
-                                                    ),
-                                                    color: isSelected ? AppColors.cyanPrimary : Colors.transparent,
-                                                  ),
-                                                  child: isSelected
-                                                      ? const Icon(Icons.check, size: 14, color: Colors.white)
-                                                      : null,
                                                 ),
                                               ],
                                             ),
+                                            value: state.tamanhoDoacao,
+                                            items: TamanhoKimono.values
+                                                .map(
+                                                  (c) =>
+                                                      DropdownMenuItem<
+                                                        TamanhoKimono
+                                                      >(
+                                                        value: c,
+                                                        child: Text(
+                                                          c.nomeVisivel,
+                                                          style: TextStyle(
+                                                            color: textColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                )
+                                                .toList(),
+                                            onChanged: (val) =>
+                                                store.updateTamanhoDoacao(val),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: inputFill,
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          border: Border.all(
+                                            color: isDark
+                                                ? Colors.white12
+                                                : Colors.grey.shade300,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 12,
+                                          vertical: 4,
+                                        ),
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton<CorKimono>(
+                                            isExpanded: true,
+                                            dropdownColor: cardBg,
+                                            icon: Icon(
+                                              Icons.arrow_drop_down,
+                                              color: textColor,
+                                            ),
+                                            style: TextStyle(
+                                              color: textColor,
+                                              fontSize: 15,
+                                            ),
+                                            hint: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.palette_outlined,
+                                                  size: 18,
+                                                  color: hintColor,
+                                                ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'Cor',
+                                                  style: TextStyle(
+                                                    color: hintColor,
+                                                    fontSize: 14,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            value: state.corDoacao,
+                                            items: CorKimono.values
+                                                .map(
+                                                  (c) =>
+                                                      DropdownMenuItem<
+                                                        CorKimono
+                                                      >(
+                                                        value: c,
+                                                        child: Text(
+                                                          c.nomeVisivel,
+                                                          style: TextStyle(
+                                                            color: textColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                )
+                                                .toList(),
+                                            onChanged: (val) =>
+                                                store.updateCorDoacao(val),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 14),
+                                TextFormField(
+                                  initialValue: state.doador,
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 15,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Nome do doador...',
+                                    hintStyle: TextStyle(
+                                      color: hintColor,
+                                      fontSize: 14,
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.person_outline,
+                                      color: AppColors.cyanPrimary,
+                                      size: 22,
+                                    ),
+                                    filled: true,
+                                    fillColor: inputFill,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(
+                                        color: AppColors.cyanPrimary,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
+                                    ),
+                                  ),
+                                  onChanged: store.updateDoador,
+                                ),
+                                const SizedBox(height: 14),
+                                TextFormField(
+                                  initialValue: state.qtdDoada,
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 15,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Quantidade doada...',
+                                    hintStyle: TextStyle(
+                                      color: hintColor,
+                                      fontSize: 14,
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.numbers,
+                                      color: AppColors.cyanPrimary,
+                                      size: 22,
+                                    ),
+                                    filled: true,
+                                    fillColor: inputFill,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(
+                                        color: AppColors.cyanPrimary,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
+                                    ),
+                                  ),
+                                  onChanged: store.updateQtdDoada,
+                                ),
+                                const SizedBox(height: 18),
+                                SizedBox(
+                                  height: 48,
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.cyanPrimary,
+                                      foregroundColor: Colors.white,
+                                      disabledBackgroundColor: isDark
+                                          ? Colors.grey.shade800
+                                          : Colors.grey.shade300,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      elevation: state.doacaoValida ? 2 : 0,
+                                    ),
+                                    onPressed: state.doacaoValida
+                                        ? _mostrarConfirmacaoDoacao
+                                        : null,
+                                    icon: const Icon(
+                                      Icons.check_circle_outline,
+                                      size: 20,
+                                    ),
+                                    label: const Text(
+                                      'Confirmar Doação',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          const SizedBox(height: 16),
+
+                          // Card Expansível: Registrar Perda
+                          _buildExpandableCard(
+                            title: 'Registrar uma perda',
+                            subtitle: 'Escolha o kimono perdido',
+                            leadingIcon: Icons.warning_amber_rounded,
+                            isExpandedContent: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.check_box_outlined,
+                                      size: 18,
+                                      color: AppColors.cyanPrimary,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      'Selecione o Kimono no Estoque:',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Container(
+                                  constraints: const BoxConstraints(
+                                    maxHeight: 220,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: isDark
+                                        ? AppColors.darkBg
+                                        : Colors.grey.shade50,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(
+                                      color: isDark
+                                          ? Colors.white12
+                                          : Colors.grey.shade200,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.all(8),
+                                  child: estoque.when(
+                                    data: (data) {
+                                      if (data.estoque.isEmpty) {
+                                        return Center(
+                                          child: Text(
+                                            'Nenhum kimono no estoque',
+                                            style: TextStyle(color: hintColor),
                                           ),
                                         );
-                                      },
+                                      }
+                                      return Scrollbar(
+                                        thumbVisibility: true,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: data.estoque.length,
+                                          itemBuilder: (context, index) {
+                                            final kimono = data.estoque[index];
+                                            final isSelected =
+                                                state.kimonoPerdido == kimono;
+                                            return InkWell(
+                                              onTap: () => store
+                                                  .updateKimonoPerdido(kimono),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Container(
+                                                margin: const EdgeInsets.only(
+                                                  bottom: 6,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 12,
+                                                      vertical: 10,
+                                                    ),
+                                                decoration: BoxDecoration(
+                                                  color: isSelected
+                                                      ? AppColors.cyanPrimary
+                                                            .withOpacity(
+                                                              isDark
+                                                                  ? 0.25
+                                                                  : 0.12,
+                                                            )
+                                                      : (isDark
+                                                            ? AppColors
+                                                                  .darkInputFill
+                                                            : Colors.white),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                    color: isSelected
+                                                        ? AppColors.cyanPrimary
+                                                        : (isDark
+                                                              ? Colors.white12
+                                                              : Colors
+                                                                    .grey
+                                                                    .shade200),
+                                                    width: isSelected ? 1.5 : 1,
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  children: [
+                                                    Icon(
+                                                      Icons.sports_martial_arts,
+                                                      size: 22,
+                                                      color: isSelected
+                                                          ? AppColors
+                                                                .cyanPrimary
+                                                          : textColor,
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel}',
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight: isSelected
+                                                              ? FontWeight.bold
+                                                              : FontWeight.w500,
+                                                          color: textColor,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      width: 20,
+                                                      height: 20,
+                                                      decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        border: Border.all(
+                                                          color: isSelected
+                                                              ? AppColors
+                                                                    .cyanPrimary
+                                                              : hintColor,
+                                                          width: 2,
+                                                        ),
+                                                        color: isSelected
+                                                            ? AppColors
+                                                                  .cyanPrimary
+                                                            : Colors
+                                                                  .transparent,
+                                                      ),
+                                                      child: isSelected
+                                                          ? const Icon(
+                                                              Icons.check,
+                                                              size: 14,
+                                                              color:
+                                                                  Colors.white,
+                                                            )
+                                                          : null,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    error: (error, stack) => const Center(
+                                      child: Text('Erro ao carregar kimonos'),
                                     ),
-                                  );
-                                },
-                                error: (error, stack) => const Center(child: Text('Erro ao carregar kimonos')),
-                                loading: () => const Center(child: CircularProgressIndicator(color: AppColors.cyanPrimary)),
-                              ),
-                            ),
-                            const SizedBox(height: 14),
-                            TextFormField(
-                              initialValue: state.motivo,
-                              style: TextStyle(color: textColor, fontSize: 15),
-                              decoration: InputDecoration(
-                                hintText: 'Motivo da perda (ex: Desgaste, rasgo)...',
-                                hintStyle: TextStyle(color: hintColor, fontSize: 14),
-                                prefixIcon: const Icon(Icons.description_outlined, color: AppColors.cyanPrimary, size: 22),
-                                filled: true,
-                                fillColor: inputFill,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: AppColors.cyanPrimary, width: 1.5),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                              ),
-                              onChanged: store.updateMotivo,
-                            ),
-                            const SizedBox(height: 14),
-                            TextFormField(
-                              initialValue: state.qtdPerdida,
-                              keyboardType: TextInputType.number,
-                              style: TextStyle(color: textColor, fontSize: 15),
-                              decoration: InputDecoration(
-                                hintText: 'Quantidade perdida...',
-                                hintStyle: TextStyle(color: hintColor, fontSize: 14),
-                                prefixIcon: const Icon(Icons.numbers, color: AppColors.cyanPrimary, size: 22),
-                                filled: true,
-                                fillColor: inputFill,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(color: isDark ? Colors.white12 : Colors.grey.shade300),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: const BorderSide(color: AppColors.cyanPrimary, width: 1.5),
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                              ),
-                              onChanged: store.updateQtdPerdida,
-                            ),
-                            const SizedBox(height: 18),
-                            SizedBox(
-                              height: 48,
-                              child: ElevatedButton.icon(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.cyanPrimary,
-                                  foregroundColor: Colors.white,
-                                  disabledBackgroundColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(14),
+                                    loading: () => const Center(
+                                      child: CircularProgressIndicator(
+                                        color: AppColors.cyanPrimary,
+                                      ),
+                                    ),
                                   ),
-                                  elevation: state.perdaValida ? 2 : 0,
                                 ),
-                                onPressed: state.perdaValida ? _mostrarConfirmacaoPerda : null,
-                                icon: const Icon(Icons.remove_circle_outline, size: 20),
-                                label: const Text(
-                                  'Confirmar Perda',
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                                const SizedBox(height: 14),
+                                TextFormField(
+                                  initialValue: state.motivo,
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 15,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText:
+                                        'Motivo da perda (ex: Desgaste, rasgo)...',
+                                    hintStyle: TextStyle(
+                                      color: hintColor,
+                                      fontSize: 14,
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.description_outlined,
+                                      color: AppColors.cyanPrimary,
+                                      size: 22,
+                                    ),
+                                    filled: true,
+                                    fillColor: inputFill,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(
+                                        color: AppColors.cyanPrimary,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
+                                    ),
+                                  ),
+                                  onChanged: store.updateMotivo,
                                 ),
-                              ),
+                                const SizedBox(height: 14),
+                                TextFormField(
+                                  initialValue: state.qtdPerdida,
+                                  keyboardType: TextInputType.number,
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 15,
+                                  ),
+                                  decoration: InputDecoration(
+                                    hintText: 'Quantidade perdida...',
+                                    hintStyle: TextStyle(
+                                      color: hintColor,
+                                      fontSize: 14,
+                                    ),
+                                    prefixIcon: const Icon(
+                                      Icons.numbers,
+                                      color: AppColors.cyanPrimary,
+                                      size: 22,
+                                    ),
+                                    filled: true,
+                                    fillColor: inputFill,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: BorderSide(
+                                        color: isDark
+                                            ? Colors.white12
+                                            : Colors.grey.shade300,
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(
+                                        color: AppColors.cyanPrimary,
+                                        width: 1.5,
+                                      ),
+                                    ),
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 14,
+                                    ),
+                                  ),
+                                  onChanged: store.updateQtdPerdida,
+                                ),
+                                const SizedBox(height: 18),
+                                SizedBox(
+                                  height: 48,
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.cyanPrimary,
+                                      foregroundColor: Colors.white,
+                                      disabledBackgroundColor: isDark
+                                          ? Colors.grey.shade800
+                                          : Colors.grey.shade300,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      elevation: state.perdaValida ? 2 : 0,
+                                    ),
+                                    onPressed: state.perdaValida
+                                        ? _mostrarConfirmacaoPerda
+                                        : null,
+                                    icon: const Icon(
+                                      Icons.remove_circle_outline,
+                                      size: 20,
+                                    ),
+                                    label: const Text(
+                                      'Confirmar Perda',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(height: 24),
+                        ],
                       ),
-                      const SizedBox(height: 24),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
-    ),
-  ),
-);
+    );
   }
 
   // Widget auxiliar para construir as áreas expansíveis mantendo o estilo de Card branco com sombra
@@ -702,9 +983,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
         boxShadow: AppColors.cardShadow(isDark),
       ),
       child: Theme(
-        data: Theme.of(context).copyWith(
-          dividerColor: Colors.transparent,
-        ),
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           leading: leadingIcon != null
               ? Container(
@@ -713,7 +992,11 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                     color: AppColors.cyanPrimary.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(leadingIcon, color: AppColors.cyanPrimary, size: 24),
+                  child: Icon(
+                    leadingIcon,
+                    color: AppColors.cyanPrimary,
+                    size: 24,
+                  ),
                 )
               : null,
           title: Text(
