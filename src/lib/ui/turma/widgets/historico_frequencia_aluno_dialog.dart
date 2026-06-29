@@ -73,7 +73,7 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          aluno.nome,
+                          aluno.nomeReferencia,
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,

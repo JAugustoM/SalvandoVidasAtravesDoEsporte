@@ -76,6 +76,27 @@ class _EtapaDadosBasicosState extends ConsumerState<EtapaDadosBasicos> {
                 ),
                 const SizedBox(height: 14),
                 InputField(
+                  initialValue: cadastro.apelido ?? '',
+                  update: notifier.updateApelido,
+                  error: null,
+                  label: 'Apelido (opcional)',
+                  hint: 'Como o aluno gosta de ser chamado',
+                ),
+                if (cadastro.apelido != null && cadastro.apelido!.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text(
+                      'Usar apelido como referência principal nas chamadas e listas',
+                      style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                    ),
+                    value: cadastro.usarApelidoComoReferencia,
+                    onChanged: notifier.updateUsarApelidoComoReferencia,
+                    activeColor: AppColors.royalAzure,
+                  ),
+                ],
+                const SizedBox(height: 14),
+                InputField(
                   initialValue: formatCPF.maskText(cadastro.cpf),
                   update: (_) => notifier.updateCPF(formatCPF.getUnmaskedText()),
                   error: cadastro.cpfError,

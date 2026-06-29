@@ -10,7 +10,7 @@ class InputField extends StatelessWidget {
     required this.initialValue,
     required this.label,
     required this.hint,
-    required this.validatorMessage,
+    this.validatorMessage,
     this.keyboardType,
     this.fillColor,
     this.inputFormatters,
@@ -23,7 +23,7 @@ class InputField extends StatelessWidget {
   final String initialValue;
   final String label;
   final String hint;
-  final String validatorMessage;
+  final String? validatorMessage;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
 
@@ -76,6 +76,7 @@ class InputField extends StatelessWidget {
             ),
           ),
           validator: (value) {
+            if (validatorMessage == null) return null;
             final text = (value ?? '').trim();
             if (text.isEmpty) return validatorMessage;
             return null;

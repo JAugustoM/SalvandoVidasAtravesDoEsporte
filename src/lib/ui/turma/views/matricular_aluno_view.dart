@@ -116,6 +116,7 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                             (aluno.idTurma == null || aluno.idTurma != widget.turma.id) &&
                             aluno.ativo &&
                             (aluno.nome.toLowerCase().contains(_searchQuery) ||
+                                (aluno.apelido?.toLowerCase().contains(_searchQuery) ?? false) ||
                                 aluno.cpf.contains(_searchQuery)))
                         .toList();
 
@@ -149,7 +150,7 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                             ),
                             child: ListTile(
                               title: Text(
-                                aluno.nome,
+                                aluno.nomeReferencia,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: textColor,
@@ -222,7 +223,7 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
           ),
         ),
         content: Text(
-          'Tem certeza que quer colocar o aluno ${aluno.nome} na turma ${widget.turma.nome}?',
+          'Tem certeza que quer colocar o aluno ${aluno.nomeReferencia} na turma ${widget.turma.nome}?',
           textAlign: TextAlign.center,
           style: TextStyle(color: isDark ? Colors.white70 : Colors.black87),
         ),
@@ -260,7 +261,7 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                 if (!mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('${aluno.nome} matriculado com sucesso!'),
+                    content: Text('${aluno.nomeReferencia} matriculado com sucesso!'),
                     backgroundColor: AppColors.success,
                     behavior: SnackBarBehavior.floating,
                   ),

@@ -69,7 +69,7 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                         Row(
                           children: [
                             Text(
-                              widget.aluno.nome,
+                              widget.aluno.nomeReferencia,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -170,6 +170,10 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
 
               if (_isExpanded) ...[
                 const SizedBox(height: 12),
+                if (widget.aluno.apelido != null && widget.aluno.apelido!.isNotEmpty) ...[
+                  _buildInfoRow('Nome completo: ', widget.aluno.nome),
+                  _buildInfoRow('Apelido: ', widget.aluno.apelido!),
+                ],
                 _buildInfoRow('CPF: ', formatCPF.maskText(widget.aluno.cpf)),
                 _buildInfoRow(
                   'Telefone: ',

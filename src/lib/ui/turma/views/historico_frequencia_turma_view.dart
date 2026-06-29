@@ -197,7 +197,8 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
 
   Widget _buildAbaAlunos(HistoricoFrequenciaTurmaData data, bool isDark) {
     final resumosFiltrados = data.resumosAlunos
-        .where((r) => r.aluno.nome.toLowerCase().contains(_filtroNome.toLowerCase()))
+        .where((r) => r.aluno.nome.toLowerCase().contains(_filtroNome.toLowerCase()) ||
+                      (r.aluno.apelido?.toLowerCase().contains(_filtroNome.toLowerCase()) ?? false))
         .toList();
 
     return Column(
@@ -266,7 +267,7 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                 children: [
                   Expanded(
                     child: Text(
-                      resumo.aluno.nome,
+                      resumo.aluno.nomeReferencia,
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -484,7 +485,7 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
   Widget _buildAlunoChip(Aluno aluno, Color color) {
     return ActionChip(
       avatar: Icon(Icons.person, size: 14, color: color),
-      label: Text(aluno.nome, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600)),
+      label: Text(aluno.nomeReferencia, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600)),
       backgroundColor: color.withOpacity(0.1),
       side: BorderSide.none,
       onPressed: () => mostrarHistoricoFrequenciaAlunoDialog(context, aluno),

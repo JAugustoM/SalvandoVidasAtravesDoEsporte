@@ -247,7 +247,7 @@ final historicoFrequenciaTurmaProvider = FutureProvider.autoDispose.family<Histo
     ));
   }
 
-  resumosAlunos.sort((a, b) => a.aluno.nome.compareTo(b.aluno.nome));
+  resumosAlunos.sort((a, b) => a.aluno.nomeReferencia.compareTo(b.aluno.nomeReferencia));
 
   double mediaTurma = 0.0;
   if (resumosAlunos.isNotEmpty) {

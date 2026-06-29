@@ -173,9 +173,9 @@ class TurmaDetail extends ConsumerWidget {
 	                      itemBuilder: (context, index) {
 	                        final aluno = data.alunos[index];
 	                        return AlunoTileWidget(
-                            nome: aluno.nome,
+                            nome: aluno.nomeReferencia,
                             onTap: () => mostrarHistoricoFrequenciaAlunoDialog(context, aluno),
-                            onRemover: () => _confirmarDesmatricula(context, ref, aluno.nome, aluno.id!),
+                            onRemover: () => _confirmarDesmatricula(context, ref, aluno.nomeReferencia, aluno.id!),
                           );
 	                      },
 	                    );

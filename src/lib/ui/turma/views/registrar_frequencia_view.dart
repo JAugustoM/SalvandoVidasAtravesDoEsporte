@@ -430,7 +430,7 @@ class _RegistrarFrequenciaViewState
                                     const SizedBox(width: 12),
                                     Expanded(
                                       child: Text(
-                                        aluno.nome,
+                                        aluno.nomeReferencia,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: isDark ? Colors.white : Colors.black87,

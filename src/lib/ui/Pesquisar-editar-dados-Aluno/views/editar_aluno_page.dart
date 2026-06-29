@@ -254,6 +254,31 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                             state.nomeError,
                           ),
                           _buildTextField(
+                            'Apelido (opcional):',
+                            notifier.updateApelido,
+                            state.apelido ?? '',
+                            null,
+                          ),
+                          if (state.apelido != null && state.apelido!.isNotEmpty) ...[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: SwitchListTile(
+                                contentPadding: EdgeInsets.zero,
+                                title: Text(
+                                  'Usar apelido como referência principal nas chamadas e listas',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: textColor,
+                                  ),
+                                ),
+                                value: state.usarApelidoComoReferencia,
+                                onChanged: notifier.updateUsarApelidoComoReferencia,
+                                activeColor: AppColors.royalAzure,
+                              ),
+                            ),
+                          ],
+                          _buildTextField(
                             'CPF:*',
                             (_) =>
                                 notifier.updateCPF(formatCPF.getUnmaskedText()),
