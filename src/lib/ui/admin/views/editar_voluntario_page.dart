@@ -69,10 +69,15 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final pageBg = isDark ? AppColors.darkBg : AppColors.platinum;
+    final containerBg = isDark ? AppColors.darkSurface : Colors.white;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+
     return Scaffold(
-      backgroundColor: AppColors.platinum,
+      backgroundColor: pageBg,
       appBar: AppBar(
-        backgroundColor: AppColors.platinum,
+        backgroundColor: pageBg,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
@@ -80,12 +85,12 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
             FocusManager.instance.primaryFocus?.unfocus();
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back,
-              color: AppColors.deepNavy, size: 22),
-          label: const Text(
+          icon: Icon(Icons.arrow_back,
+              color: textColor, size: 22),
+          label: Text(
             'Voltar',
             style: TextStyle(
-              color: AppColors.deepNavy,
+              color: textColor,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -102,11 +107,11 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: containerBg,
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(isDark ? 0.4 : 0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   ),
@@ -115,6 +120,7 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
               child: TextField(
                 controller: _searchCtrl,
                 onChanged: _filtrar,
+                style: TextStyle(color: isDark ? Colors.white : Colors.black),
                 decoration: InputDecoration(
                   hintText: 'Buscar por nome ou email',
                   hintStyle: const TextStyle(
@@ -189,11 +195,15 @@ class _VoluntarioTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final cardBg = isDark ? AppColors.darkSurface : Colors.white;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+
     return Material(
-      color: Colors.white,
+      color: cardBg,
       borderRadius: BorderRadius.circular(14),
       elevation: 1,
-      shadowColor: AppColors.shadowLight,
+      shadowColor: isDark ? Colors.black54 : AppColors.shadowLight,
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
         onTap: () async {
@@ -225,8 +235,8 @@ class _VoluntarioTile extends StatelessWidget {
                   children: [
                     Text(
                       user.nome,
-                      style: const TextStyle(
-                        color: AppColors.deepNavy,
+                      style: TextStyle(
+                        color: textColor,
                         fontWeight: FontWeight.w700,
                         fontSize: 15,
                       ),
@@ -354,16 +364,18 @@ class _EditarVoluntarioFormState
   }
 
   Future<bool> _mostrarDialogConfirmacao() async {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return await showDialog<bool>(
           context: context,
           builder: (ctx) => AlertDialog(
+            backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16)),
-            title: const Text(
+            title: Text(
               'Deseja salvar as\nalterações?',
               textAlign: TextAlign.center,
               style: TextStyle(
-                  fontWeight: FontWeight.bold, color: AppColors.deepNavy),
+                  fontWeight: FontWeight.bold, color: isDark ? Colors.white : AppColors.deepNavy),
             ),
             actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: [
@@ -390,10 +402,15 @@ class _EditarVoluntarioFormState
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final pageBg = isDark ? AppColors.darkBg : AppColors.platinum;
+    final containerBg = isDark ? AppColors.darkSurface : Colors.white;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+
     return Scaffold(
-      backgroundColor: AppColors.platinum,
+      backgroundColor: pageBg,
       appBar: AppBar(
-        backgroundColor: AppColors.platinum,
+        backgroundColor: pageBg,
         elevation: 0,
         leadingWidth: 110,
         leading: TextButton.icon(
@@ -401,12 +418,12 @@ class _EditarVoluntarioFormState
             FocusManager.instance.primaryFocus?.unfocus();
             Navigator.pop(context);
           },
-          icon: const Icon(Icons.arrow_back,
-              color: AppColors.deepNavy, size: 22),
-          label: const Text(
+          icon: Icon(Icons.arrow_back,
+              color: textColor, size: 22),
+          label: Text(
             'Voltar',
             style: TextStyle(
-              color: AppColors.deepNavy,
+              color: textColor,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -424,13 +441,13 @@ class _EditarVoluntarioFormState
             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: containerBg,
               borderRadius: BorderRadius.circular(16),
-              boxShadow: const [
+              boxShadow: [
                 BoxShadow(
-                  color: AppColors.shadowLight,
+                  color: isDark ? Colors.black54 : AppColors.shadowLight,
                   blurRadius: 12,
-                  offset: Offset(0, 4),
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
@@ -441,12 +458,12 @@ class _EditarVoluntarioFormState
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Editar Voluntário',
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.deepNavy,
+                      color: textColor,
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -583,6 +600,10 @@ class _EditarVoluntarioFormState
     String? Function(String?)? validator,
     TextInputType? keyboardType,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fillColor = isDark ? AppColors.darkInputFill : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Column(
@@ -595,10 +616,11 @@ class _EditarVoluntarioFormState
             onChanged: onChanged,
             keyboardType: keyboardType,
             validator: validator,
+            style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
             decoration: InputDecoration(
               hintText: hint,
               filled: true,
-              fillColor: AppColors.platinum,
+              fillColor: fillColor,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               border: OutlineInputBorder(
@@ -626,6 +648,10 @@ class _EditarVoluntarioFormState
     String? Function(String?)? validator,
     TextInputType? keyboardType,
   }) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fillColor = isDark ? AppColors.darkInputFill : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Column(
@@ -639,10 +665,11 @@ class _EditarVoluntarioFormState
             keyboardType: keyboardType ?? TextInputType.number,
             inputFormatters: [formatter],
             validator: validator,
+            style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
             decoration: InputDecoration(
               hintText: hint,
               filled: true,
-              fillColor: AppColors.platinum,
+              fillColor: fillColor,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               border: OutlineInputBorder(
@@ -662,6 +689,10 @@ class _EditarVoluntarioFormState
   }
 
   Widget _buildFaixaDropdown() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final fillColor = isDark ? AppColors.darkInputFill : AppColors.platinum;
+    final textColor = isDark ? Colors.white : AppColors.deepNavy;
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Column(
@@ -671,10 +702,11 @@ class _EditarVoluntarioFormState
           const SizedBox(height: 6),
           DropdownButtonFormField<Faixa>(
             value: _faixa,
-            icon: const Icon(Icons.arrow_drop_down, color: AppColors.deepNavy),
+            dropdownColor: isDark ? AppColors.darkSurface : Colors.white,
+            icon: Icon(Icons.arrow_drop_down, color: textColor),
             decoration: InputDecoration(
               filled: true,
-              fillColor: AppColors.platinum,
+              fillColor: fillColor,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               border: OutlineInputBorder(
@@ -683,7 +715,7 @@ class _EditarVoluntarioFormState
               ),
             ),
             items: Faixa.values
-                .map((f) => DropdownMenuItem(value: f, child: Text(f.nomeVisivel)))
+                .map((f) => DropdownMenuItem(value: f, child: Text(f.nomeVisivel, style: TextStyle(color: textColor))))
                 .toList(),
             onChanged: (value) {
               if (value != null) setState(() => _faixa = value);

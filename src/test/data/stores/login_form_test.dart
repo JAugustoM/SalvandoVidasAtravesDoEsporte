@@ -23,6 +23,7 @@ void main() {
       expect(state.senhaError, isNull);
 
       notifier.updateSenha('');
+      notifier.validateForm();
       expect(container.read(loginFormProvider).senhaError, isNotNull);
     });
   });

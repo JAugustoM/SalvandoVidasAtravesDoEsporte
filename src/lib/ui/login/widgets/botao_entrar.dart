@@ -1,5 +1,6 @@
 import 'package:salvando_vidas/data/services/global/global_service.dart';
 import 'package:salvando_vidas/data/stores/login/login_controller.dart';
+import 'package:salvando_vidas/data/stores/login/login_form.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart';
 
@@ -30,6 +31,7 @@ class BotaoEntrar extends ConsumerWidget {
         onPressed: loginState.isLoading
             ? null
             : () {
+                ref.read(loginFormProvider.notifier).validateForm();
                 if (formKey.currentState?.validate() ?? false) {
                   ref.read(loginControllerProvider.notifier).submitLogin();
                 }
