@@ -38,11 +38,19 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
                 splashColor: logoSplash,
                 highlightColor: logoSplash.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                child: Container(
+                  padding: isDark
+                      ? const EdgeInsets.symmetric(horizontal: 8, vertical: 4)
+                      : const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                  decoration: isDark
+                      ? BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(6),
+                        )
+                      : null,
                   child: Image.asset(
                     'assets/images/logoMestre.png',
-                    height: 40,
+                    height: isDark ? 32 : 40,
                     fit: BoxFit.contain,
                   ),
                 ),
