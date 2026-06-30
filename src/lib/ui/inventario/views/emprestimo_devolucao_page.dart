@@ -13,7 +13,8 @@ import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart';
 
 class EmprestimoDevolucaoPage extends ConsumerStatefulWidget {
-  const EmprestimoDevolucaoPage({super.key});
+  final bool? modoInicialEmprestar;
+  const EmprestimoDevolucaoPage({super.key, this.modoInicialEmprestar});
 
   @override
   ConsumerState<EmprestimoDevolucaoPage> createState() =>
@@ -49,7 +50,19 @@ class _EmprestimoDevolucaoPageState
   final List<String> tamanhos = ['A0', 'A1', 'A2', 'A3', 'A4', 'A5'];
   final List<String> cores = ['Branco', 'Azul', 'Preto', 'Rosa'];
 
-  String viewState = 'escolha';
+  late String viewState;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.modoInicialEmprestar == true) {
+      viewState = 'emprestar_aluno';
+    } else if (widget.modoInicialEmprestar == false) {
+      viewState = 'recuperar_aluno';
+    } else {
+      viewState = 'escolha';
+    }
+  }
 
   void _resetSelection() {
     setState(() {
@@ -192,7 +205,13 @@ class _EmprestimoDevolucaoPageState
       backgroundColor: Colors.transparent,
       appBar: _buildAppBar(
         context: context,
-        onBack: () => setState(() => viewState = 'escolha'),
+        onBack: () {
+          if (widget.modoInicialEmprestar != null) {
+            context.pop();
+          } else {
+            setState(() => viewState = 'escolha');
+          }
+        },
       ),
       body: Consumer(
         builder: (context, ref, child) {
@@ -641,7 +660,11 @@ class _EmprestimoDevolucaoPageState
               onPressed: () {
                 Navigator.pop(context);
                 _resetSelection();
-                setState(() => viewState = 'escolha');
+                if (widget.modoInicialEmprestar != null) {
+                  context.pop();
+                } else {
+                  setState(() => viewState = 'escolha');
+                }
               },
               child: const Text(
                 'Fechar',

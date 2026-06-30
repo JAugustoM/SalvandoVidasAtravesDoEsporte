@@ -25,6 +25,7 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
   List<LocalUser> _todos = [];
   List<LocalUser> _filtrados = [];
   bool _carregando = true;
+  bool _mostrarInativos = false;
   String? _erro;
 
   @override
@@ -44,9 +45,9 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
       final users = await ref.read(userServiceProvider).listUsers();
       setState(() {
         _todos = users;
-        _filtrados = users;
         _carregando = false;
       });
+      _filtrar();
     } catch (e) {
       setState(() {
         _erro = 'Erro ao carregar voluntários.';
@@ -55,16 +56,16 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
     }
   }
 
-  void _filtrar(String query) {
-    final q = query.toLowerCase().trim();
+  void _filtrar([String? query]) {
+    final q = (query ?? _searchCtrl.text).toLowerCase().trim();
     setState(() {
-      _filtrados = q.isEmpty
-          ? _todos
-          : _todos
-              .where((u) =>
-                  u.nome.toLowerCase().contains(q) ||
-                  u.email.toLowerCase().contains(q))
-              .toList();
+      _filtrados = _todos.where((u) {
+        final matchQ = q.isEmpty ||
+            u.nome.toLowerCase().contains(q) ||
+            u.email.toLowerCase().contains(q);
+        final matchAtivo = _mostrarInativos ? true : u.ativo;
+        return matchQ && matchAtivo;
+      }).toList();
     });
   }
 
@@ -104,6 +105,47 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+            child: TextField(
+              controller: _searchCtrl,
+              onChanged: _filtrar,
+              style: TextStyle(color: textColor),
+              decoration: InputDecoration(
+                hintText: 'Pesquisar voluntário por nome ou email...',
+                hintStyle: const TextStyle(color: AppColors.textSecondary),
+                prefixIcon: const Icon(Icons.search, color: AppColors.cyanPrimary),
+                filled: true,
+                fillColor: containerBg,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'Mostrar inativos',
+                  style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                ),
+                const SizedBox(width: 8),
+                Switch(
+                  value: _mostrarInativos,
+                  onChanged: (val) {
+                    setState(() => _mostrarInativos = val);
+                    _filtrar();
+                  },
+                  activeColor: AppColors.cyanPrimary,
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: _carregando
                 ? const Center(child: CircularProgressIndicator())
@@ -141,14 +183,14 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
 // Tile do voluntário na lista
 // ─────────────────────────────────────────────────────────────────────────────
 
-class _VoluntarioTile extends StatelessWidget {
+class _VoluntarioTile extends ConsumerWidget {
   const _VoluntarioTile({required this.user, required this.onEditado});
 
   final LocalUser user;
   final VoidCallback onEditado;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
@@ -176,35 +218,96 @@ class _VoluntarioTile extends StatelessWidget {
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
-                  color: AppColors.cyanPrimary.withOpacity(0.15),
+                  color: user.ativo
+                      ? AppColors.cyanPrimary.withOpacity(0.15)
+                      : AppColors.error.withOpacity(0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.person_outline,
-                    color: AppColors.cyanPrimary, size: 24),
+                child: Icon(
+                  user.ativo ? Icons.person_outline : Icons.person_off_outlined,
+                  color: user.ativo ? AppColors.cyanPrimary : AppColors.error,
+                  size: 24,
+                ),
               ),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      user.nome,
-                      style: TextStyle(
-                        color: textColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 15,
-                      ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            user.nome,
+                            style: TextStyle(
+                              color: textColor,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        if (!user.ativo) ...[
+                          const SizedBox(width: 8),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: AppColors.error.withOpacity(0.15),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: const Text(
+                              'Inativo',
+                              style: TextStyle(
+                                color: AppColors.error,
+                                fontSize: 11,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      user.funcao,
-                      style: const TextStyle(
-                        color: AppColors.textSecondary,
-                        fontSize: 13,
-                      ),
-                    ),
+                    const SizedBox(height: 6),
+                    FaixaBadge(faixa: user.faixa),
                   ],
                 ),
+              ),
+              PopupMenuButton<String>(
+                icon: const Icon(Icons.more_vert, color: AppColors.textSecondary),
+                onSelected: (val) async {
+                  if (val == 'inativar') {
+                    await ref.read(userServiceProvider).inactivateUser(user.id!);
+                    onEditado();
+                  } else if (val == 'reativar') {
+                    await ref.read(userServiceProvider).reactivateUser(user.id!);
+                    onEditado();
+                  }
+                },
+                itemBuilder: (_) => [
+                  if (user.ativo)
+                    const PopupMenuItem(
+                      value: 'inativar',
+                      child: Row(
+                        children: [
+                          Icon(Icons.block, size: 18, color: AppColors.error),
+                          SizedBox(width: 8),
+                          Text('Inativar'),
+                        ],
+                      ),
+                    )
+                  else
+                    const PopupMenuItem(
+                      value: 'reativar',
+                      child: Row(
+                        children: [
+                          Icon(Icons.check_circle_outline,
+                              size: 18, color: AppColors.success),
+                          SizedBox(width: 8),
+                          Text('Reativar'),
+                        ],
+                      ),
+                    ),
+                ],
               ),
               const Icon(Icons.chevron_right,
                   color: AppColors.cyanPrimary, size: 24),
@@ -234,28 +337,22 @@ class _EditarVoluntarioFormState
     extends ConsumerState<_EditarVoluntarioForm> {
   final _formKey = GlobalKey<FormState>();
 
-  late final MaskTextInputFormatter formatCPF;
   late final MaskTextInputFormatter formatTelefone;
 
   late String _nome;
   late String _email;
   late String _telefone;
-  late String _cpf;
-  late String _funcao;
   late Faixa _faixa;
   String _senha = '';
 
   @override
   void initState() {
     super.initState();
-    formatCPF = maskCPF();
     formatTelefone = maskTelefone();
 
     _nome = widget.user.nome;
     _email = widget.user.email;
     _telefone = widget.user.telefone;
-    _cpf = widget.user.cpf;
-    _funcao = widget.user.funcao;
     _faixa = widget.user.faixa;
   }
 
@@ -285,8 +382,6 @@ class _EditarVoluntarioFormState
       'p_nome': _nome,
       'p_email': _email,
       'p_telefone': _telefone,
-      'p_cpf': _cpf,
-      'p_funcao': _funcao,
       if (_senha.isNotEmpty) 'p_senha': _senha,
     };
 
@@ -439,19 +534,6 @@ class _EditarVoluntarioFormState
                           ),
                           const SizedBox(height: 12),
                           _buildMaskedField(
-                            label: 'CPF*',
-                            initial: formatCPF.maskText(_cpf),
-                            hint: '000.000.000-00',
-                            formatter: formatCPF,
-                            onChanged: (_) =>
-                                _cpf = formatCPF.getUnmaskedText(),
-                            validator: (v) =>
-                                (v == null || v.trim().isEmpty)
-                                    ? 'O CPF é obrigatório'
-                                    : null,
-                          ),
-                          const SizedBox(height: 12),
-                          _buildMaskedField(
                             label: 'Telefone*',
                             initial: formatTelefone.maskText(_telefone),
                             hint: '(00) 00000-0000',
@@ -485,18 +567,7 @@ class _EditarVoluntarioFormState
                             onChanged: (v) => _senha = v,
                           ),
                           const SizedBox(height: 20),
-                          _buildSectionTitle('Dados Institucionais'),
-                          _buildField(
-                            label: 'Função*',
-                            initial: _funcao,
-                            hint: 'Ex.: professor, monitor, apoio',
-                            onChanged: (v) => _funcao = v,
-                            validator: (v) =>
-                                (v == null || v.trim().isEmpty)
-                                    ? 'A função é obrigatória'
-                                    : null,
-                          ),
-                          const SizedBox(height: 12),
+                          _buildSectionTitle('Graduação no Jiu-Jitsu (Faixa)'),
                           _buildFaixaDropdown(),
                           const SizedBox(height: 20),
                         ],

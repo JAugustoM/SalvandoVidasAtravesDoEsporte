@@ -20,13 +20,11 @@ class _CadastrarVoluntarioPageState
     extends ConsumerState<CadastrarVoluntarioPage> {
   final _formKey = GlobalKey<FormState>();
 
-  late final MaskTextInputFormatter formatCPF;
   late final MaskTextInputFormatter formatTelefone;
 
   @override
   void initState() {
     super.initState();
-    formatCPF = maskCPF();
     formatTelefone = maskTelefone();
   }
 
@@ -61,7 +59,6 @@ class _CadastrarVoluntarioPageState
 
       ref.invalidate(cadastroVoluntarioProvider);
       _formKey.currentState?.reset();
-      formatCPF.clear();
       formatTelefone.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -211,18 +208,6 @@ class _CadastrarVoluntarioPageState
                           ),
                           const SizedBox(height: 12),
                           InputField(
-                            initialValue: formatCPF.maskText(cadastro.cpf),
-                            update: (_) =>
-                                notifier.updateCpf(formatCPF.getUnmaskedText()),
-                            error: cadastro.cpfError,
-                            label: 'CPF*',
-                            hint: '000.000.000-00',
-                            keyboardType: TextInputType.number,
-                            validatorMessage: 'Informe um CPF válido',
-                            inputFormatters: [formatCPF],
-                          ),
-                          const SizedBox(height: 12),
-                          InputField(
                             initialValue:
                                 formatTelefone.maskText(cadastro.telefone),
                             update: (_) => notifier.updateTelefone(
@@ -255,16 +240,7 @@ class _CadastrarVoluntarioPageState
                             validatorMessage: 'A senha é obrigatória',
                           ),
                           const SizedBox(height: 20),
-                          _buildSectionTitle('Dados Institucionais'),
-                          InputField(
-                            initialValue: cadastro.funcao,
-                            update: notifier.updateFuncao,
-                            error: cadastro.funcaoError,
-                            label: 'Função*',
-                            hint: 'Ex.: professor, monitor, apoio',
-                            validatorMessage: 'Informe a função',
-                          ),
-                          const SizedBox(height: 12),
+                          _buildSectionTitle('Graduação no Jiu-Jitsu (Faixa)'),
                           _buildFaixaDropdown(cadastro, notifier),
                           const SizedBox(height: 20),
                         ],

@@ -46,29 +46,19 @@ class UpdateVoluntarioState with UpdateVoluntarioStateMappable {
     return eTelefone(telefone) ? null : 'Não é um telefone válido';
   }
 
-  String? get cpfError {
-    if (!dirty && cpf.isEmpty) return null;
-    return eCPF(cpf) ? null : 'Não é um CPF válido';
-  }
+  String? get cpfError => null;
 
-  String? get funcaoError {
-    if (!dirty && funcao.isEmpty) return null;
-    return funcao.isNotEmpty ? null : 'Não pode estar em branco';
-  }
+  String? get funcaoError => null;
 
   bool get temErros =>
       nomeError != null ||
       emailError != null ||
-      telefoneError != null ||
-      cpfError != null ||
-      funcaoError != null;
+      telefoneError != null;
 
   bool get podeCadastrar =>
       nome.isNotEmpty &&
       email.isNotEmpty &&
       telefone.isNotEmpty &&
-      cpf.isNotEmpty &&
-      funcao.isNotEmpty &&
       !temErros;
 
   Map<String, dynamic> get diff => {

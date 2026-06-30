@@ -80,6 +80,34 @@ class FaixaAvatar extends StatelessWidget {
   }
 }
 
+class FaixaBadge extends StatelessWidget {
+  final Faixa faixa;
+  const FaixaBadge({super.key, required this.faixa});
+
+  @override
+  Widget build(BuildContext context) {
+    final cores = faixaCores(faixa);
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      decoration: BoxDecoration(
+        color: cores.main,
+        borderRadius: BorderRadius.circular(20),
+        border: faixa == Faixa.branca
+            ? Border.all(color: Colors.grey.shade400)
+            : null,
+      ),
+      child: Text(
+        faixa.nomeVisivel,
+        style: TextStyle(
+          color: cores.text,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+    );
+  }
+}
+
 class FaixaDropdownItem extends StatelessWidget {
   final Faixa faixa;
 

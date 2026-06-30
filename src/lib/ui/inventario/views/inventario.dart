@@ -90,6 +90,7 @@ class Inventario extends ConsumerWidget {
                         decoration: BoxDecoration(
                           color: isDark ? AppColors.darkSurface : Colors.white,
                           borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColors.royalAzure.withOpacity(0.35), width: 1.5),
                           boxShadow: AppColors.cardShadow(isDark),
                         ),
                         child: Column(
@@ -143,9 +144,18 @@ class Inventario extends ConsumerWidget {
                                               vertical: 10),
                                           child: Row(
                                             children: [
-                                              CircleAvatar(
-                                                radius: 22,
-                                                backgroundColor: Colors.grey.shade300,
+                                              Container(
+                                                width: 44,
+                                                height: 44,
+                                                decoration: BoxDecoration(
+                                                  color: AppColors.cyanPrimary.withOpacity(0.15),
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                                child: const Icon(
+                                                  Icons.checkroom_outlined,
+                                                  color: AppColors.cyanPrimary,
+                                                  size: 24,
+                                                ),
                                               ),
                                               const SizedBox(width: 12),
                                               Expanded(
@@ -213,16 +223,24 @@ class Inventario extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: _ActionButton(
-                            title: 'Doações &\nPerdas',
-                            onTap: () => context.push(Routes.doacoesPerdas),
+                            title: 'Emprestar\nKimono',
+                            onTap: () => context.push(Routes.emprestimoDevolucao, extra: true),
+                            color: AppColors.royalAzure,
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: _ActionButton(
-                            title: 'Emprestar/\nPegar de volta',
-                            onTap: () =>
-                                context.push(Routes.emprestimoDevolucao),
+                            title: 'Devolver\nKimono',
+                            onTap: () => context.push(Routes.emprestimoDevolucao, extra: false),
+                            color: AppColors.cyanPrimary,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: _ActionButton(
+                            title: 'Doações &\nPerdas',
+                            onTap: () => context.push(Routes.doacoesPerdas),
                             outlined: true,
                           ),
                         ),
@@ -264,6 +282,7 @@ class _StatCardConsultar extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.royalAzure.withOpacity(0.4), width: 1.5),
         boxShadow: AppColors.cardShadow(isDark),
       ),
       child: Column(
@@ -333,6 +352,7 @@ class _StatCardSimples extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.cyanPrimary.withOpacity(0.4), width: 1.5),
         boxShadow: AppColors.cardShadow(isDark),
       ),
       child: Column(
@@ -369,21 +389,20 @@ class _ActionButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
   final bool outlined;
+  final Color? color;
 
   const _ActionButton({
     required this.title,
     required this.onTap,
     this.outlined = false,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // No protótipo: "Doações & Perdas" = azul sólido, "Emprestar/Pegar de volta" = azul mais claro/ciano
-    final bg = outlined
-        ? AppColors.cyanPrimary
-        : AppColors.royalAzure;
+    final bg = color ?? (outlined ? AppColors.cyanPrimary : AppColors.royalAzure);
 
     return Material(
       color: bg,
