@@ -128,9 +128,9 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
 
                       switch (widget.turma.faixaEtaria) {
                         case FaixaEtaria.infantil:
-                          if (idade >= 18) return false;
+                          if (idade >= 13) return false;
                         case FaixaEtaria.adulto:
-                          if (idade < 18) return false;
+                          if (idade < 13) return false;
                       }
 
                       return (aluno.nome.toLowerCase().contains(_searchQuery) ||
