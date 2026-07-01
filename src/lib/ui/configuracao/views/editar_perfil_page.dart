@@ -196,7 +196,7 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                               label: 'Nova Senha (opcional)',
                               hint:
                                   'Digite a senha do voluntário (deixe em branco para manter)',
-                              validatorMessage: '',
+                              validatorMessage: null,
                             ),
                             const SizedBox(height: 14),
 
