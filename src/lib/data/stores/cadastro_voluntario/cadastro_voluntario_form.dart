@@ -49,7 +49,10 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
     return senha.isNotEmpty ? null : 'Não pode estar em branco';
   }
 
-  String? get cpfError => null;
+  String? get cpfError {
+    if (!dirty && cpf.isEmpty) return null;
+    return eCPF(cpf) ? null : 'Não é um CPF válido';
+  }
 
   String? get funcaoError => null;
 
@@ -57,12 +60,14 @@ class CadastroVoluntarioState with CadastroVoluntarioStateMappable {
       nomeError != null ||
       emailError != null ||
       telefoneError != null ||
+      cpfError != null ||
       senhaError != null;
 
   bool get podeCadastrar =>
       nome.isNotEmpty &&
       email.isNotEmpty &&
       telefone.isNotEmpty &&
+      cpf.isNotEmpty &&
       senha.isNotEmpty &&
       !temErros;
 

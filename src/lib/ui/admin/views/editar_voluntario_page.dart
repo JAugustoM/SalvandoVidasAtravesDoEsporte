@@ -1,5 +1,6 @@
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
+import 'package:salvando_vidas/data/validators.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/local_user/local_user.dart';
 import 'package:salvando_vidas/main_imports.dart';
@@ -338,10 +339,12 @@ class _EditarVoluntarioFormState
   final _formKey = GlobalKey<FormState>();
 
   late final MaskTextInputFormatter formatTelefone;
+  late final MaskTextInputFormatter formatCpf;
 
   late String _nome;
   late String _email;
   late String _telefone;
+  late String _cpf;
   late Faixa _faixa;
   String _senha = '';
 
@@ -349,10 +352,12 @@ class _EditarVoluntarioFormState
   void initState() {
     super.initState();
     formatTelefone = maskTelefone();
+    formatCpf = maskCPF();
 
     _nome = widget.user.nome;
     _email = widget.user.email;
     _telefone = widget.user.telefone;
+    _cpf = widget.user.cpf;
     _faixa = widget.user.faixa;
   }
 
@@ -382,6 +387,8 @@ class _EditarVoluntarioFormState
       'p_nome': _nome,
       'p_email': _email,
       'p_telefone': _telefone,
+      'p_cpf': _cpf,
+      'p_faixa': _faixa.name,
       if (_senha.isNotEmpty) 'p_senha': _senha,
     };
 
@@ -544,6 +551,20 @@ class _EditarVoluntarioFormState
                             validator: (v) =>
                                 (v == null || v.trim().isEmpty)
                                     ? 'O telefone é obrigatório'
+                                    : null,
+                          ),
+                          const SizedBox(height: 12),
+                          _buildMaskedField(
+                            label: 'CPF*',
+                            initial: formatCpf.maskText(_cpf),
+                            hint: '000.000.000-00',
+                            formatter: formatCpf,
+                            keyboardType: TextInputType.number,
+                            onChanged: (_) =>
+                                _cpf = formatCpf.getUnmaskedText(),
+                            validator: (v) =>
+                                (v == null || !eCPF(formatCpf.getUnmaskedText().isEmpty ? _cpf : formatCpf.getUnmaskedText()))
+                                    ? 'Informe um CPF válido'
                                     : null,
                           ),
                           const SizedBox(height: 20),

@@ -21,11 +21,13 @@ class _CadastrarVoluntarioPageState
   final _formKey = GlobalKey<FormState>();
 
   late final MaskTextInputFormatter formatTelefone;
+  late final MaskTextInputFormatter formatCpf;
 
   @override
   void initState() {
     super.initState();
     formatTelefone = maskTelefone();
+    formatCpf = maskCPF();
   }
 
   Future<void> _salvar() async {
@@ -60,6 +62,7 @@ class _CadastrarVoluntarioPageState
       ref.invalidate(cadastroVoluntarioProvider);
       _formKey.currentState?.reset();
       formatTelefone.clear();
+      formatCpf.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -218,6 +221,18 @@ class _CadastrarVoluntarioPageState
                             keyboardType: TextInputType.phone,
                             validatorMessage: 'Informe um telefone válido',
                             inputFormatters: [formatTelefone],
+                          ),
+                          const SizedBox(height: 12),
+                          InputField(
+                            initialValue: formatCpf.maskText(cadastro.cpf),
+                            update: (_) => notifier.updateCpf(
+                                formatCpf.getUnmaskedText()),
+                            error: cadastro.cpfError,
+                            label: 'CPF*',
+                            hint: '000.000.000-00',
+                            keyboardType: TextInputType.number,
+                            validatorMessage: 'Informe um CPF válido',
+                            inputFormatters: [formatCpf],
                           ),
                           const SizedBox(height: 20),
                           _buildSectionTitle('Acesso ao Sistema'),

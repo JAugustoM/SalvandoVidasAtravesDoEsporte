@@ -62,10 +62,6 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
             alignment: Alignment.centerLeft,
           ),
         ),
-        title: Text(
-          'Histórico de Empréstimos e Devoluções',
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
-        ),
         bottom: TabBar(
           controller: _tabController,
           labelColor: AppColors.cyanPrimary,
@@ -73,8 +69,26 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
           indicatorColor: AppColors.cyanPrimary,
           indicatorWeight: 3,
           tabs: const [
-            Tab(icon: Icon(Icons.people), text: 'Por Aluno'),
-            Tab(icon: Icon(Icons.history), text: 'Geral'),
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.people_outline, size: 18),
+                  SizedBox(width: 6),
+                  Text('Por Aluno'),
+                ],
+              ),
+            ),
+            Tab(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.history, size: 18),
+                  SizedBox(width: 6),
+                  Text('Histórico Geral'),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -122,8 +136,8 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
     final devolvidos = itens.where((i) => i.emprestimo.dataDevolucao != null).length;
 
     return Container(
-      margin: const EdgeInsets.all(16),
-      padding: const EdgeInsets.all(18),
+      margin: const EdgeInsets.fromLTRB(16, 10, 16, 6),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: isDark
@@ -132,83 +146,56 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: AppColors.deepNavy.withOpacity(isDark ? 0.4 : 0.2),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: AppColors.deepNavy.withOpacity(isDark ? 0.4 : 0.15),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Visão Geral de Empréstimos',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    'Controle em tempo real dos kimonos',
-                    style: TextStyle(color: Colors.white70, fontSize: 13),
-                  ),
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.15),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.dry_cleaning, color: AppColors.cyanPrimary, size: 26),
-              ),
-            ],
-          ),
-          const SizedBox(height: 18),
-          const Divider(color: Colors.white24, height: 1),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildStatMetric('Ativos', '$ativos', AppColors.warning),
-              Container(width: 1, height: 35, color: Colors.white24),
-              _buildStatMetric('Devolvidos', '$devolvidos', AppColors.success),
-              Container(width: 1, height: 35, color: Colors.white24),
-              _buildStatMetric('Total Registrado', '${itens.length}', Colors.white),
-            ],
-          ),
+          _buildCompactMetric('Em Aberto', '$ativos', AppColors.warning, Icons.pending_actions),
+          Container(width: 1, height: 32, color: Colors.white24),
+          _buildCompactMetric('Devolvidos', '$devolvidos', AppColors.success, Icons.check_circle_outline),
+          Container(width: 1, height: 32, color: Colors.white24),
+          _buildCompactMetric('Total', '${itens.length}', Colors.white, Icons.inventory_2_outlined),
         ],
       ),
     );
   }
 
-  Widget _buildStatMetric(String label, String value, Color color) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            color: color,
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
+  Widget _buildCompactMetric(String label, String value, Color color, IconData icon) {
+    return Expanded(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 16, color: color),
+              const SizedBox(width: 4),
+              Text(
+                value,
+                style: TextStyle(
+                  color: color,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          label,
-          style: const TextStyle(color: Colors.white70, fontSize: 12),
-        ),
-      ],
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: const TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w500),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
     );
   }
 
@@ -231,50 +218,84 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
         return nomeA.compareTo(nomeB);
       });
 
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          child: TextField(
-            style: TextStyle(color: isDark ? Colors.white : Colors.black87),
+    return Container(
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isDark ? AppColors.darkSurface : Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.royalAzure.withOpacity(0.25), width: 1),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          TextField(
+            style: TextStyle(
+              color: isDark ? Colors.white : Colors.black87,
+              fontSize: 15,
+            ),
             onChanged: (val) => setState(() => _filtroNome = val),
             decoration: InputDecoration(
-              hintText: 'Pesquisar aluno por nome...',
-              hintStyle: const TextStyle(color: AppColors.textSecondary),
-              prefixIcon: const Icon(Icons.search, color: AppColors.cyanPrimary),
+              hintText: 'Pesquisar aluno por nome ou apelido...',
+              hintStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+              prefixIcon: const Icon(Icons.search, color: AppColors.cyanPrimary, size: 22),
+              suffixIcon: _filtroNome.isNotEmpty
+                  ? IconButton(
+                      icon: const Icon(Icons.clear, color: AppColors.textSecondary, size: 20),
+                      onPressed: () => setState(() => _filtroNome = ''),
+                    )
+                  : null,
               filled: true,
-              fillColor: isDark ? AppColors.darkInputFill : Colors.white,
+              fillColor: isDark ? AppColors.darkInputFill : Colors.grey.shade100,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(14),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(
+                  color: AppColors.cyanPrimary,
+                  width: 1.5,
+                ),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
             ),
           ),
-        ),
-        Expanded(
-          child: entries.isEmpty
-              ? Center(
-                  child: Text(
-                    'Nenhum aluno encontrado.',
-                    style: TextStyle(color: AppColors.textSecondary, fontSize: 15),
+          const SizedBox(height: 12),
+          Expanded(
+            child: entries.isEmpty
+                ? Center(
+                    child: Text(
+                      'Nenhum aluno encontrado.',
+                      style: TextStyle(color: AppColors.textSecondary, fontSize: 15),
+                    ),
+                  )
+                : RefreshIndicator(
+                    color: AppColors.cyanPrimary,
+                    onRefresh: () => ref.refresh(historicoEmprestimosStoreProvider.future),
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      itemCount: entries.length,
+                      itemBuilder: (context, index) {
+                        final listaAluno = entries[index].value;
+                        final aluno = listaAluno.first.aluno!;
+                        return _buildAlunoCard(aluno, listaAluno, isDark);
+                      },
+                    ),
                   ),
-                )
-              : RefreshIndicator(
-                  color: AppColors.cyanPrimary,
-                  onRefresh: () => ref.refresh(historicoEmprestimosStoreProvider.future),
-                  child: ListView.builder(
-                    padding: const EdgeInsets.all(16),
-                    itemCount: entries.length,
-                    itemBuilder: (context, index) {
-                      final listaAluno = entries[index].value;
-                      final aluno = listaAluno.first.aluno!;
-                      return _buildAlunoCard(aluno, listaAluno, isDark);
-                    },
-                  ),
-                ),
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -378,8 +399,21 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
           child: _FiltroChips(),
         ),
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: isDark ? AppColors.darkSurface : Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.royalAzure.withOpacity(0.25), width: 1),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
             child: _HistoricoLista(data: data),
           ),
         ),

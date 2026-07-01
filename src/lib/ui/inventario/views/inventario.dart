@@ -282,6 +282,7 @@ class Inventario extends ConsumerWidget {
                         ),
                       ],
                     ),
+                    const SizedBox(height: 32),
                   ],
                 ),
               ),
@@ -519,28 +520,67 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final dialogBg = isDark ? AppColors.darkSurface : Colors.white;
-    // Fundo interno do popup — cinza-azulado claro como no protótipo
-    final innerBg = isDark ? AppColors.darkBg : const Color(0xFFECF3F5);
+    final innerBg = isDark ? AppColors.darkBg : const Color(0xFFF3F7F9);
     final dropBg = isDark ? AppColors.darkInputFill : Colors.white;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
     final hintColor = isDark ? Colors.white54 : AppColors.textSecondary;
-    final iconColor = isDark ? Colors.white70 : AppColors.textSecondary;
 
     return Dialog(
       backgroundColor: dialogBg,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      elevation: 12,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.55,
+          width: 400,
+          height: MediaQuery.of(context).size.height * 0.60,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // ── Área interna cinza ────────────────────────────────
+              // ── Cabeçalho do Modal ────────────────────────────────
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppColors.cyanPrimary.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(
+                      Icons.inventory_2_outlined,
+                      color: AppColors.cyanPrimary,
+                      size: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      'Estoque Disponível',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(Icons.close, color: hintColor),
+                    splashRadius: 20,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+
+              // ── Área interna de listagem ──────────────────────────
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                     color: innerBg,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: isDark ? Colors.white12 : Colors.grey.shade200,
+                    ),
                   ),
                   padding: const EdgeInsets.all(12),
                   child: Column(
@@ -548,7 +588,6 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                       // Filtros
                       Row(
                         children: [
-                          // Dropdown Tamanho
                           Expanded(
                             child: _FilterDropdown<TamanhoKimono>(
                               hint: 'Tamanho',
@@ -564,7 +603,6 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          // Dropdown Cor
                           Expanded(
                             child: _FilterDropdown<CorKimono>(
                               hint: 'Cor',
@@ -603,9 +641,16 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
 
                                 if (filtrado.isEmpty) {
                                   return Center(
-                                    child: Text(
-                                      'Nenhum kimono disponível',
-                                      style: TextStyle(color: hintColor),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.inbox_outlined, size: 40, color: hintColor),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Nenhum kimono com este filtro',
+                                          style: TextStyle(color: hintColor, fontSize: 14),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 }
@@ -614,45 +659,77 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                                   itemCount: filtrado.length,
                                   itemBuilder: (context, index) {
                                     final kimono = filtrado[index];
-                                    return Padding(
+                                    return Container(
+                                      margin: const EdgeInsets.only(bottom: 8),
                                       padding: const EdgeInsets.symmetric(
-                                          vertical: 8),
+                                          horizontal: 14, vertical: 12),
+                                      decoration: BoxDecoration(
+                                        color: isDark ? AppColors.darkSurface : Colors.white,
+                                        borderRadius: BorderRadius.circular(12),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.black.withOpacity(isDark ? 0.2 : 0.04),
+                                            blurRadius: 6,
+                                            offset: const Offset(0, 2),
+                                          ),
+                                        ],
+                                        border: Border.all(
+                                          color: isDark ? Colors.white12 : Colors.grey.shade200,
+                                        ),
+                                      ),
                                       child: Row(
                                         children: [
-                                          Icon(
-                                            Icons.sports_martial_arts,
-                                            size: 26,
-                                            color: iconColor,
-                                          ),
-                                          const SizedBox(width: 14),
-                                          Expanded(
-                                            child: Text(
-                                              '${kimono.tamanho.nomeVisivel}, ${kimono.cor.nomeVisivel}',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w500,
-                                                color: textColor,
-                                              ),
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: AppColors.cyanPrimary.withOpacity(0.12),
+                                              borderRadius: BorderRadius.circular(8),
+                                            ),
+                                            child: const Icon(
+                                              Icons.sports_martial_arts,
+                                              size: 22,
+                                              color: AppColors.cyanPrimary,
                                             ),
                                           ),
-                                          // Quantidade disponível
+                                          const SizedBox(width: 12),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  kimono.tamanho.nomeVisivel,
+                                                  style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: textColor,
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 2),
+                                                Text(
+                                                  'Cor: ${kimono.cor.nomeVisivel}',
+                                                  style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: hintColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                           Container(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 10, vertical: 3),
+                                                horizontal: 12, vertical: 6),
                                             decoration: BoxDecoration(
-                                              color: AppColors.cyanPrimary
-                                                  .withOpacity(0.15),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
+                                              gradient: const LinearGradient(
+                                                colors: [Color(0xFF0083B0), Color(0xFF00B4DB)],
+                                              ),
+                                              borderRadius: BorderRadius.circular(20),
                                             ),
                                             child: Text(
-                                              'x${kimono.quantidadeDisponivel}',
-                                              style: TextStyle(
+                                              '${kimono.quantidadeDisponivel} un.',
+                                              style: const TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w700,
-                                                color: isDark
-                                                    ? AppColors.cyanPrimary
-                                                    : AppColors.deepNavy,
+                                                color: Colors.white,
                                               ),
                                             ),
                                           ),
@@ -681,27 +758,26 @@ class _PopUpKimonosDisponiveisState extends State<_PopUpKimonosDisponiveis> {
                   ),
                 ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 16),
 
-              // Botão Ok
+              // Botão Concluído
               SizedBox(
-                width: 120,
-                height: 42,
+                height: 46,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.cyanPrimary,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(14),
                     ),
                     elevation: 0,
                   ),
                   onPressed: () => Navigator.of(context).pop(),
                   child: const Text(
-                    'Ok',
+                    'Entendido',
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

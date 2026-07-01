@@ -100,6 +100,7 @@ class HomePage extends ConsumerWidget {
     final headerBg = isDark ? const Color(0xFF1E293B) : AppColors.platinum;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
     final subColor = isDark ? Colors.white70 : AppColors.textSecondary;
+    final colHeaderColor = isDark ? AppColors.cyanPrimary : AppColors.deepNavy;
 
     return Scaffold(
       body: Container(
@@ -161,7 +162,7 @@ class HomePage extends ConsumerWidget {
                               children: [
                                 // Cabeçalho da tabela de alunos
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
                                   decoration: BoxDecoration(
                                     color: headerBg,
                                     borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
@@ -175,16 +176,16 @@ class HomePage extends ConsumerWidget {
                                           onTap: () => ref.read(homeStoreProvider.notifier).toggleOrder(OrderBy.nome),
                                           child: Row(
                                             children: [
-                                              const Text('Nome', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
+                                              Text('Nome', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: colHeaderColor)),
                                               if (homeState.value?.orderBy == OrderBy.nome)
-                                                Icon(homeState.value!.ascending ? Icons.arrow_drop_up : Icons.arrow_drop_down, size: 14, color: AppColors.textSecondary),
+                                                Icon(homeState.value!.ascending ? Icons.arrow_drop_up : Icons.arrow_drop_down, size: 16, color: colHeaderColor),
                                             ],
                                           ),
                                         ),
                                       ),
-                                      const Expanded(
+                                      Expanded(
                                         flex: 2,
-                                        child: Text('Turma', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
+                                        child: Text('Turma', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: colHeaderColor)),
                                       ),
                                       Expanded(
                                         flex: 3,
@@ -193,9 +194,9 @@ class HomePage extends ConsumerWidget {
                                           child: Row(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              const Text('Última\npresença', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: AppColors.textSecondary)),
+                                              Text('Última\npresença', textAlign: TextAlign.center, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: colHeaderColor)),
                                               if (homeState.value?.orderBy == OrderBy.ultimaPresenca)
-                                                Icon(homeState.value!.ascending ? Icons.arrow_drop_up : Icons.arrow_drop_down, size: 14, color: AppColors.textSecondary),
+                                                Icon(homeState.value!.ascending ? Icons.arrow_drop_up : Icons.arrow_drop_down, size: 16, color: colHeaderColor),
                                             ],
                                           ),
                                         ),
