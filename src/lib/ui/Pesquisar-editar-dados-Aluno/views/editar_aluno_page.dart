@@ -133,10 +133,12 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                   diff['id_responsavel'] = null;
                 }
 
-                await service.atualizaAluno(
-                  widget.aluno.id!,
-                  state.diffAluno(aluno),
-                );
+                if (diff.isNotEmpty) {
+                  await service.atualizaAluno(
+                    widget.aluno.id!,
+                    diff,
+                  );
+                }
                 await ref.refresh(pesquisaAlunoProvider.future);
 
                 if (!mounted) return;
