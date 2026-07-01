@@ -51,305 +51,275 @@ class Inventario extends ConsumerWidget {
           ),
         ),
         child: SafeArea(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 800),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                child: Column(
-                  children: [
-                    Row(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final compact = constraints.maxWidth < 520;
+              final listHeight = constraints.maxHeight * (compact ? 0.30 : 0.26);
+
+              return Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 20),
+                    child: Column(
                       children: [
-                        Text(
-                          'Estoque de Kimonos',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: isDark ? Colors.white : AppColors.deepNavy,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    // ── Cards de estatísticas ──────────────────────────
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final compact = constraints.maxWidth < 520;
-                        final firstCard = _StatCardConsultar(
-                          title: 'Kimonos\nDisponíveis',
-                          value: '$kimonoDisponives',
-                          buttonText: 'Ver Estoque',
-                          buttonIcon: Icons.checkroom_outlined,
-                          gradientColors: isDark
-                              ? const [
-                                  Color(0xFF071F3F),
-                                  Color(0xFF006B85),
-                                ]
-                              : const [
-                                  Color(0xFF1976D2),
-                                  Color(0xFF26C6DA),
-                                ],
-                          onConsultar: () => _abrirPopUpKimonos(context),
-                        );
-                        final secondCard = _StatCardConsultar(
-                          title: 'Kimonos\nEmprestados',
-                          value: '$kimonosEmprestados',
-                          buttonText: 'Ver Histórico',
-                          buttonIcon: Icons.history_rounded,
-                          gradientColors: isDark
-                              ? const [
-                                  Color(0xFF140D36),
-                                  Color(0xFF45229E),
-                                ]
-                              : const [
-                                  Color(0xFF3F51B5),
-                                  Color(0xFF7986CB),
-                                ],
-                          onConsultar: () =>
-                              context.push(Routes.historicoEmprestimos),
-                        );
-
-                        if (compact) {
-                          return Column(
-                            children: [
-                              firstCard,
-                              const SizedBox(height: 12),
-                              secondCard,
-                            ],
-                          );
-                        }
-
-                        return IntrinsicHeight(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(child: firstCard),
-                              const SizedBox(width: 12),
-                              Expanded(child: secondCard),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 16),
-
-                    // ── Lista de alunos com kimono ─────────────────────
-                    Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: cardBg,
-                          borderRadius: BorderRadius.circular(14),
-                          border: Border.all(
-                            color: AppColors.royalAzure.withOpacity(0.35),
-                            width: 1.5,
-                          ),
-                          boxShadow: AppColors.cardShadow(isDark),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
                           children: [
                             Text(
-                              'Alunos com kimonos:',
+                              'Estoque de Kimonos',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: isDark
-                                    ? Colors.white
-                                    : AppColors.deepNavy,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: isDark ? Colors.white : AppColors.deepNavy,
                               ),
                             ),
-                            const SizedBox(height: 12),
-                            Expanded(
-                              child: store.when(
-                                data: (data) {
-                                  final emprestimos = data.emprestimos
-                                      .where((e) => e.dataDevolucao == null)
-                                      .toList();
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final firstCard = _StatCardConsultar(
+                              title: 'Kimonos\nDisponíveis',
+                              value: '$kimonoDisponives',
+                              buttonText: 'Ver Estoque',
+                              buttonIcon: Icons.checkroom_outlined,
+                              gradientColors: isDark
+                                  ? const [Color(0xFF071F3F), Color(0xFF006B85)]
+                                  : const [Color(0xFF1976D2), Color(0xFF26C6DA)],
+                              onConsultar: () => _abrirPopUpKimonos(context),
+                            );
+                            final secondCard = _StatCardConsultar(
+                              title: 'Kimonos\nEmprestados',
+                              value: '$kimonosEmprestados',
+                              buttonText: 'Ver Histórico',
+                              buttonIcon: Icons.history_rounded,
+                              gradientColors: isDark
+                                  ? const [Color(0xFF140D36), Color(0xFF45229E)]
+                                  : const [Color(0xFF3F51B5), Color(0xFF7986CB)],
+                              onConsultar: () =>
+                                  context.push(Routes.historicoEmprestimos),
+                            );
 
-                                  if (emprestimos.isEmpty) {
-                                    return Center(
-                                      child: Text(
-                                        'Nenhum kimono emprestado',
-                                        style: TextStyle(
-                                          color: AppColors.textSecondary,
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(child: firstCard),
+                                const SizedBox(width: 12),
+                                Expanded(child: secondCard),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        Container(
+                          height: listHeight.clamp(220.0, 420.0),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: cardBg,
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(
+                              color: AppColors.royalAzure.withOpacity(0.35),
+                              width: 1.5,
+                            ),
+                            boxShadow: AppColors.cardShadow(isDark),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Alunos com kimonos:',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: isDark ? Colors.white : AppColors.deepNavy,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Expanded(
+                                child: store.when(
+                                  data: (data) {
+                                    final emprestimos = data.emprestimos
+                                        .where((e) => e.dataDevolucao == null)
+                                        .toList();
+
+                                    if (emprestimos.isEmpty) {
+                                      return Center(
+                                        child: Text(
+                                          'Nenhum kimono emprestado',
+                                          style: TextStyle(
+                                            color: AppColors.textSecondary,
+                                          ),
                                         ),
+                                      );
+                                    }
+
+                                    return RefreshIndicator(
+                                      color: AppColors.cyanPrimary,
+                                      onRefresh: () => ref.refresh(
+                                        gestaoKimonosStoreProvider.future,
+                                      ),
+                                      child: ListView.separated(
+                                        itemCount: emprestimos.length,
+                                        separatorBuilder: (_, __) => Divider(
+                                          height: 1,
+                                          color: isDark
+                                              ? AppColors.darkDivider
+                                              : AppColors.divider,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          final emp = emprestimos[index];
+                                          final aluno = data.alunos[emp.alunoId]!;
+                                          return InkWell(
+                                            onTap: () =>
+                                                mostrarHistoricoEmprestimoAlunoDialog(
+                                                  context,
+                                                  aluno,
+                                                ),
+                                            borderRadius: BorderRadius.circular(12),
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                vertical: 10,
+                                                horizontal: 8,
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Container(
+                                                    width: 44,
+                                                    height: 44,
+                                                    decoration: BoxDecoration(
+                                                      color: AppColors.cyanPrimary
+                                                          .withOpacity(0.15),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                        12,
+                                                      ),
+                                                    ),
+                                                    child: const Icon(
+                                                      Icons.checkroom_outlined,
+                                                      color: AppColors.cyanPrimary,
+                                                      size: 24,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 12),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          aluno.nome,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 14,
+                                                            color: isDark
+                                                                ? Colors.white
+                                                                : AppColors.deepNavy,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(height: 2),
+                                                        Text(
+                                                          '${emp.tamanho.nomeVisivel}, ${emp.cor.nomeVisivel}',
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          style: TextStyle(
+                                                            color: AppColors.textSecondary,
+                                                            fontSize: 13,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const Icon(
+                                                    Icons.chevron_right,
+                                                    color: AppColors.cyanPrimary,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       ),
                                     );
-                                  }
-
-                                  return RefreshIndicator(
-                                    color: AppColors.cyanPrimary,
-                                    onRefresh: () => ref.refresh(
-                                      gestaoKimonosStoreProvider.future,
-                                    ),
-                                    child: ListView.separated(
-                                      itemCount: emprestimos.length,
-                                      separatorBuilder: (_, __) => Divider(
-                                        height: 1,
-                                        color: isDark
-                                            ? AppColors.darkDivider
-                                            : AppColors.divider,
+                                  },
+                                  error: (error, stack) {
+                                    if (error is AppApiException) {
+                                      ref.read(loggerProvider).e(error.message, error: error.error);
+                                    }
+                                    return const Center(
+                                      child: Text(
+                                        'Erro ao carregar o estoque de kimonos',
                                       ),
-                                      itemBuilder: (context, index) {
-                                        final emp = emprestimos[index];
-                                        final aluno = data.alunos[emp.alunoId]!;
-                                        return InkWell(
-                                          onTap: () =>
-                                              mostrarHistoricoEmprestimoAlunoDialog(
-                                                context,
-                                                aluno,
-                                              ),
-                                          borderRadius: BorderRadius.circular(
-                                            12,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 10,
-                                              horizontal: 8,
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  width: 44,
-                                                  height: 44,
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.cyanPrimary
-                                                        .withOpacity(0.15),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          12,
-                                                        ),
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.checkroom_outlined,
-                                                    color:
-                                                        AppColors.cyanPrimary,
-                                                    size: 24,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 12),
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        aluno.nome,
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 14,
-                                                          color: isDark
-                                                              ? Colors.white
-                                                              : AppColors
-                                                                    .deepNavy,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(height: 2),
-                                                      Text(
-                                                        '${emp.tamanho.nomeVisivel}, ${emp.cor.nomeVisivel}',
-                                                        style: TextStyle(
-                                                          color: AppColors
-                                                              .textSecondary,
-                                                          fontSize: 13,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                const Icon(
-                                                  Icons.chevron_right,
-                                                  color: AppColors.cyanPrimary,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
+                                    );
+                                  },
+                                  loading: () => const Center(
+                                    child: CircularProgressIndicator(
+                                      color: AppColors.cyanPrimary,
                                     ),
-                                  );
-                                },
-                                error: (error, stack) {
-                                  if (error is AppApiException) {
-                                    ref
-                                        .read(loggerProvider)
-                                        .e(error.message, error: error.error);
-                                  }
-                                  return const Center(
-                                    child: Text(
-                                      'Erro ao carregar o estoque de kimonos',
-                                    ),
-                                  );
-                                },
-                                loading: () => const Center(
-                                  child: CircularProgressIndicator(
-                                    color: AppColors.cyanPrimary,
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-
-                    // ── Botões de ação ─────────────────────────────────
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        final compact = constraints.maxWidth < 520;
-                        final emprestar = _ActionButton(
-                          title: 'Emprestar\nKimono',
-                          onTap: () => context.push(
-                            Routes.emprestimoDevolucao,
-                            extra: true,
-                          ),
-                          color: AppColors.royalAzure,
-                        );
-                        final devolver = _ActionButton(
-                          title: 'Devolver\nKimono',
-                          onTap: () => context.push(
-                            Routes.emprestimoDevolucao,
-                            extra: false,
-                          ),
-                          color: AppColors.cyanPrimary,
-                        );
-                        final doacoes = _ActionButton(
-                          title: 'Doações &\nPerdas',
-                          onTap: () => context.push(Routes.doacoesPerdas),
-                          outlined: true,
-                        );
-
-                        if (compact) {
-                          return Column(
-                            children: [
-                              SizedBox(height: 56, child: emprestar),
-                              const SizedBox(height: 8),
-                              SizedBox(height: 56, child: devolver),
-                              const SizedBox(height: 8),
-                              SizedBox(height: 56, child: doacoes),
                             ],
-                          );
-                        }
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        LayoutBuilder(
+                          builder: (context, constraints) {
+                            final compactButtons = constraints.maxWidth < 520;
+                            final emprestar = _ActionButton(
+                              title: 'Emprestar\nKimono',
+                              onTap: () => context.push(
+                                Routes.emprestimoDevolucao,
+                                extra: true,
+                              ),
+                              color: AppColors.royalAzure,
+                            );
+                            final devolver = _ActionButton(
+                              title: 'Devolver\nKimono',
+                              onTap: () => context.push(
+                                Routes.emprestimoDevolucao,
+                                extra: false,
+                              ),
+                              color: AppColors.cyanPrimary,
+                            );
+                            final doacoes = _ActionButton(
+                              title: 'Doações &\nPerdas',
+                              onTap: () => context.push(Routes.doacoesPerdas),
+                              outlined: true,
+                            );
 
-                        return Row(
-                          children: [
-                            Expanded(child: emprestar),
-                            const SizedBox(width: 8),
-                            Expanded(child: devolver),
-                            const SizedBox(width: 8),
-                            Expanded(child: doacoes),
-                          ],
-                        );
-                      },
+                            if (compactButtons) {
+                              return Column(
+                                children: [
+                                  SizedBox(height: 56, child: emprestar),
+                                  const SizedBox(height: 8),
+                                  SizedBox(height: 56, child: devolver),
+                                  const SizedBox(height: 8),
+                                  SizedBox(height: 56, child: doacoes),
+                                ],
+                              );
+                            }
+
+                            return Row(
+                              children: [
+                                Expanded(child: emprestar),
+                                const SizedBox(width: 8),
+                                Expanded(child: devolver),
+                                const SizedBox(width: 8),
+                                Expanded(child: doacoes),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 32),
+                      ],
                     ),
-                    const SizedBox(height: 32),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       ),
