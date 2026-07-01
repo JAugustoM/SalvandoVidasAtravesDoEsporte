@@ -44,7 +44,7 @@ bool eCPF(String cpf) {
 
   verC %= 11;
 
-  if (((verC == 0 || verC == 1) && ver1 != 0) || ((11 - verC) != ver1)) {
+  if (((verC == 0 || verC == 1) && ver1 != 0) && ((11 - verC) != ver1)) {
     return false;
   }
 
