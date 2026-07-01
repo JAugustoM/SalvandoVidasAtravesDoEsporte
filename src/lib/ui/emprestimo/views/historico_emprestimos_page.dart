@@ -711,6 +711,8 @@ class _HistoricoTile extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     nomeAluno,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
@@ -720,6 +722,8 @@ class _HistoricoTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     'Kimono: $kimono',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 13,
                       color: AppColors.textSecondary,
@@ -734,11 +738,15 @@ class _HistoricoTile extends StatelessWidget {
                         color: AppColors.textSecondary,
                       ),
                       const SizedBox(width: 4),
-                      Text(
-                        nomeVoluntario,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: AppColors.textSecondary,
+                      Expanded(
+                        child: Text(
+                          nomeVoluntario,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: AppColors.textSecondary,
+                          ),
                         ),
                       ),
                     ],

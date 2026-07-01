@@ -44,12 +44,14 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
   Future<void> _carregar() async {
     try {
       final users = await ref.read(userServiceProvider).listUsers();
+      if (!mounted) return;
       setState(() {
         _todos = users;
         _carregando = false;
       });
       _filtrar();
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _erro = 'Erro ao carregar voluntários.';
         _carregando = false;
@@ -104,112 +106,118 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-            child: Container(
-              decoration: BoxDecoration(
-                color: containerBg,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(isDark ? 0.4 : 0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: TextField(
-                controller: _searchCtrl,
-                onChanged: _filtrar,
-                style: TextStyle(color: isDark ? Colors.white : Colors.black),
-                decoration: InputDecoration(
-                  hintText: 'Buscar por nome ou email',
-                  hintStyle: const TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14,
-                  ),
-                  filled: true,
-                  fillColor: Colors.transparent,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 14,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColors.cyanPrimary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.search,
-                        color: Colors.white,
-                        size: 20,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: containerBg,
+                      borderRadius: BorderRadius.circular(30),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(isDark ? 0.4 : 0.1),
+                          blurRadius: 8,
+                          offset: const Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      controller: _searchCtrl,
+                      onChanged: _filtrar,
+                      style: TextStyle(color: isDark ? Colors.white : Colors.black),
+                      decoration: InputDecoration(
+                        hintText: 'Buscar por nome ou email',
+                        hintStyle: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 14,
+                        ),
+                        filled: true,
+                        fillColor: Colors.transparent,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide.none,
+                        ),
+                        suffixIcon: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: AppColors.cyanPrimary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.search,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                const Text(
-                  'Mostrar inativos',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: AppColors.textSecondary,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      const Text(
+                        'Mostrar inativos',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Switch(
+                        value: _mostrarInativos,
+                        onChanged: (val) {
+                          setState(() => _mostrarInativos = val);
+                          _filtrar();
+                        },
+                        activeColor: AppColors.cyanPrimary,
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(width: 8),
-                Switch(
-                  value: _mostrarInativos,
-                  onChanged: (val) {
-                    setState(() => _mostrarInativos = val);
-                    _filtrar();
-                  },
-                  activeColor: AppColors.cyanPrimary,
+                Expanded(
+                  child: _carregando
+                      ? const Center(child: CircularProgressIndicator())
+                      : _erro != null
+                      ? Center(
+                          child: Text(
+                            _erro!,
+                            style: const TextStyle(color: AppColors.error),
+                          ),
+                        )
+                      : _filtrados.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'Nenhum voluntário encontrado.',
+                            style: TextStyle(color: AppColors.textSecondary),
+                          ),
+                        )
+                      : ListView.separated(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                          itemCount: _filtrados.length,
+                          separatorBuilder: (_, _) => const SizedBox(height: 10),
+                          itemBuilder: (context, i) {
+                            final user = _filtrados[i];
+                            return _VoluntarioTile(user: user, onEditado: _carregar);
+                          },
+                        ),
                 ),
               ],
-            ),
-          ),
-          Expanded(
-            child: _carregando
-                ? const Center(child: CircularProgressIndicator())
-                : _erro != null
-                ? Center(
-                    child: Text(
-                      _erro!,
-                      style: const TextStyle(color: AppColors.error),
-                    ),
-                  )
-                : _filtrados.isEmpty
-                ? const Center(
-                    child: Text(
-                      'Nenhum voluntário encontrado.',
-                      style: TextStyle(color: AppColors.textSecondary),
-                    ),
-                  )
-                : ListView.separated(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                    itemCount: _filtrados.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 10),
-                    itemBuilder: (context, i) {
-                      final user = _filtrados[i];
-                      return _VoluntarioTile(user: user, onEditado: _carregar);
-                    },
-                  ),
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -316,16 +324,29 @@ class _VoluntarioTile extends ConsumerWidget {
                   color: AppColors.textSecondary,
                 ),
                 onSelected: (val) async {
-                  if (val == 'inativar') {
-                    await ref
-                        .read(userServiceProvider)
-                        .inactivateUser(user.id!);
-                    onEditado();
-                  } else if (val == 'reativar') {
-                    await ref
-                        .read(userServiceProvider)
-                        .reactivateUser(user.id!);
-                    onEditado();
+                  try {
+                    if (val == 'inativar') {
+                      await ref
+                          .read(userServiceProvider)
+                          .inactivateUser(user.id!);
+                      onEditado();
+                    } else if (val == 'reativar') {
+                      await ref
+                          .read(userServiceProvider)
+                          .reactivateUser(user.id!);
+                      onEditado();
+                    }
+                  } catch (e) {
+                    ref.read(loggerProvider).e('Erro ao atualizar status do voluntário', error: e);
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Erro ao atualizar voluntário.'),
+                          backgroundColor: AppColors.error,
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    }
                   }
                 },
                 itemBuilder: (_) => [
@@ -465,6 +486,17 @@ class _EditarVoluntarioFormState extends ConsumerState<_EditarVoluntarioForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(e.message),
+          backgroundColor: AppColors.error,
+          behavior: SnackBarBehavior.floating,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      Navigator.of(context, rootNavigator: true).pop();
+      ref.read(loggerProvider).e('Erro inesperado ao atualizar voluntário', error: e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao atualizar voluntário.'),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
         ),

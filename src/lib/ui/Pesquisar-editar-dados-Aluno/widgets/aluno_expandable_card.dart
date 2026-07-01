@@ -68,12 +68,16 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              widget.aluno.nomeReferencia,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: mainText,
+                            Expanded(
+                              child: Text(
+                                widget.aluno.nomeReferencia,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: mainText,
+                                ),
                               ),
                             ),
                             if (isInativo) ...[
@@ -279,17 +283,29 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
         final isDark = Theme.of(context).brightness == Brightness.dark;
         return Padding(
           padding: const EdgeInsets.only(bottom: 2.0),
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(color: isDark ? Colors.white70 : AppColors.black1, fontSize: 13),
-              children: [
-                TextSpan(
-                  text: label,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(
+                  color: isDark ? Colors.white70 : AppColors.black1,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
                 ),
-                TextSpan(text: value),
-              ],
-            ),
+              ),
+              Expanded(
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: isDark ? Colors.white70 : AppColors.black1,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

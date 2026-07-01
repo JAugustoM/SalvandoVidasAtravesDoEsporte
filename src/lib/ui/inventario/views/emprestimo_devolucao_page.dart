@@ -141,26 +141,28 @@ class _EmprestimoDevolucaoPageState
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: _buildAppBar(context: context, onBack: () => context.pop()),
-      body: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 600),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildMenuButton(
-                  title: 'Emprestar Kimono',
-                  color: AppColors.royalAzure,
-                  onTap: () => setState(() => viewState = 'emprestar_aluno'),
-                ),
-                const SizedBox(height: 24),
-                _buildMenuButton(
-                  title: 'Recuperar Kimono',
-                  color: AppColors.cyanPrimary,
-                  onTap: () => setState(() => viewState = 'recuperar_aluno'),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 600),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildMenuButton(
+                    title: 'Emprestar Kimono',
+                    color: AppColors.royalAzure,
+                    onTap: () => setState(() => viewState = 'emprestar_aluno'),
+                  ),
+                  const SizedBox(height: 24),
+                  _buildMenuButton(
+                    title: 'Recuperar Kimono',
+                    color: AppColors.cyanPrimary,
+                    onTap: () => setState(() => viewState = 'recuperar_aluno'),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -305,6 +307,8 @@ class _EmprestimoDevolucaoPageState
                                   ),
                                   title: Text(
                                     alunos[index].nome,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                     ),

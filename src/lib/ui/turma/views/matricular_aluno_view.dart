@@ -18,6 +18,7 @@ class MatricularAlunoView extends ConsumerStatefulWidget {
 
 class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
   String _searchQuery = '';
+  bool _matriculando = false;
   late AlunoService service;
   late Logger logger;
 
@@ -170,6 +171,8 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                             child: ListTile(
                               title: Text(
                                 aluno.nomeReferencia,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   color: textColor,
@@ -194,7 +197,9 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                                     vertical: 8,
                                   ),
                                 ),
-                                onPressed: () => _confirmarMatricula(aluno),
+                                onPressed: _matriculando
+                                    ? null
+                                    : () => _confirmarMatricula(aluno),
                                 child: const Text(
                                   'Matricular',
                                   style: TextStyle(fontSize: 12),
@@ -264,6 +269,7 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
               ),
             ),
             onPressed: () async {
+              setState(() => _matriculando = true);
               try {
                 await service.atualizaAluno(aluno.id!, {
                   'id_turma': widget.turma.id,
@@ -300,6 +306,10 @@ class _MatricularAlunoViewState extends ConsumerState<MatricularAlunoView> {
                     behavior: SnackBarBehavior.floating,
                   ),
                 );
+              } finally {
+                if (mounted) {
+                  setState(() => _matriculando = false);
+                }
               }
             },
             child: const Text('Confirmar'),

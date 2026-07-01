@@ -20,165 +20,170 @@ class Configuracao extends ConsumerWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 600),
-            child: Padding(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: scheme.surface,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 30,
-                          child: Icon(Icons.person),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 600),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: scheme.surface,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                user.nome,
-                                style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                user.email,
-                                style: TextStyle(
-                                  color: isDark
-                                      ? AppColors.darkTextSecondary
-                                      : AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => context.push(Routes.editarPerfil),
-                          icon: const Icon(Icons.edit),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: scheme.surface,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: SwitchListTile(
-                        contentPadding: EdgeInsets.zero,
-                        value: isDark,
-                        onChanged: (_) =>
-                            ref.read(themeStoreProvider.notifier).toggle(),
-                        title: const Text('Modo escuro'),
-                        secondary: Icon(
-                          isDark ? Icons.dark_mode : Icons.light_mode,
-                          color: isDark
-                              ? AppColors.cyanPastel
-                              : AppColors.royalAzure,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const Expanded(child: SizedBox()),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            final dialogBg = isDark
-                                ? AppColors.darkSurface
-                                : Colors.white;
-                            final textColor = isDark
-                                ? Colors.white
-                                : AppColors.deepNavy;
-                            final cancelColor = isDark
-                                ? Colors.white70
-                                : AppColors.textSecondary;
-
-                            return AlertDialog(
-                              backgroundColor: dialogBg,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              title: Text(
-                                'Deseja deslogar do sistema?',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: textColor,
-                                ),
-                              ),
-                              actionsAlignment: MainAxisAlignment.spaceEvenly,
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(ctx),
-                                  child: Text(
-                                    'Cancelar',
-                                    style: TextStyle(color: cancelColor),
-                                  ),
-                                ),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: AppColors.error,
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 30,
+                              child: Icon(Icons.person),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    user.nome,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700,
                                     ),
                                   ),
-                                  onPressed: () async {
-                                    await ref
-                                        .read(userServiceProvider)
-                                        .logout();
-                                    if (!context.mounted) return;
-                                    Navigator.pop(ctx);
-                                    context.go(Routes.login);
-                                  },
-                                  child: const Text('Deslogar'),
-                                ),
-                              ],
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    user.email,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      color: isDark
+                                          ? AppColors.darkTextSecondary
+                                          : AppColors.textSecondary,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => context.push(Routes.editarPerfil),
+                              icon: const Icon(Icons.edit),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: scheme.surface,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: SwitchListTile(
+                            contentPadding: EdgeInsets.zero,
+                            value: isDark,
+                            onChanged: (_) =>
+                                ref.read(themeStoreProvider.notifier).toggle(),
+                            title: const Text('Modo escuro'),
+                            secondary: Icon(
+                              isDark ? Icons.dark_mode : Icons.light_mode,
+                              color: isDark
+                                  ? AppColors.cyanPastel
+                                  : AppColors.royalAzure,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                final dialogBg = isDark
+                                    ? AppColors.darkSurface
+                                    : Colors.white;
+                                final textColor = isDark
+                                    ? Colors.white
+                                    : AppColors.deepNavy;
+                                final cancelColor = isDark
+                                    ? Colors.white70
+                                    : AppColors.textSecondary;
+
+                                return AlertDialog(
+                                  backgroundColor: dialogBg,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  title: Text(
+                                    'Deseja deslogar do sistema?',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: textColor,
+                                    ),
+                                  ),
+                                  actionsAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(ctx),
+                                      child: Text(
+                                        'Cancelar',
+                                        style: TextStyle(color: cancelColor),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.error,
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        await ref
+                                            .read(userServiceProvider)
+                                            .logout();
+                                        if (!context.mounted) return;
+                                        Navigator.pop(ctx);
+                                        context.go(Routes.login);
+                                      },
+                                      child: const Text('Deslogar'),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
                           },
-                        );
-                      },
-                      icon: const Icon(Icons.logout),
-                      label: const Text('Deslogar'),
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        backgroundColor: AppColors.error,
-                        foregroundColor: Colors.white,
+                          icon: const Icon(Icons.logout),
+                          label: const Text('Deslogar'),
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            backgroundColor: AppColors.error,
+                            foregroundColor: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
+                      const SizedBox(height: 5),
+                    ],
                   ),
-                  const SizedBox(height: 5),
-                ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

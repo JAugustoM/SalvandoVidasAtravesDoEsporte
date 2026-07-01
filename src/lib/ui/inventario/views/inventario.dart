@@ -72,52 +72,64 @@ class Inventario extends ConsumerWidget {
                     ),
                     const SizedBox(height: 12),
                     // ── Cards de estatísticas ──────────────────────────
-                    IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          // Card "Disponíveis" com botão Consultar Estoque
-                          Expanded(
-                            child: _StatCardConsultar(
-                              title: 'Kimonos\nDisponíveis',
-                              value: '$kimonoDisponives',
-                              buttonText: 'Ver Estoque',
-                              buttonIcon: Icons.checkroom_outlined,
-                              gradientColors: isDark
-                                  ? const [
-                                      Color(0xFF071F3F),
-                                      Color(0xFF006B85),
-                                    ] // Escuro vibrante
-                                  : const [
-                                      Color(0xFF1976D2),
-                                      Color(0xFF26C6DA),
-                                    ], // Claro vivo
-                              onConsultar: () => _abrirPopUpKimonos(context),
-                            ),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final compact = constraints.maxWidth < 520;
+                        final firstCard = _StatCardConsultar(
+                          title: 'Kimonos\nDisponíveis',
+                          value: '$kimonoDisponives',
+                          buttonText: 'Ver Estoque',
+                          buttonIcon: Icons.checkroom_outlined,
+                          gradientColors: isDark
+                              ? const [
+                                  Color(0xFF071F3F),
+                                  Color(0xFF006B85),
+                                ]
+                              : const [
+                                  Color(0xFF1976D2),
+                                  Color(0xFF26C6DA),
+                                ],
+                          onConsultar: () => _abrirPopUpKimonos(context),
+                        );
+                        final secondCard = _StatCardConsultar(
+                          title: 'Kimonos\nEmprestados',
+                          value: '$kimonosEmprestados',
+                          buttonText: 'Ver Histórico',
+                          buttonIcon: Icons.history_rounded,
+                          gradientColors: isDark
+                              ? const [
+                                  Color(0xFF140D36),
+                                  Color(0xFF45229E),
+                                ]
+                              : const [
+                                  Color(0xFF3F51B5),
+                                  Color(0xFF7986CB),
+                                ],
+                          onConsultar: () =>
+                              context.push(Routes.historicoEmprestimos),
+                        );
+
+                        if (compact) {
+                          return Column(
+                            children: [
+                              firstCard,
+                              const SizedBox(height: 12),
+                              secondCard,
+                            ],
+                          );
+                        }
+
+                        return IntrinsicHeight(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(child: firstCard),
+                              const SizedBox(width: 12),
+                              Expanded(child: secondCard),
+                            ],
                           ),
-                          const SizedBox(width: 12),
-                          // Card "Emprestados" com botão explícito de Histórico
-                          Expanded(
-                            child: _StatCardConsultar(
-                              title: 'Kimonos\nEmprestados',
-                              value: '$kimonosEmprestados',
-                              buttonText: 'Ver Histórico',
-                              buttonIcon: Icons.history_rounded,
-                              gradientColors: isDark
-                                  ? const [
-                                      Color(0xFF140D36),
-                                      Color(0xFF45229E),
-                                    ] // Escuro vibrante
-                                  : const [
-                                      Color(0xFF3F51B5),
-                                      Color(0xFF7986CB),
-                                    ], // Claro vivo
-                              onConsultar: () =>
-                                  context.push(Routes.historicoEmprestimos),
-                            ),
-                          ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 16),
 
@@ -285,38 +297,53 @@ class Inventario extends ConsumerWidget {
                     const SizedBox(height: 16),
 
                     // ── Botões de ação ─────────────────────────────────
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _ActionButton(
-                            title: 'Emprestar\nKimono',
-                            onTap: () => context.push(
-                              Routes.emprestimoDevolucao,
-                              extra: true,
-                            ),
-                            color: AppColors.royalAzure,
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        final compact = constraints.maxWidth < 520;
+                        final emprestar = _ActionButton(
+                          title: 'Emprestar\nKimono',
+                          onTap: () => context.push(
+                            Routes.emprestimoDevolucao,
+                            extra: true,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _ActionButton(
-                            title: 'Devolver\nKimono',
-                            onTap: () => context.push(
-                              Routes.emprestimoDevolucao,
-                              extra: false,
-                            ),
-                            color: AppColors.cyanPrimary,
+                          color: AppColors.royalAzure,
+                        );
+                        final devolver = _ActionButton(
+                          title: 'Devolver\nKimono',
+                          onTap: () => context.push(
+                            Routes.emprestimoDevolucao,
+                            extra: false,
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: _ActionButton(
-                            title: 'Doações &\nPerdas',
-                            onTap: () => context.push(Routes.doacoesPerdas),
-                            outlined: true,
-                          ),
-                        ),
-                      ],
+                          color: AppColors.cyanPrimary,
+                        );
+                        final doacoes = _ActionButton(
+                          title: 'Doações &\nPerdas',
+                          onTap: () => context.push(Routes.doacoesPerdas),
+                          outlined: true,
+                        );
+
+                        if (compact) {
+                          return Column(
+                            children: [
+                              SizedBox(height: 56, child: emprestar),
+                              const SizedBox(height: 8),
+                              SizedBox(height: 56, child: devolver),
+                              const SizedBox(height: 8),
+                              SizedBox(height: 56, child: doacoes),
+                            ],
+                          );
+                        }
+
+                        return Row(
+                          children: [
+                            Expanded(child: emprestar),
+                            const SizedBox(width: 8),
+                            Expanded(child: devolver),
+                            const SizedBox(width: 8),
+                            Expanded(child: doacoes),
+                          ],
+                        );
+                      },
                     ),
                     const SizedBox(height: 32),
                   ],
