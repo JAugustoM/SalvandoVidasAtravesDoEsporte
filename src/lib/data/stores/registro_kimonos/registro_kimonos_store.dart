@@ -39,7 +39,8 @@ class RegistroKimonosState with RegistroKimonosStateMappable {
   }
 
   String? get qtdDoadaError {
-    return int.tryParse(qtdDoada) != null
+    final qtd = int.tryParse(qtdDoada);
+    return qtd != null && qtd > 0
         ? null
         : "Deve informar o número de kimonos doados";
   }
@@ -55,7 +56,8 @@ class RegistroKimonosState with RegistroKimonosStateMappable {
   }
 
   String? get qtdPerdidaError {
-    return int.tryParse(qtdPerdida) != null
+    final qtd = int.tryParse(qtdPerdida);
+    return qtd != null && qtd > 0
         ? null
         : "Deve informar a quantidade de kimonos perdidos";
   }

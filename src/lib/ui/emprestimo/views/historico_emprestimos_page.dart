@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:salvando_vidas/data/stores/emprestimo/historico_emprestimos_store.dart';
-import 'package:salvando_vidas/data/supabase_call.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/kimono/kimono.dart';
 import 'package:salvando_vidas/ui/emprestimo/widgets/historico_emprestimo_aluno_dialog.dart';
@@ -12,10 +11,12 @@ class HistoricoEmprestimosPage extends ConsumerStatefulWidget {
   const HistoricoEmprestimosPage({super.key});
 
   @override
-  ConsumerState<HistoricoEmprestimosPage> createState() => _HistoricoEmprestimosPageState();
+  ConsumerState<HistoricoEmprestimosPage> createState() =>
+      _HistoricoEmprestimosPageState();
 }
 
-class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosPage>
+class _HistoricoEmprestimosPageState
+    extends ConsumerState<HistoricoEmprestimosPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String _filtroNome = '';
@@ -38,7 +39,9 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
     final appBarBg = isDark ? AppColors.darkTopbar : AppColors.platinum;
-    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
+    final gradientColors = isDark
+        ? AppColors.bgGradientDark
+        : AppColors.bgGradientLight;
 
     return Scaffold(
       appBar: AppBar(
@@ -132,8 +135,12 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
   }
 
   Widget _buildHeroCard(List<HistoricoItem> itens, bool isDark) {
-    final ativos = itens.where((i) => i.emprestimo.dataDevolucao == null).length;
-    final devolvidos = itens.where((i) => i.emprestimo.dataDevolucao != null).length;
+    final ativos = itens
+        .where((i) => i.emprestimo.dataDevolucao == null)
+        .length;
+    final devolvidos = itens
+        .where((i) => i.emprestimo.dataDevolucao != null)
+        .length;
 
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 10, 16, 6),
@@ -158,17 +165,37 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildCompactMetric('Em Aberto', '$ativos', AppColors.warning, Icons.pending_actions),
+          _buildCompactMetric(
+            'Em Aberto',
+            '$ativos',
+            AppColors.warning,
+            Icons.pending_actions,
+          ),
           Container(width: 1, height: 32, color: Colors.white24),
-          _buildCompactMetric('Devolvidos', '$devolvidos', AppColors.success, Icons.check_circle_outline),
+          _buildCompactMetric(
+            'Devolvidos',
+            '$devolvidos',
+            AppColors.success,
+            Icons.check_circle_outline,
+          ),
           Container(width: 1, height: 32, color: Colors.white24),
-          _buildCompactMetric('Total', '${itens.length}', Colors.white, Icons.inventory_2_outlined),
+          _buildCompactMetric(
+            'Total',
+            '${itens.length}',
+            Colors.white,
+            Icons.inventory_2_outlined,
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildCompactMetric(String label, String value, Color color, IconData icon) {
+  Widget _buildCompactMetric(
+    String label,
+    String value,
+    Color color,
+    IconData icon,
+  ) {
     return Expanded(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -191,7 +218,11 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
           const SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(color: Colors.white70, fontSize: 11, fontWeight: FontWeight.w500),
+            style: const TextStyle(
+              color: Colors.white70,
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
@@ -207,16 +238,19 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
       }
     }
 
-    final entries = porAluno.entries.where((entry) {
-      final aluno = entry.value.first.aluno!;
-      return aluno.nome.toLowerCase().contains(_filtroNome.toLowerCase()) ||
-          (aluno.apelido?.toLowerCase().contains(_filtroNome.toLowerCase()) ?? false);
-    }).toList()
-      ..sort((a, b) {
-        final nomeA = a.value.first.aluno?.nome ?? '';
-        final nomeB = b.value.first.aluno?.nome ?? '';
-        return nomeA.compareTo(nomeB);
-      });
+    final entries =
+        porAluno.entries.where((entry) {
+          final aluno = entry.value.first.aluno!;
+          return aluno.nome.toLowerCase().contains(_filtroNome.toLowerCase()) ||
+              (aluno.apelido?.toLowerCase().contains(
+                    _filtroNome.toLowerCase(),
+                  ) ??
+                  false);
+        }).toList()..sort((a, b) {
+          final nomeA = a.value.first.aluno?.nome ?? '';
+          final nomeB = b.value.first.aluno?.nome ?? '';
+          return nomeA.compareTo(nomeB);
+        });
 
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 8, 16, 24),
@@ -224,7 +258,10 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurface : Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.royalAzure.withOpacity(0.25), width: 1),
+        border: Border.all(
+          color: AppColors.royalAzure.withOpacity(0.25),
+          width: 1,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
@@ -243,16 +280,29 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
             onChanged: (val) => setState(() => _filtroNome = val),
             decoration: InputDecoration(
               hintText: 'Pesquisar aluno por nome ou apelido...',
-              hintStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
-              prefixIcon: const Icon(Icons.search, color: AppColors.cyanPrimary, size: 22),
+              hintStyle: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+              ),
+              prefixIcon: const Icon(
+                Icons.search,
+                color: AppColors.cyanPrimary,
+                size: 22,
+              ),
               suffixIcon: _filtroNome.isNotEmpty
                   ? IconButton(
-                      icon: const Icon(Icons.clear, color: AppColors.textSecondary, size: 20),
+                      icon: const Icon(
+                        Icons.clear,
+                        color: AppColors.textSecondary,
+                        size: 20,
+                      ),
                       onPressed: () => setState(() => _filtroNome = ''),
                     )
                   : null,
               filled: true,
-              fillColor: isDark ? AppColors.darkInputFill : Colors.grey.shade100,
+              fillColor: isDark
+                  ? AppColors.darkInputFill
+                  : Colors.grey.shade100,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(14),
                 borderSide: BorderSide.none,
@@ -268,7 +318,10 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
                   width: 1.5,
                 ),
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 18,
+                vertical: 14,
+              ),
             ),
           ),
           const SizedBox(height: 12),
@@ -277,12 +330,16 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
                 ? Center(
                     child: Text(
                       'Nenhum aluno encontrado.',
-                      style: TextStyle(color: AppColors.textSecondary, fontSize: 15),
+                      style: TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 15,
+                      ),
                     ),
                   )
                 : RefreshIndicator(
                     color: AppColors.cyanPrimary,
-                    onRefresh: () => ref.refresh(historicoEmprestimosStoreProvider.future),
+                    onRefresh: () =>
+                        ref.refresh(historicoEmprestimosStoreProvider.future),
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       itemCount: entries.length,
@@ -299,10 +356,18 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
     );
   }
 
-  Widget _buildAlunoCard(Aluno aluno, List<HistoricoItem> listaAluno, bool isDark) {
+  Widget _buildAlunoCard(
+    Aluno aluno,
+    List<HistoricoItem> listaAluno,
+    bool isDark,
+  ) {
     final total = listaAluno.length;
-    final ativos = listaAluno.where((i) => i.emprestimo.dataDevolucao == null).length;
-    final devolvidos = listaAluno.where((i) => i.emprestimo.dataDevolucao != null).length;
+    final ativos = listaAluno
+        .where((i) => i.emprestimo.dataDevolucao == null)
+        .length;
+    final devolvidos = listaAluno
+        .where((i) => i.emprestimo.dataDevolucao != null)
+        .length;
 
     final cor = ativos > 0 ? AppColors.warning : AppColors.success;
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
@@ -335,14 +400,21 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: cor.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       ativos > 0 ? '$ativos em aberto' : 'Tudo devolvido',
-                      style: TextStyle(color: cor, fontWeight: FontWeight.bold, fontSize: 12),
+                      style: TextStyle(
+                        color: cor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
                     ),
                   ),
                 ],
@@ -353,7 +425,9 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
                 child: LinearProgressIndicator(
                   value: total > 0 ? (devolvidos / total) : 1.0,
                   backgroundColor: isDark ? Colors.white12 : Colors.grey[200],
-                  valueColor: const AlwaysStoppedAnimation<Color>(AppColors.success),
+                  valueColor: const AlwaysStoppedAnimation<Color>(
+                    AppColors.success,
+                  ),
                   minHeight: 6,
                 ),
               ),
@@ -363,23 +437,51 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.check_circle, size: 16, color: AppColors.success),
+                      const Icon(
+                        Icons.check_circle,
+                        size: 16,
+                        color: AppColors.success,
+                      ),
                       const SizedBox(width: 4),
-                      Text('$devolvidos Devolvidos', style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                      Text(
+                        '$devolvidos Devolvidos',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
                       const SizedBox(width: 12),
-                      const Icon(Icons.pending_actions, size: 16, color: AppColors.warning),
+                      const Icon(
+                        Icons.pending_actions,
+                        size: 16,
+                        color: AppColors.warning,
+                      ),
                       const SizedBox(width: 4),
-                      Text('$ativos Em Aberto', style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                      Text(
+                        '$ativos Em Aberto',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
                     ],
                   ),
                   const Row(
                     children: [
                       Text(
                         'Detalhes',
-                        style: TextStyle(color: AppColors.cyanPrimary, fontWeight: FontWeight.w600, fontSize: 13),
+                        style: TextStyle(
+                          color: AppColors.cyanPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                       ),
                       SizedBox(width: 2),
-                      Icon(Icons.arrow_forward_ios, size: 12, color: AppColors.cyanPrimary),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: AppColors.cyanPrimary,
+                      ),
                     ],
                   ),
                 ],
@@ -405,7 +507,10 @@ class _HistoricoEmprestimosPageState extends ConsumerState<HistoricoEmprestimosP
             decoration: BoxDecoration(
               color: isDark ? AppColors.darkSurface : Colors.white,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.royalAzure.withOpacity(0.25), width: 1),
+              border: Border.all(
+                color: AppColors.royalAzure.withOpacity(0.25),
+                width: 1,
+              ),
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
@@ -459,7 +564,9 @@ class _FiltroChips extends ConsumerWidget {
                   ? AppColors.darkSurface
                   : Colors.white,
               side: BorderSide(
-                color: selecionado ? AppColors.royalAzure : AppColors.borderSubtle,
+                color: selecionado
+                    ? AppColors.royalAzure
+                    : AppColors.borderSubtle,
               ),
             ),
           );
@@ -499,7 +606,7 @@ class _HistoricoLista extends ConsumerWidget {
         child: ListView.separated(
           padding: const EdgeInsets.symmetric(vertical: 8),
           itemCount: data.itensFiltrados.length,
-          separatorBuilder: (_, __) => Divider(
+          separatorBuilder: (_, _) => Divider(
             height: 1,
             indent: 16,
             endIndent: 16,
@@ -528,15 +635,20 @@ class _HistoricoTile extends StatelessWidget {
 
     final tipoColor = isDevolucao ? AppColors.success : AppColors.royalAzure;
     final tipoLabel = isDevolucao ? 'Devolução' : 'Empréstimo';
-    final tipoIcon = isDevolucao ? Icons.assignment_return_outlined : Icons.assignment_outlined;
+    final tipoIcon = isDevolucao
+        ? Icons.assignment_return_outlined
+        : Icons.assignment_outlined;
 
-    final data = isDevolucao ? item.emprestimo.dataDevolucao! : item.emprestimo.data;
+    final data = isDevolucao
+        ? item.emprestimo.dataDevolucao!
+        : item.emprestimo.data;
     final dataFormatada =
         '${data.day.toString().padLeft(2, '0')}/${data.month.toString().padLeft(2, '0')}/${data.year}';
 
     final nomeAluno = item.aluno?.nome ?? 'Aluno #${item.emprestimo.alunoId}';
     final nomeVoluntario = item.voluntario?.nome ?? '—';
-    final kimono = '${item.emprestimo.tamanho.nomeVisivel}, ${item.emprestimo.cor.nomeVisivel}';
+    final kimono =
+        '${item.emprestimo.tamanho.nomeVisivel}, ${item.emprestimo.cor.nomeVisivel}';
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -561,7 +673,10 @@ class _HistoricoTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: tipoColor.withOpacity(0.12),
                         borderRadius: BorderRadius.circular(20),

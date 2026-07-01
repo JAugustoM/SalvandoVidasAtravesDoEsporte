@@ -202,7 +202,7 @@ class _EditarVoluntarioPageState extends ConsumerState<EditarVoluntarioPage> {
                 : ListView.separated(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                     itemCount: _filtrados.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 10),
+                    separatorBuilder: (_, _) => const SizedBox(height: 10),
                     itemBuilder: (context, i) {
                       final user = _filtrados[i];
                       return _VoluntarioTile(user: user, onEditado: _carregar);

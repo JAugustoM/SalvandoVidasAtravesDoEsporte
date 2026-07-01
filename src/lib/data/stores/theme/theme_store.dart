@@ -17,7 +17,7 @@ class ThemeStore extends _$ThemeStore {
     final current = state.when(
       data: (v) => v,
       loading: () => false,
-      error: (_, __) => false,
+      error: (_, _) => false,
     );
     final next = !current;
     state = AsyncData(next);

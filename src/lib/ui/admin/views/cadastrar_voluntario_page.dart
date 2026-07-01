@@ -1,7 +1,6 @@
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
 import 'package:salvando_vidas/data/stores/cadastro_voluntario/cadastro_voluntario_form.dart';
-import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/widgets/input_field.dart';
 import 'package:salvando_vidas/ui/global/masks.dart';
@@ -34,7 +33,8 @@ class _CadastrarVoluntarioPageState
     final cadastro = ref.read(cadastroVoluntarioProvider);
     final notifier = ref.read(cadastroVoluntarioProvider.notifier);
 
-    if (!(_formKey.currentState?.validate() ?? false) || !cadastro.podeCadastrar) {
+    if (!(_formKey.currentState?.validate() ?? false) ||
+        !cadastro.podeCadastrar) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Preencha todos os campos obrigatórios corretamente.'),
@@ -91,11 +91,14 @@ class _CadastrarVoluntarioPageState
           context: context,
           builder: (ctx) => AlertDialog(
             backgroundColor: isDark ? AppColors.darkSurface : Colors.white,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
             title: Text(
               'Confirmar Cadastro',
-              style: TextStyle(color: isDark ? Colors.white : AppColors.deepNavy),
+              style: TextStyle(
+                color: isDark ? Colors.white : AppColors.deepNavy,
+              ),
             ),
             content: Text(
               'Deseja realmente salvar as informações deste voluntário?',
@@ -114,7 +117,8 @@ class _CadastrarVoluntarioPageState
                   backgroundColor: AppColors.deepNavy,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 onPressed: () => Navigator.of(ctx).pop(true),
                 child: const Text('Confirmar'),
@@ -146,8 +150,7 @@ class _CadastrarVoluntarioPageState
             FocusManager.instance.primaryFocus?.unfocus();
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back,
-              color: textColor, size: 22),
+          icon: Icon(Icons.arrow_back, color: textColor, size: 22),
           label: Text(
             'Voltar',
             style: TextStyle(
@@ -211,10 +214,12 @@ class _CadastrarVoluntarioPageState
                           ),
                           const SizedBox(height: 12),
                           InputField(
-                            initialValue:
-                                formatTelefone.maskText(cadastro.telefone),
+                            initialValue: formatTelefone.maskText(
+                              cadastro.telefone,
+                            ),
                             update: (_) => notifier.updateTelefone(
-                                formatTelefone.getUnmaskedText()),
+                              formatTelefone.getUnmaskedText(),
+                            ),
                             error: cadastro.telefoneError,
                             label: 'Telefone*',
                             hint: '(00) 00000-0000',
@@ -225,8 +230,8 @@ class _CadastrarVoluntarioPageState
                           const SizedBox(height: 12),
                           InputField(
                             initialValue: formatCpf.maskText(cadastro.cpf),
-                            update: (_) => notifier.updateCpf(
-                                formatCpf.getUnmaskedText()),
+                            update: (_) =>
+                                notifier.updateCpf(formatCpf.getUnmaskedText()),
                             error: cadastro.cpfError,
                             label: 'CPF*',
                             hint: '000.000.000-00',
@@ -278,7 +283,9 @@ class _CadastrarVoluntarioPageState
                       child: const Text(
                         'Cadastrar Voluntário',
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -306,7 +313,9 @@ class _CadastrarVoluntarioPageState
   }
 
   Widget _buildFaixaDropdown(
-      CadastroVoluntarioState cadastro, CadastroVoluntario notifier) {
+    CadastroVoluntarioState cadastro,
+    CadastroVoluntario notifier,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: FaixaDropdownField(

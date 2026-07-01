@@ -350,8 +350,9 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                             items: TipoSanguineo.values,
                             getName: (TipoSanguineo t) => t.nomeVisivel,
                             onChanged: (value) {
-                              if (value != null)
+                              if (value != null) {
                                 notifier.updateTipoSanguineo(value);
+                              }
                             },
                           ),
                           FaixaDropdownField(
@@ -359,7 +360,8 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                             onChanged: (value) {
                               if (value != null) notifier.updateFaixa(value);
                             },
-                            validator: (v) => v == null ? 'Selecione a faixa' : null,
+                            validator: (v) =>
+                                v == null ? 'Selecione a faixa' : null,
                             label: 'Faixa/Grau:*',
                           ),
                           _buildTextField(

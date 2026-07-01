@@ -9,10 +9,7 @@ import 'main_imports.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(
-    url: SUPABASE_URL,
-    anonKey: ANON_KEY,
-  );
+  await Supabase.initialize(url: SUPABASE_URL, anonKey: ANON_KEY);
 
   runApp(const AppRoot());
 }
@@ -40,7 +37,7 @@ class MyApp extends ConsumerWidget {
     final isDark = themeAsync.when(
       data: (v) => v,
       loading: () => false,
-      error: (_, __) => false,
+      error: (_, _) => false,
     );
 
     return MaterialApp.router(
@@ -53,9 +50,7 @@ class MyApp extends ConsumerWidget {
       builder: DevicePreview.appBuilder,
       locale: DevicePreview.locale(context),
 
-      supportedLocales: const [
-        Locale('pt', 'BR'),
-      ],
+      supportedLocales: const [Locale('pt', 'BR')],
 
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

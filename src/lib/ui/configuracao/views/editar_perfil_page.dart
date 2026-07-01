@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
 import 'package:salvando_vidas/data/stores/update_voluntario/update_voluntario_store.dart';
@@ -62,7 +59,9 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final topbarBg = isDark ? AppColors.darkTopbar : AppColors.cyanPrimary;
-    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
+    final gradientColors = isDark
+        ? AppColors.bgGradientDark
+        : AppColors.bgGradientLight;
     final containerBg = isDark ? AppColors.darkSurface : Colors.white;
     final avatarBg = isDark ? const Color(0xFF161B22) : AppColors.white2;
     final textColor = isDark ? Colors.white : AppColors.black1;
@@ -137,7 +136,9 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                               'Atualize suas informações pessoais abaixo.',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: isDark ? AppColors.darkTextSecondary : AppColors.textSecondary,
+                                color: isDark
+                                    ? AppColors.darkTextSecondary
+                                    : AppColors.textSecondary,
                                 fontSize: 14,
                               ),
                             ),
@@ -180,8 +181,12 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
 
                             // 4. Telefone
                             InputField(
-                              initialValue: formatTelefone.maskText(state.telefone),
-                              update: (_) => notifier.updateTelefone(formatTelefone.getUnmaskedText()),
+                              initialValue: formatTelefone.maskText(
+                                state.telefone,
+                              ),
+                              update: (_) => notifier.updateTelefone(
+                                formatTelefone.getUnmaskedText(),
+                              ),
                               error: state.telefoneError,
                               label: 'Telefone',
                               hint: '(00) 00000-0000',
@@ -194,7 +199,9 @@ class _EditarPerfilPageState extends ConsumerState<EditarPerfilPage> {
                             // 5. CPF
                             InputField(
                               initialValue: formatCpf.maskText(state.cpf),
-                              update: (_) => notifier.updateCpf(formatCpf.getUnmaskedText()),
+                              update: (_) => notifier.updateCpf(
+                                formatCpf.getUnmaskedText(),
+                              ),
                               error: state.cpfError,
                               label: 'CPF',
                               hint: '000.000.000-00',

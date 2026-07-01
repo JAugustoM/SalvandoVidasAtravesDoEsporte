@@ -6,7 +6,6 @@ import 'package:salvando_vidas/ui/admin/views/cadastrar_voluntario_page.dart';
 import 'package:salvando_vidas/ui/admin/views/editar_voluntario_page.dart';
 import 'package:salvando_vidas/ui/cadastro_voluntario/views/cadastros_page.dart';
 import 'package:salvando_vidas/ui/configuracao/views/configuracao.dart';
-import 'package:salvando_vidas/ui/global/widgets/navbar.dart';
 import 'package:salvando_vidas/ui/home/views/home_page.dart';
 import 'package:salvando_vidas/ui/login/views/login_page.dart';
 import 'package:salvando_vidas/ui/turma/views/turma.dart';
@@ -87,7 +86,10 @@ GoRouter router(Ref ref) {
             builder: (context, state) => const PesquisaAlunosPage(),
           ),
 
-          GoRoute(path: Routes.inventario, builder: (context, state) => Inventario()),
+          GoRoute(
+            path: Routes.inventario,
+            builder: (context, state) => Inventario(),
+          ),
 
           GoRoute(
             path: Routes.doacoesPerdas,

@@ -211,10 +211,10 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
 
   @override
   Widget build(BuildContext context) {
-    cadastro = this.ref.watch(cadastroAlunoProvider);
-    notifier = this.ref.read(cadastroAlunoProvider.notifier);
-    service = this.ref.read(alunoServiceProvider);
-    logger = this.ref.read(loggerProvider);
+    cadastro = ref.watch(cadastroAlunoProvider);
+    notifier = ref.read(cadastroAlunoProvider.notifier);
+    service = ref.read(alunoServiceProvider);
+    logger = ref.read(loggerProvider);
 
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final primaryColor = isDark ? Colors.white : AppColors.deepNavy;
