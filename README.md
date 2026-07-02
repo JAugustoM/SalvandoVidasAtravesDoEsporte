@@ -6,6 +6,10 @@ Repositório da equipe **Na Minha Máquina Funciona** dedicado ao desenvolviment
 
 - [Visão do Produto e Projeto](https://mdsreq-fga-unb.github.io/REQ-2026.1-T02-Salvando-Vidas-atraves-do-Esporte/Vis%C3%A3o%20do%20Produto%20e%20Projeto/cenarioAtualDoClienteEDoNegocio/)
 
+## Link para donwload do nosso APK
+
+[Baixe a versão mais recente](https://github.com/mdsreq-fga-unb/REQ-2026.1-T02-Salvando-Vidas-atraves-do-Esporte/releases/latest)
+
 ## Credenciais para uso do aplicativo
 
 ### Usuário Administrador
