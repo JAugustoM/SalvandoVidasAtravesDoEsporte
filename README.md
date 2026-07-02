@@ -22,6 +22,13 @@ Repositório da equipe **Na Minha Máquina Funciona** dedicado ao desenvolviment
 - **Email:** george.vol@gmail.com
 - **Senha:** 12345678 
 
+## Imagens da nossa Validação realizada no dia 29/06/2026
+
+<p align="center">
+  <img src="docs/assets/Evidencias/Foto_em_grupo.jpg" alt="Imagem 1" width="48%">
+  <img src="docs/assets/Evidencias/Foto_rodinha.jpg" alt="Imagem 2" width="48%">
+</p>
+
 ## Equipe
 
 <div align="center">
