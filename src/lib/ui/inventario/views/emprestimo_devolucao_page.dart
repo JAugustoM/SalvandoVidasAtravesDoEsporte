@@ -22,33 +22,6 @@ class EmprestimoDevolucaoPage extends ConsumerStatefulWidget {
 
 class _EmprestimoDevolucaoPageState
     extends ConsumerState<EmprestimoDevolucaoPage> {
-  final List<String> alunos = [
-    'Pedro Ramos Sousa Reis',
-    'João Silva Oliveira',
-    'Maria Santos Ferreira',
-    'Lucas Souza Lima',
-    'Ana Beatriz Costa',
-    'Mateus Pereira Rocha',
-  ];
-
-  final List<Map<String, String>> kimonosDisponiveis = [
-    {'tamanho': 'A3', 'cor': 'Branco'},
-    {'tamanho': 'A2', 'cor': 'Azul'},
-    {'tamanho': 'A4', 'cor': 'Preto'},
-    {'tamanho': 'A1', 'cor': 'Rosa'},
-    {'tamanho': 'A3', 'cor': 'Branco'},
-  ];
-
-  String searchQuery = '';
-  String? alunoSelecionado;
-  Map<String, String>? kimonoSelecionado;
-
-  String? filtroTamanho;
-  String? filtroCor;
-
-  final List<String> tamanhos = ['A0', 'A1', 'A2', 'A3', 'A4', 'A5'];
-  final List<String> cores = ['Branco', 'Azul', 'Preto', 'Rosa'];
-
   late String viewState;
 
   @override
@@ -61,15 +34,6 @@ class _EmprestimoDevolucaoPageState
     } else {
       viewState = 'escolha';
     }
-  }
-
-  void _resetSelection() {
-    setState(() {
-      alunoSelecionado = null;
-      kimonoSelecionado = null;
-      filtroTamanho = null;
-      filtroCor = null;
-    });
   }
 
   AppBar _buildAppBar({
@@ -146,7 +110,10 @@ class _EmprestimoDevolucaoPageState
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 600),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24.0,
+                vertical: 24,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -274,7 +241,9 @@ class _EmprestimoDevolucaoPageState
                             if (isEmprestar) {
                               alunos = data.alunosFiltrados
                                   .where(
-                                    (a) => !alunosEmprestimos.contains(a.id),
+                                    (a) =>
+                                        a.ativo &&
+                                        !alunosEmprestimos.contains(a.id),
                                   )
                                   .toList();
                             } else {
@@ -293,8 +262,12 @@ class _EmprestimoDevolucaoPageState
                                 return ListTile(
                                   leading: CircleAvatar(
                                     backgroundColor: isEmprestar
-                                        ? AppColors.royalAzure.withValues(alpha: 0.15)
-                                        : AppColors.cyanPrimary.withValues(alpha: 0.15),
+                                        ? AppColors.royalAzure.withValues(
+                                            alpha: 0.15,
+                                          )
+                                        : AppColors.cyanPrimary.withValues(
+                                            alpha: 0.15,
+                                          ),
                                     child: Icon(
                                       isEmprestar
                                           ? Icons.person_outline
@@ -478,7 +451,10 @@ class _EmprestimoDevolucaoPageState
                   actions: [
                     TextButton(
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
                       ),
                       onPressed: () => Navigator.pop(context),
                       child: const FittedBox(
@@ -493,7 +469,10 @@ class _EmprestimoDevolucaoPageState
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.cyanPrimary,
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 10,
+                        ),
                       ),
                       onPressed: state.value?.kimono == null
                           ? null
@@ -543,7 +522,10 @@ class _EmprestimoDevolucaoPageState
                 Expanded(
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
+                      ),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -560,7 +542,10 @@ class _EmprestimoDevolucaoPageState
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.cyanPrimary,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
+                      ),
                     ),
                     onPressed: () async {
                       try {
@@ -574,7 +559,9 @@ class _EmprestimoDevolucaoPageState
                             .read(kimonoServiceProvider)
                             .cadastrarEmprestimo(emprestimo);
                         await ref.refresh(gestaoKimonosStoreProvider.future);
-                        await ref.refresh(gestaoEmprestimosStoreProvider.future);
+                        await ref.refresh(
+                          gestaoEmprestimosStoreProvider.future,
+                        );
                         if (context.mounted) {
                           Navigator.pop(context);
                           _showPopUpSucesso(
@@ -644,7 +631,10 @@ class _EmprestimoDevolucaoPageState
                 Expanded(
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
+                      ),
                     ),
                     onPressed: () => Navigator.pop(context),
                     child: const FittedBox(
@@ -658,14 +648,17 @@ class _EmprestimoDevolucaoPageState
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.cyanPrimary,
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
+                      ),
                     ),
                     onPressed: () async {
                       try {
                         final service = ref.read(kimonoServiceProvider);
                         await service.retornarEmprestimo(emprestimo);
-                        await ref.refresh(gestaoKimonosStoreProvider.future);
-                        await ref.refresh(gestaoEmprestimosStoreProvider.future);
+                        ref.invalidate(gestaoKimonosStoreProvider);
+                        ref.invalidate(gestaoEmprestimosStoreProvider);
                         if (context.mounted) {
                           Navigator.pop(context);
                           _showPopUpSucesso(
@@ -737,7 +730,6 @@ class _EmprestimoDevolucaoPageState
               ),
               onPressed: () {
                 Navigator.pop(context);
-                _resetSelection();
                 if (widget.modoInicialEmprestar != null) {
                   context.pop();
                 } else {
