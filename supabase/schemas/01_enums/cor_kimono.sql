@@ -1,0 +1,1 @@
+CREATE TYPE cor_kimono AS ENUM ('azul', 'branco', 'preto', 'rosa');

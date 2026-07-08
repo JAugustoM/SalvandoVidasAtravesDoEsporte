@@ -15,5 +15,8 @@
         "src/linux": true,
         "src/web": true,
         "src/windows": true,
+    },
+    "cSpell.enabledFileTypes": {
+        "sql": false
     }
 }

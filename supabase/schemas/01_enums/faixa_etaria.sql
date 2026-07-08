@@ -1,0 +1,1 @@
+CREATE TYPE faixa_etaria AS ENUM ('infantil', 'adulto');
