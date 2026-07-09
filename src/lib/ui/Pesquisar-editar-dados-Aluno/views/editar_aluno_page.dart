@@ -5,7 +5,6 @@ import 'package:salvando_vidas/data/stores/turmas/turmas_store.dart';
 import 'package:salvando_vidas/data/stores/update_aluno/update_aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/responsavel/responsavel.dart';
-import 'package:salvando_vidas/domain/turma/turma.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/global/masks.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart';
@@ -134,12 +133,9 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                 }
 
                 if (diff.isNotEmpty) {
-                  await service.atualizaAluno(
-                    widget.aluno.id!,
-                    diff,
-                  );
+                  await service.atualizaAluno(widget.aluno.id!, diff);
                 }
-                await ref.refresh(pesquisaAlunoProvider.future);
+                ref.invalidate(pesquisaAlunoProvider);
 
                 if (!mounted) return;
                 Navigator.pop(ctx);
@@ -207,7 +203,9 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 600), // Responsividade
+              constraints: const BoxConstraints(
+                maxWidth: 600,
+              ), // Responsividade
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.all(24),
@@ -241,135 +239,131 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
                       ),
                       const SizedBox(height: 20),
                       _buildSectionTitle('Dados Pessoais'),
-                          _buildTextField(
-                            'Nome:*',
-                            notifier.updateNome,
-                            state.nome,
-                            state.nomeError,
-                          ),
-                          _buildTextField(
-                            'Apelido (opcional):',
-                            notifier.updateApelido,
-                            state.apelido ?? '',
-                            null,
-                          ),
-                          if (state.apelido != null &&
-                              state.apelido!.isNotEmpty) ...[
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
-                              child: SwitchListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  'Usar apelido como referência principal nas chamadas e listas',
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600,
-                                    color: textColor,
-                                  ),
-                                ),
-                                value: state.usarApelido,
-                                onChanged:
-                                    notifier.updateUsarApelidoComoReferencia,
-                                activeColor: AppColors.royalAzure,
+                      _buildTextField(
+                        'Nome:*',
+                        notifier.updateNome,
+                        state.nome,
+                        state.nomeError,
+                      ),
+                      _buildTextField(
+                        'Apelido (opcional):',
+                        notifier.updateApelido,
+                        state.apelido ?? '',
+                        null,
+                      ),
+                      if (state.apelido != null &&
+                          state.apelido!.isNotEmpty) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: SwitchListTile(
+                            contentPadding: EdgeInsets.zero,
+                            title: Text(
+                              'Usar apelido como referência principal nas chamadas e listas',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: textColor,
                               ),
                             ),
-                          ],
-                          _buildTextField(
-                            'CPF:*',
-                            (_) =>
-                                notifier.updateCPF(formatCPF.getUnmaskedText()),
-                            formatCPF.maskText(state.cpf),
-                            state.cpfError,
-                            formatter: formatCPF,
+                            value: state.usarApelido,
+                            onChanged: notifier.updateUsarApelidoComoReferencia,
+                            activeThumbColor: AppColors.royalAzure,
                           ),
-                          _buildTextField(
-                            'Telefone:*',
-                            (_) => notifier.updateContato(
-                              formatTelefone.getUnmaskedText(),
-                            ),
-                            formatTelefone.maskText(state.contato),
-                            state.contatoError,
-                            formatter: formatTelefone,
-                          ),
+                        ),
+                      ],
+                      _buildTextField(
+                        'CPF:*',
+                        (_) => notifier.updateCPF(formatCPF.getUnmaskedText()),
+                        formatCPF.maskText(state.cpf),
+                        state.cpfError,
+                        formatter: formatCPF,
+                      ),
+                      _buildTextField(
+                        'Telefone:*',
+                        (_) => notifier.updateContato(
+                          formatTelefone.getUnmaskedText(),
+                        ),
+                        formatTelefone.maskText(state.contato),
+                        state.contatoError,
+                        formatter: formatTelefone,
+                      ),
 
-                          // Novo Campo: Contato de Emergência
-                          _buildTextField(
-                            'Contato de Emergência:*',
-                            (_) => notifier.updateContatoEmergencia(
-                              formatTelefoneEmergencia.getUnmaskedText(),
-                            ),
-                            formatTelefoneEmergencia.maskText(
-                              state.contatoEmergencia,
-                            ),
-                            state.contatoEmergenciaError,
-                            formatter: formatTelefoneEmergencia,
-                          ),
+                      // Novo Campo: Contato de Emergência
+                      _buildTextField(
+                        'Contato de Emergência:*',
+                        (_) => notifier.updateContatoEmergencia(
+                          formatTelefoneEmergencia.getUnmaskedText(),
+                        ),
+                        formatTelefoneEmergencia.maskText(
+                          state.contatoEmergencia,
+                        ),
+                        state.contatoEmergenciaError,
+                        formatter: formatTelefoneEmergencia,
+                      ),
 
-                          _buildDateField(),
+                      _buildDateField(),
 
-                          if (mostrarResponsavel) ...[
-                            const SizedBox(height: 16),
-                            _buildSectionTitle('Dados do Responsável'),
-                            _buildTextField(
-                              'Nome do Responsável:*',
-                              notifier.updateNomeResponsavel,
-                              state.nomeResponsavel,
-                              state.nomeResponsavelError,
-                            ),
-                            _buildTextField(
-                              'CPF do Responsável:*',
-                              (_) => notifier.updateCPFResponsavel(
-                                formatCPFResponsavel.getUnmaskedText(),
-                              ),
-                              formatCPFResponsavel.maskText(
-                                state.cpfResponsavel,
-                              ),
-                              state.cpfResponsavelError,
-                              formatter: formatCPFResponsavel,
-                            ),
-                            _buildTextField(
-                              'Telefone do Responsável:*',
-                              (_) => notifier.updateContatoResponsavel(
-                                formatTelefoneResponsavel.getUnmaskedText(),
-                              ),
-                              formatTelefoneResponsavel.maskText(
-                                state.contatoResponsavel,
-                              ),
-                              state.contatoResponsavelError,
-                              formatter: formatTelefoneResponsavel,
-                            ),
-                          ],
+                      if (mostrarResponsavel) ...[
+                        const SizedBox(height: 16),
+                        _buildSectionTitle('Dados do Responsável'),
+                        _buildTextField(
+                          'Nome do Responsável:*',
+                          notifier.updateNomeResponsavel,
+                          state.nomeResponsavel,
+                          state.nomeResponsavelError,
+                        ),
+                        _buildTextField(
+                          'CPF do Responsável:*',
+                          (_) => notifier.updateCPFResponsavel(
+                            formatCPFResponsavel.getUnmaskedText(),
+                          ),
+                          formatCPFResponsavel.maskText(state.cpfResponsavel),
+                          state.cpfResponsavelError,
+                          formatter: formatCPFResponsavel,
+                        ),
+                        _buildTextField(
+                          'Telefone do Responsável:*',
+                          (_) => notifier.updateContatoResponsavel(
+                            formatTelefoneResponsavel.getUnmaskedText(),
+                          ),
+                          formatTelefoneResponsavel.maskText(
+                            state.contatoResponsavel,
+                          ),
+                          state.contatoResponsavelError,
+                          formatter: formatTelefoneResponsavel,
+                        ),
+                      ],
 
-                          const SizedBox(height: 16),
-                          _buildSectionTitle('Dados Institucionais'),
-                          _buildDropdownEnum<TipoSanguineo>(
-                            label: 'Tipo sanguíneo:*',
-                            value: state.tipoSanguineo,
-                            items: TipoSanguineo.values,
-                            getName: (TipoSanguineo t) => t.nomeVisivel,
-                            onChanged: (value) {
-                              if (value != null) {
-                                notifier.updateTipoSanguineo(value);
-                              }
-                            },
-                          ),
-                          FaixaDropdownField(
-                            value: state.faixa,
-                            onChanged: (value) {
-                              if (value != null) notifier.updateFaixa(value);
-                            },
-                            validator: (v) =>
-                                v == null ? 'Selecione a faixa' : null,
-                            label: 'Faixa/Grau:*',
-                          ),
-                          _buildTextField(
-                            'ID da ficha:',
-                            notifier.updateIdFicha,
-                            state.idFicha,
-                            state.idFichaError,
-                          ),
-                          _buildTurmaDropdown(),
-                          const SizedBox(height: 20),
+                      const SizedBox(height: 16),
+                      _buildSectionTitle('Dados Institucionais'),
+                      _buildDropdownEnum<TipoSanguineo>(
+                        label: 'Tipo sanguíneo:*',
+                        value: state.tipoSanguineo,
+                        items: TipoSanguineo.values,
+                        getName: (TipoSanguineo t) => t.nomeVisivel,
+                        onChanged: (value) {
+                          if (value != null) {
+                            notifier.updateTipoSanguineo(value);
+                          }
+                        },
+                      ),
+                      FaixaDropdownField(
+                        value: state.faixa,
+                        onChanged: (value) {
+                          if (value != null) notifier.updateFaixa(value);
+                        },
+                        validator: (v) =>
+                            v == null ? 'Selecione a faixa' : null,
+                        label: 'Faixa/Grau:*',
+                      ),
+                      _buildTextField(
+                        'ID da ficha:',
+                        notifier.updateIdFicha,
+                        state.idFicha,
+                        state.idFichaError,
+                      ),
+                      _buildTurmaDropdown(),
+                      const SizedBox(height: 20),
                       // Botão de Salvar Único
                       SizedBox(
                         width: double.infinity,
@@ -559,7 +553,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
               ),
               const SizedBox(height: 4),
               DropdownButtonFormField<int?>(
-                value: state.idTurma,
+                initialValue: state.idTurma,
                 dropdownColor: cardBg,
                 style: TextStyle(color: textColor, fontSize: 16),
                 icon: Icon(Icons.arrow_drop_down, color: textColor),
@@ -668,7 +662,7 @@ class _EditarAlunoPageState extends ConsumerState<EditarAlunoPage> {
           ),
           const SizedBox(height: 4),
           DropdownButtonFormField<T>(
-            value: value,
+            initialValue: value,
             dropdownColor: cardBg,
             style: TextStyle(color: textColor, fontSize: 16),
             icon: Icon(Icons.arrow_drop_down, color: textColor),

@@ -5,15 +5,47 @@ import 'package:salvando_vidas/domain/aluno/aluno.dart';
 /// [main] = cor principal | [stripe] = cor da listra da ponta (faixa preta = vermelho) | [text] = cor do texto
 ({Color main, Color? stripe, Color text}) faixaCores(Faixa faixa) {
   return switch (faixa) {
-    Faixa.branca  => (main: Colors.white,                 stripe: null,                    text: Colors.black87),
-    Faixa.cinza   => (main: const Color(0xFF808080),      stripe: null,                    text: Colors.white),
-    Faixa.amarela => (main: const Color(0xFFFFC107),      stripe: null,                    text: Colors.white),
-    Faixa.laranja => (main: const Color(0xFFFF8C00),      stripe: null,                    text: Colors.white),
-    Faixa.verde   => (main: const Color(0xFF2E8B00),      stripe: null,                    text: Colors.white),
-    Faixa.azul    => (main: const Color(0xFF1A1AFF),      stripe: null,                    text: Colors.white),
-    Faixa.roxa    => (main: const Color(0xFF5B2D8E),      stripe: null,                    text: Colors.white),
-    Faixa.marrom  => (main: const Color(0xFF7B3F00),      stripe: null,                    text: Colors.white),
-    Faixa.preta   => (main: Colors.black,                 stripe: const Color(0xFFDD0000), text: Colors.white),
+    Faixa.branca => (main: Colors.white, stripe: null, text: Colors.black87),
+    Faixa.cinza => (
+      main: const Color(0xFF808080),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.amarela => (
+      main: const Color(0xFFFFC107),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.laranja => (
+      main: const Color(0xFFFF8C00),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.verde => (
+      main: const Color(0xFF2E8B00),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.azul => (
+      main: const Color(0xFF1A1AFF),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.roxa => (
+      main: const Color(0xFF5B2D8E),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.marrom => (
+      main: const Color(0xFF7B3F00),
+      stripe: null,
+      text: Colors.white,
+    ),
+    Faixa.preta => (
+      main: Colors.black,
+      stripe: const Color(0xFFDD0000),
+      text: Colors.white,
+    ),
   };
 }
 
@@ -39,12 +71,12 @@ class FaixaAvatar extends StatelessWidget {
         border: Border.all(
           color: faixa == Faixa.branca
               ? Colors.grey.shade300
-              : cores.main.withOpacity(0.4),
+              : cores.main.withValues(alpha: 0.4),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: cores.main.withOpacity(0.35),
+            color: cores.main.withValues(alpha: 0.35),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -152,17 +184,26 @@ class FaixaDropdownItem extends StatelessWidget {
                       Positioned.fill(child: Container(color: Colors.black)),
                       // Listra branca esquerda
                       Positioned(
-                        left: 14, top: 0, bottom: 0, width: 10,
+                        left: 14,
+                        top: 0,
+                        bottom: 0,
+                        width: 10,
                         child: Container(color: Colors.white),
                       ),
                       // Listra vermelha central
                       Positioned(
-                        left: 24, top: 0, bottom: 0, width: 20,
+                        left: 24,
+                        top: 0,
+                        bottom: 0,
+                        width: 20,
                         child: Container(color: cores.stripe),
                       ),
                       // Listra branca direita
                       Positioned(
-                        left: 44, top: 0, bottom: 0, width: 10,
+                        left: 44,
+                        top: 0,
+                        bottom: 0,
+                        width: 10,
                         child: Container(color: Colors.white),
                       ),
                     ],
@@ -234,7 +275,9 @@ class FaixaDropdownField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final fillColor = isDark ? const Color(0xFF161B22) : const Color(0xFFF0F7F8);
+    final fillColor = isDark
+        ? const Color(0xFF161B22)
+        : const Color(0xFFF0F7F8);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -251,7 +294,7 @@ class FaixaDropdownField extends StatelessWidget {
           ),
         ),
         DropdownButtonFormField<Faixa>(
-          value: value,
+          initialValue: value,
           validator: validator,
           dropdownColor: isDark ? const Color(0xFF0D1117) : Colors.white,
           icon: Icon(
@@ -272,7 +315,10 @@ class FaixaDropdownField extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Color(0xFF245BE6), width: 1.5),
+              borderSide: const BorderSide(
+                color: Color(0xFF245BE6),
+                width: 1.5,
+              ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -282,10 +328,12 @@ class FaixaDropdownField extends StatelessWidget {
           selectedItemBuilder: (context) =>
               Faixa.values.map((f) => _SelectedFaixaItem(faixa: f)).toList(),
           items: Faixa.values
-              .map((f) => DropdownMenuItem<Faixa>(
-                    value: f,
-                    child: FaixaDropdownItem(faixa: f),
-                  ))
+              .map(
+                (f) => DropdownMenuItem<Faixa>(
+                  value: f,
+                  child: FaixaDropdownItem(faixa: f),
+                ),
+              )
               .toList(),
           onChanged: onChanged,
         ),
@@ -293,3 +341,4 @@ class FaixaDropdownField extends StatelessWidget {
     );
   }
 }
+

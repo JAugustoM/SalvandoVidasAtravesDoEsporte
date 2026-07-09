@@ -159,7 +159,7 @@ class _HistoricoEmprestimosPageState
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: AppColors.deepNavy.withOpacity(isDark ? 0.4 : 0.15),
+            color: AppColors.deepNavy.withValues(alpha: isDark ? 0.4 : 0.15),
             blurRadius: 8,
             offset: const Offset(0, 3),
           ),
@@ -262,12 +262,12 @@ class _HistoricoEmprestimosPageState
         color: isDark ? AppColors.darkSurface : Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.royalAzure.withOpacity(0.25),
+          color: AppColors.royalAzure.withValues(alpha: 0.25),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+            color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -412,7 +412,7 @@ class _HistoricoEmprestimosPageState
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: cor.withOpacity(0.15),
+                      color: cor.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -515,12 +515,12 @@ class _HistoricoEmprestimosPageState
               color: isDark ? AppColors.darkSurface : Colors.white,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: AppColors.royalAzure.withOpacity(0.25),
+                color: AppColors.royalAzure.withValues(alpha: 0.25),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(isDark ? 0.3 : 0.06),
+                  color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.06),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

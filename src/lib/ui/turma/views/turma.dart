@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:salvando_vidas/data/services/global/global_service.dart';
 import 'package:salvando_vidas/data/stores/turmas/turmas_store.dart';
 import 'package:salvando_vidas/domain/turma/turma.dart';
 import 'package:salvando_vidas/main_imports.dart';
@@ -29,7 +26,9 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
     final headerBg = isDark ? AppColors.darkSurface : AppColors.platinum;
     final headerBorder = isDark ? AppColors.darkDivider : AppColors.inputFill;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
-    final gradientColors = isDark ? AppColors.bgGradientDark : AppColors.bgGradientLight;
+    final gradientColors = isDark
+        ? AppColors.bgGradientDark
+        : AppColors.bgGradientLight;
 
     return Scaffold(
       body: Container(
@@ -41,64 +40,77 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
           ),
         ),
         child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 768), // Responsividade fluida no tablet
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                decoration: BoxDecoration(
-                  color: headerBg,
-                  border: Border(
-                    bottom: BorderSide(color: headerBorder, width: 1),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 768,
+            ), // Responsividade fluida no tablet
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 14,
+                  ),
+                  decoration: BoxDecoration(
+                    color: headerBg,
+                    border: Border(
+                      bottom: BorderSide(color: headerBorder, width: 1),
+                    ),
+                  ),
+                  child: Text(
+                    'Turmas Abertas',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: textColor,
+                    ),
                   ),
                 ),
-                child: Text(
-                  'Turmas Abertas',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: textColor,
+                Expanded(
+                  child: turmas.when(
+                    data: (listaTurmas) {
+                      return RefreshIndicator(
+                        onRefresh: () =>
+                            ref.refresh(turmasStoreProvider.future),
+                        child: switch (listaTurmas.isNotEmpty) {
+                          false => _buildAltState(
+                            'Nenhuma turma foi encontrada',
+                          ),
+                          true => ListView.builder(
+                            padding: const EdgeInsets.only(top: 16, bottom: 24),
+                            itemCount: listaTurmas.length,
+                            itemBuilder: (context, index) {
+                              final turma = listaTurmas[index];
+                              return TurmaCardWidget(
+                                turma: turma,
+                                onTap: () => _onTapTurma(turma),
+                              );
+                            },
+                          ),
+                        },
+                      );
+                    },
+                    error: (error, stack) {
+                      if (error is AppApiException) {
+                        ref
+                            .read(loggerProvider)
+                            .e(error.message, error: error.error);
+                        return _buildAltState(error.message);
+                      }
+                      return _buildAltState(
+                        'Ocorreu algum erro inesperado ao carregar as turmas',
+                      );
+                    },
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                   ),
                 ),
-              ),
-              Expanded(
-                child: turmas.when(
-                  data: (listaTurmas) {
-                    return RefreshIndicator(
-                      onRefresh: () => ref.refresh(turmasStoreProvider.future),
-                      child: switch (listaTurmas.isNotEmpty) {
-                        false => _buildAltState('Nenhuma turma foi encontrada'),
-                        true => ListView.builder(
-                          padding: const EdgeInsets.only(top: 16, bottom: 24),
-                          itemCount: listaTurmas.length,
-                          itemBuilder: (context, index) {
-                            final turma = listaTurmas[index];
-                            return TurmaCardWidget(
-                              turma: turma,
-                              onTap: () => _onTapTurma(turma),
-                            );
-                          },
-                        ),
-                      },
-                    );
-                  },
-                  error: (error, stack) {
-                    if (error is AppApiException) {
-                      ref.read(loggerProvider).e(error.message, error: error.error);
-                      return _buildAltState(error.message);
-                    }
-                    return _buildAltState('Ocorreu algum erro inesperado ao carregar as turmas');
-                  },
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -108,14 +120,22 @@ class _TurmasViewState extends ConsumerState<TurmaPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.group_outlined, size: 48, color: AppColors.textSecondary),
+          const Icon(
+            Icons.group_outlined,
+            size: 48,
+            color: AppColors.textSecondary,
+          ),
           const SizedBox(height: 12),
           Text(
             mensagem,
-            style: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 14,
+            ),
           ),
         ],
       ),
     );
   }
 }
+

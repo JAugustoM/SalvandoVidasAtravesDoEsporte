@@ -23,7 +23,7 @@ void main() {
     nome: 'Criança Teste',
     cpf: '111.222.333-44',
     email: 'crianca@teste.com',
-    nascimento: DateTime(2015, 1, 1), 
+    nascimento: DateTime(2015, 1, 1),
     idResponsavel: 102,
     ativo: true,
     faixa: Faixa.branca,
@@ -32,8 +32,10 @@ void main() {
     grau: 1,
     federado: false,
   );
-  
-  final Aluno alunoMaior = alunosMock.firstWhere((a) => a.idResponsavel == null);
+
+  final Aluno alunoMaior = alunosMock.firstWhere(
+    (a) => a.idResponsavel == null,
+  );
 
   setUp(() {
     mockAlunoService = MockAlunoService();
@@ -68,9 +70,11 @@ void main() {
   }
 
   group('EditarAlunoPage Test', () {
-    testWidgets('Deve abrir a tela com dados preenchidos corretamente', (tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(1080, 2340);
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    testWidgets('Deve abrir a tela com dados preenchidos corretamente', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2340);
+      addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(createWidgetUnderTest(alunoMenor));
       await tester.tap(find.text('Ir para Edição'));
@@ -82,9 +86,11 @@ void main() {
       expect(find.byType(TextField), findsWidgets);
     });
 
-    testWidgets('Deve permitir voltar a pagina inicial através do AppBar', (tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(1080, 2340);
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    testWidgets('Deve permitir voltar a pagina inicial através do AppBar', (
+      tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2340);
+      addTearDown(tester.view.resetPhysicalSize);
 
       await tester.pumpWidget(createWidgetUnderTest(alunoMaior));
       await tester.tap(find.text('Ir para Edição'));
@@ -107,7 +113,7 @@ void main() {
       } else {
         Navigator.of(tester.element(find.byType(EditarAlunoPage))).pop();
       }
-      
+
       await tester.pumpAndSettle();
 
       // Verifica se fechou a edição com sucesso e voltou para a home
@@ -116,3 +122,4 @@ void main() {
     });
   });
 }
+

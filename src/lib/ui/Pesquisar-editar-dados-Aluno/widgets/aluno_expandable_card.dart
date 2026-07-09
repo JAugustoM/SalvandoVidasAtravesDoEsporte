@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salvando_vidas/data/stores/pesquisa_aluno/pesquisa_aluno_store.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/responsavel/responsavel.dart';
@@ -41,14 +39,18 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
     final cardBg = isInativo
         ? AppColors.textSecondary.withValues(alpha: 0.4)
         : (isDark ? AppColors.darkSurface : Colors.white);
-    final mainText = isInativo ? AppColors.textSecondary : (isDark ? Colors.white : Colors.black);
-    final subText = isInativo ? AppColors.textSecondary : (isDark ? Colors.white70 : AppColors.black1);
+    final mainText = isInativo
+        ? AppColors.textSecondary
+        : (isDark ? Colors.white : Colors.black);
+    final subText = isInativo
+        ? AppColors.textSecondary
+        : (isDark ? Colors.white70 : AppColors.black1);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: isInativo ? 0 : 4,
-      shadowColor: AppColors.royalAzure.withOpacity(isDark ? 0.35 : 0.18),
+      shadowColor: AppColors.royalAzure.withValues(alpha: isDark ? 0.35 : 0.18),
       color: cardBg,
       child: InkWell(
         onTap: () => setState(() => _isExpanded = !_isExpanded),
@@ -106,17 +108,11 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                         const SizedBox(height: 4),
                         Text(
                           'Turma: ${widget.aluno.idTurma ?? "N/A"}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: subText,
-                          ),
+                          style: TextStyle(fontSize: 14, color: subText),
                         ),
                         Text(
                           'Faixa: ${widget.aluno.faixa.nomeVisivel}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: subText,
-                          ),
+                          style: TextStyle(fontSize: 14, color: subText),
                         ),
                       ],
                     ),
@@ -125,7 +121,9 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                     PopupMenuButton<String>(
                       icon: const Icon(Icons.more_vert),
                       onSelected: (value) async {
-                        final notifier = ref.read(pesquisaAlunoProvider.notifier);
+                        final notifier = ref.read(
+                          pesquisaAlunoProvider.notifier,
+                        );
                         try {
                           if (value == 'inativar') {
                             await notifier.inativarAluno(widget.aluno.id!);
@@ -150,7 +148,11 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                             value: 'inativar',
                             child: Row(
                               children: [
-                                Icon(Icons.block, size: 18, color: AppColors.error),
+                                Icon(
+                                  Icons.block,
+                                  size: 18,
+                                  color: AppColors.error,
+                                ),
                                 SizedBox(width: 8),
                                 Text('Inativar'),
                               ],
@@ -161,7 +163,11 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                             value: 'reativar',
                             child: Row(
                               children: [
-                                Icon(Icons.check_circle_outline, size: 18, color: AppColors.success),
+                                Icon(
+                                  Icons.check_circle_outline,
+                                  size: 18,
+                                  color: AppColors.success,
+                                ),
                                 SizedBox(width: 8),
                                 Text('Reativar'),
                               ],
@@ -174,7 +180,8 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
 
               if (_isExpanded) ...[
                 const SizedBox(height: 12),
-                if (widget.aluno.apelido != null && widget.aluno.apelido!.isNotEmpty) ...[
+                if (widget.aluno.apelido != null &&
+                    widget.aluno.apelido!.isNotEmpty) ...[
                   _buildInfoRow('Nome completo: ', widget.aluno.nome),
                   _buildInfoRow('Apelido: ', widget.aluno.apelido!),
                 ],
@@ -187,7 +194,8 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                 ),
                 _buildInfoRow(
                   'Contato de emergência: ',
-                  widget.aluno.contatoEmergencia != null && widget.aluno.contatoEmergencia!.isNotEmpty
+                  widget.aluno.contatoEmergencia != null &&
+                          widget.aluno.contatoEmergencia!.isNotEmpty
                       ? formatTelefone.maskText(widget.aluno.contatoEmergencia!)
                       : 'Não informado',
                 ),
@@ -227,13 +235,19 @@ class _AlunoExpandableCardState extends ConsumerState<AlunoExpandableCard> {
                     child: OutlinedButton.icon(
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.cyanPrimary,
-                        side: const BorderSide(color: AppColors.cyanPrimary, width: 1.5),
+                        side: const BorderSide(
+                          color: AppColors.cyanPrimary,
+                          width: 1.5,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                       icon: const Icon(Icons.history, size: 18),
-                      onPressed: () => mostrarHistoricoFrequenciaAlunoDialog(context, widget.aluno),
+                      onPressed: () => mostrarHistoricoFrequenciaAlunoDialog(
+                        context,
+                        widget.aluno,
+                      ),
                       label: const Text(
                         'Ver Histórico de Frequência',
                         style: TextStyle(fontWeight: FontWeight.bold),

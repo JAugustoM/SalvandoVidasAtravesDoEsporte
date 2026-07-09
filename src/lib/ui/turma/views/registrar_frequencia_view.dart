@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:salvando_vidas/data/services/presenca_service/presenca_service.dart';
 import 'package:salvando_vidas/data/stores/presenca/presenca_store.dart';
@@ -30,7 +28,7 @@ class _RegistrarFrequenciaViewState
   late final MaskTextInputFormatter formatData;
 
   // BLINDAGEM: Agora tipado estritamente como LocalUser em vez de dynamic
-  LocalUser? _professorSelecionado; 
+  LocalUser? _professorSelecionado;
   DateTime? _dataSelecionada;
   bool _isFirstLoad = true;
 
@@ -90,7 +88,9 @@ class _RegistrarFrequenciaViewState
               content: Text(
                 'Ao menos uma presença tem que ser marcada para salvar a frequência.',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: isDark ? Colors.white70 : Colors.black87),
+                style: TextStyle(
+                  color: isDark ? Colors.white70 : Colors.black87,
+                ),
               ),
               actionsAlignment: MainAxisAlignment.center,
               actions: [
@@ -125,13 +125,20 @@ class _RegistrarFrequenciaViewState
             title: Text(
               'Registrar Frequência?',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: textColor),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: textColor,
+              ),
             ),
             actionsAlignment: MainAxisAlignment.spaceEvenly,
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('Cancelar', style: TextStyle(color: AppColors.error)),
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(color: AppColors.error),
+                ),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -143,8 +150,8 @@ class _RegistrarFrequenciaViewState
                   ),
                 ),
                 onPressed: () async {
-                  if (state.value == null) return; 
-                  
+                  if (state.value == null) return;
+
                   try {
                     final presencas = state.value!.presenca;
                     final alunosPresentes = presencas.entries
@@ -160,9 +167,9 @@ class _RegistrarFrequenciaViewState
                       alunosPresentes,
                     );
                     if (!ctx.mounted) return;
-                    Navigator.of(ctx).pop(); 
+                    Navigator.of(ctx).pop();
                     if (!context.mounted) return;
-                    _mostrarDialogSucesso(); 
+                    _mostrarDialogSucesso();
                   } on AppApiException catch (e) {
                     logger.e(e.message, error: e);
                   } catch (e) {
@@ -195,7 +202,11 @@ class _RegistrarFrequenciaViewState
           title: const Text(
             'A frequência foi\nregistrada com sucesso!',
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.success),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: AppColors.success,
+            ),
           ),
           actionsAlignment: MainAxisAlignment.center,
           actions: [
@@ -210,8 +221,8 @@ class _RegistrarFrequenciaViewState
                 padding: const EdgeInsets.symmetric(horizontal: 32),
               ),
               onPressed: () {
-                Navigator.of(ctx).pop(); 
-                Navigator.of(context).pop(); 
+                Navigator.of(ctx).pop();
+                Navigator.of(context).pop();
               },
               child: const Text('Fechar'),
             ),
@@ -231,7 +242,7 @@ class _RegistrarFrequenciaViewState
     if (_isFirstLoad && state.value != null) {
       _professorSelecionado = state.value!.professor;
       _dataSelecionada = state.value!.data;
-      
+
       if (_dataSelecionada != null) {
         final dia = _dataSelecionada!.day.toString().padLeft(2, '0');
         final mes = _dataSelecionada!.month.toString().padLeft(2, '0');
@@ -243,10 +254,12 @@ class _RegistrarFrequenciaViewState
 
     final usuarios = state.value?.usuarios ?? [];
     // Também definimos a variável dropdownValue explicitamente como LocalUser
-    LocalUser? dropdownValue; 
+    LocalUser? dropdownValue;
     if (_professorSelecionado != null) {
       try {
-        dropdownValue = usuarios.firstWhere((u) => u.id == _professorSelecionado!.id);
+        dropdownValue = usuarios.firstWhere(
+          (u) => u.id == _professorSelecionado!.id,
+        );
       } catch (_) {
         dropdownValue = null;
       }
@@ -319,15 +332,15 @@ class _RegistrarFrequenciaViewState
                         // Passamos o tipo genérico <LocalUser> pro construtor pra garantir que o Flutter entenda
                         buildDropdownField<LocalUser>(
                           label: 'Instrutor/Professor da Aula:*',
-                          value: dropdownValue, 
+                          value: dropdownValue,
                           items: usuarios,
                           labelBuilder: (user) => user.nome,
                           onChanged: (value) {
                             if (value != null) {
                               setState(() {
-                                _professorSelecionado = value; 
+                                _professorSelecionado = value;
                               });
-                              notifier.updateProfessor(value); 
+                              notifier.updateProfessor(value);
                             }
                           },
                           validatorMessage: 'Selecione o professor responsável',
@@ -340,10 +353,14 @@ class _RegistrarFrequenciaViewState
                           controller: _dataController,
                           keyboardType: TextInputType.number,
                           inputFormatters: [formatData],
-                          style: TextStyle(color: isDark ? Colors.white : Colors.black),
+                          style: TextStyle(
+                            color: isDark ? Colors.white : Colors.black,
+                          ),
                           decoration: InputDecoration(
                             hintText: 'DD/MM/AAAA',
-                            hintStyle: TextStyle(color: isDark ? Colors.white54 : Colors.black54),
+                            hintStyle: TextStyle(
+                              color: isDark ? Colors.white54 : Colors.black54,
+                            ),
                             filled: true,
                             fillColor: inputBg,
                             border: OutlineInputBorder(
@@ -355,23 +372,33 @@ class _RegistrarFrequenciaViewState
                               vertical: 14,
                             ),
                             suffixIcon: IconButton(
-                              icon: Icon(Icons.calendar_today, color: textColor),
+                              icon: Icon(
+                                Icons.calendar_today,
+                                color: textColor,
+                              ),
                               onPressed: () async {
-                                FocusManager.instance.primaryFocus?.unfocus(); 
+                                FocusManager.instance.primaryFocus?.unfocus();
                                 DateTime? picked = await showDatePicker(
                                   context: context,
-                                  initialDate: _dataSelecionada ?? DateTime.now(),
+                                  initialDate:
+                                      _dataSelecionada ?? DateTime.now(),
                                   firstDate: DateTime(2000),
                                   lastDate: DateTime.now(),
                                 );
                                 if (picked != null) {
                                   setState(() {
-                                    _dataSelecionada = picked; 
+                                    _dataSelecionada = picked;
                                   });
-                                  notifier.updateData(picked); 
-                                  
-                                  final dia = picked.day.toString().padLeft(2, '0');
-                                  final mes = picked.month.toString().padLeft(2, '0');
+                                  notifier.updateData(picked);
+
+                                  final dia = picked.day.toString().padLeft(
+                                    2,
+                                    '0',
+                                  );
+                                  final mes = picked.month.toString().padLeft(
+                                    2,
+                                    '0',
+                                  );
                                   final ano = picked.year.toString();
                                   _dataController.text = "$dia/$mes/$ano";
                                 }
@@ -388,15 +415,16 @@ class _RegistrarFrequenciaViewState
                                   int.parse(partes[0]),
                                 );
                                 setState(() {
-                                  _dataSelecionada = data; 
+                                  _dataSelecionada = data;
                                 });
-                                notifier.updateData(data); 
+                                notifier.updateData(data);
                               } catch (e) {
                                 // Ignora enquanto a pessoa estiver apagando ou escrevendo errado
                               }
                             }
                           },
-                          validator: (val) => (val == null || val.isEmpty || val.length < 10)
+                          validator: (val) =>
+                              (val == null || val.isEmpty || val.length < 10)
                               ? 'A data é obrigatória e deve ser válida'
                               : null,
                         ),
@@ -419,13 +447,19 @@ class _RegistrarFrequenciaViewState
                             itemBuilder: (context, index) {
                               final aluno = state.alunos[index];
                               return Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0,
+                                ),
                                 child: Row(
                                   children: [
                                     CircleAvatar(
                                       backgroundColor: avatarBg,
                                       radius: 18,
-                                      child: Icon(Icons.person, color: textColor, size: 20),
+                                      child: Icon(
+                                        Icons.person,
+                                        color: textColor,
+                                        size: 20,
+                                      ),
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(
@@ -433,7 +467,9 @@ class _RegistrarFrequenciaViewState
                                         aluno.nomeReferencia,
                                         style: TextStyle(
                                           fontWeight: FontWeight.w500,
-                                          color: isDark ? Colors.white : Colors.black87,
+                                          color: isDark
+                                              ? Colors.white
+                                              : Colors.black87,
                                         ),
                                       ),
                                     ),
@@ -456,13 +492,16 @@ class _RegistrarFrequenciaViewState
                           ),
                           error: (error, stack) {
                             if (error is AppApiException) {
-                              ref.read(loggerProvider).e(error.message, error: error.error);
+                              ref
+                                  .read(loggerProvider)
+                                  .e(error.message, error: error.error);
                             }
                             return const Center(
                               child: Text('Erro ao carregar os alunos'),
                             );
                           },
-                          loading: () => const Center(child: CircularProgressIndicator()),
+                          loading: () =>
+                              const Center(child: CircularProgressIndicator()),
                         ),
                       ],
                     ),
@@ -486,7 +525,10 @@ class _RegistrarFrequenciaViewState
                       onPressed: _mostrarDialogConfirmacao,
                       child: const Text(
                         'Registrar Frequência',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -499,3 +541,4 @@ class _RegistrarFrequenciaViewState
     );
   }
 }
+

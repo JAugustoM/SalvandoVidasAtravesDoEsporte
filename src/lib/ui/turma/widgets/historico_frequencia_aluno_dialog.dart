@@ -39,7 +39,7 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               blurRadius: 15,
               offset: const Offset(0, -5),
             ),
@@ -64,8 +64,14 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
                 children: [
                   CircleAvatar(
                     radius: 26,
-                    backgroundColor: AppColors.cyanPrimary.withOpacity(0.2),
-                    child: const Icon(Icons.person, color: AppColors.cyanPrimary, size: 30),
+                    backgroundColor: AppColors.cyanPrimary.withValues(
+                      alpha: 0.2,
+                    ),
+                    child: const Icon(
+                      Icons.person,
+                      color: AppColors.cyanPrimary,
+                      size: 30,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -132,19 +138,30 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
                           padding: const EdgeInsets.symmetric(vertical: 40),
                           child: Column(
                             children: [
-                              Icon(Icons.event_busy, size: 48, color: AppColors.textSecondary.withOpacity(0.5)),
+                              Icon(
+                                Icons.event_busy,
+                                size: 48,
+                                color: AppColors.textSecondary.withValues(
+                                  alpha: 0.5,
+                                ),
+                              ),
                               const SizedBox(height: 12),
                               const Text(
                                 'Nenhum registro de aula encontrado para este aluno.',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(color: AppColors.textSecondary, fontSize: 15),
+                                style: TextStyle(
+                                  color: AppColors.textSecondary,
+                                  fontSize: 15,
+                                ),
                               ),
                             ],
                           ),
                         ),
                       )
                     else
-                      ...data.itens.map((item) => _buildTimelineCard(item, isDark)),
+                      ...data.itens.map(
+                        (item) => _buildTimelineCard(item, isDark),
+                      ),
                   ],
                 ),
               ),
@@ -158,7 +175,9 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
   Widget _buildResumoGrid(HistoricoFrequenciaAlunoData data, bool isDark) {
     final corFrequencia = data.percentualFrequencia >= 75
         ? AppColors.success
-        : (data.percentualFrequencia >= 50 ? AppColors.warning : AppColors.error);
+        : (data.percentualFrequencia >= 50
+              ? AppColors.warning
+              : AppColors.error);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -206,13 +225,18 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: corFrequencia.withOpacity(0.15),
+                  color: corFrequencia.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  data.percentualFrequencia >= 75 ? 'Excelente' : (data.percentualFrequencia >= 50 ? 'Regular' : 'Baixa'),
+                  data.percentualFrequencia >= 75
+                      ? 'Excelente'
+                      : (data.percentualFrequencia >= 50 ? 'Regular' : 'Baixa'),
                   style: TextStyle(
                     color: corFrequencia,
                     fontWeight: FontWeight.bold,
@@ -226,7 +250,9 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(6),
             child: LinearProgressIndicator(
-              value: data.totalAulas > 0 ? (data.percentualFrequencia / 100) : 0,
+              value: data.totalAulas > 0
+                  ? (data.percentualFrequencia / 100)
+                  : 0,
               backgroundColor: isDark ? Colors.white12 : Colors.grey[300],
               valueColor: AlwaysStoppedAnimation<Color>(corFrequencia),
               minHeight: 8,
@@ -235,11 +261,35 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _buildStatBadge('Aulas', '${data.totalAulas}', Icons.calendar_month, AppColors.cyanPrimary, isDark)),
+              Expanded(
+                child: _buildStatBadge(
+                  'Aulas',
+                  '${data.totalAulas}',
+                  Icons.calendar_month,
+                  AppColors.cyanPrimary,
+                  isDark,
+                ),
+              ),
               const SizedBox(width: 8),
-              Expanded(child: _buildStatBadge('Presenças', '${data.totalPresencas}', Icons.check_circle, AppColors.success, isDark)),
+              Expanded(
+                child: _buildStatBadge(
+                  'Presenças',
+                  '${data.totalPresencas}',
+                  Icons.check_circle,
+                  AppColors.success,
+                  isDark,
+                ),
+              ),
               const SizedBox(width: 8),
-              Expanded(child: _buildStatBadge('Ausências', '${data.totalAusencias}', Icons.cancel, AppColors.error, isDark)),
+              Expanded(
+                child: _buildStatBadge(
+                  'Ausências',
+                  '${data.totalAusencias}',
+                  Icons.cancel,
+                  AppColors.error,
+                  isDark,
+                ),
+              ),
             ],
           ),
         ],
@@ -247,7 +297,13 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatBadge(String label, String value, IconData icon, Color color, bool isDark) {
+  Widget _buildStatBadge(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+    bool isDark,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       decoration: BoxDecoration(
@@ -268,7 +324,10 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
           ),
           Text(
             label,
-            style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 11,
+            ),
           ),
         ],
       ),
@@ -278,7 +337,9 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
   Widget _buildTimelineCard(RegistroFrequenciaItem item, bool isDark) {
     final statusColor = item.presente ? AppColors.success : AppColors.error;
     final statusText = item.presente ? 'Presente' : 'Ausente';
-    final statusIcon = item.presente ? Icons.check_circle_outline : Icons.highlight_off;
+    final statusIcon = item.presente
+        ? Icons.check_circle_outline
+        : Icons.highlight_off;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -291,7 +352,7 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.2 : 0.04),
+            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -318,9 +379,12 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.15),
+                  color: statusColor.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -347,15 +411,25 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
               const SizedBox(width: 6),
               Text(
                 item.turmaNome ?? 'Turma #${item.turmaId}',
-                style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 13,
+                ),
               ),
               if (item.voluntarioNome != null) ...[
                 const SizedBox(width: 12),
-                Icon(Icons.person_outline, size: 16, color: AppColors.textSecondary),
+                Icon(
+                  Icons.person_outline,
+                  size: 16,
+                  color: AppColors.textSecondary,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   item.voluntarioNome!,
-                  style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                  style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 13,
+                  ),
                 ),
               ],
             ],
@@ -368,7 +442,9 @@ class _HistoricoFrequenciaAlunoSheet extends ConsumerWidget {
               decoration: BoxDecoration(
                 color: isDark ? Colors.black26 : Colors.grey[50],
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: isDark ? Colors.white10 : Colors.grey[200]!),
+                border: Border.all(
+                  color: isDark ? Colors.white10 : Colors.grey[200]!,
+                ),
               ),
               child: Text(
                 'Nota: "${item.observacao!}"',

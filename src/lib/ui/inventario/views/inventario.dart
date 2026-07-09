@@ -129,7 +129,7 @@ class Inventario extends ConsumerWidget {
                           color: cardBg,
                           borderRadius: BorderRadius.circular(14),
                           border: Border.all(
-                            color: AppColors.royalAzure.withOpacity(0.35),
+                            color: AppColors.royalAzure.withValues(alpha: 0.35),
                             width: 1.5,
                           ),
                           boxShadow: AppColors.cardShadow(isDark),
@@ -173,7 +173,7 @@ class Inventario extends ConsumerWidget {
                                     ),
                                     child: ListView.separated(
                                       itemCount: emprestimos.length,
-                                      separatorBuilder: (_, __) => Divider(
+                                      separatorBuilder: (_, _) => Divider(
                                         height: 1,
                                         color: isDark
                                             ? AppColors.darkDivider
@@ -203,7 +203,9 @@ class Inventario extends ConsumerWidget {
                                                   height: 44,
                                                   decoration: BoxDecoration(
                                                     color: AppColors.cyanPrimary
-                                                        .withOpacity(0.15),
+                                                        .withValues(
+                                                          alpha: 0.15,
+                                                        ),
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                           12,
@@ -365,7 +367,7 @@ class _StatCardConsultar extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: gradientColors.first.withOpacity(isDark ? 0.45 : 0.25),
+            color: gradientColors.first.withValues(alpha: isDark ? 0.45 : 0.25),
             blurRadius: 14,
             offset: const Offset(0, 5),
           ),
@@ -460,7 +462,7 @@ class _StatCardSimples extends StatelessWidget {
         color: bg,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: AppColors.cyanPrimary.withOpacity(0.4),
+          color: AppColors.cyanPrimary.withValues(alpha: 0.4),
           width: 1.5,
         ),
         boxShadow: AppColors.cardShadow(isDark),
@@ -510,8 +512,6 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-
     final bg =
         color ?? (outlined ? AppColors.cyanPrimary : AppColors.royalAzure);
 
@@ -584,7 +584,7 @@ class _PopUpKimonosDisponiveisState
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: AppColors.cyanPrimary.withOpacity(0.15),
+                      color: AppColors.cyanPrimary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(
@@ -722,8 +722,8 @@ class _PopUpKimonosDisponiveisState
                                         borderRadius: BorderRadius.circular(12),
                                         boxShadow: [
                                           BoxShadow(
-                                            color: Colors.black.withOpacity(
-                                              isDark ? 0.2 : 0.04,
+                                            color: Colors.black.withValues(
+                                              alpha: isDark ? 0.2 : 0.04,
                                             ),
                                             blurRadius: 6,
                                             offset: const Offset(0, 2),
@@ -741,7 +741,7 @@ class _PopUpKimonosDisponiveisState
                                             padding: const EdgeInsets.all(8),
                                             decoration: BoxDecoration(
                                               color: AppColors.cyanPrimary
-                                                  .withOpacity(0.12),
+                                                  .withValues(alpha: 0.12),
                                               borderRadius:
                                                   BorderRadius.circular(8),
                                             ),
@@ -806,7 +806,7 @@ class _PopUpKimonosDisponiveisState
                                   },
                                 );
                               },
-                              error: (_, __) => Center(
+                              error: (_, _) => Center(
                                 child: Text(
                                   'Erro ao carregar',
                                   style: TextStyle(color: hintColor),
@@ -890,7 +890,7 @@ class _FilterDropdown<T> extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.06),
+            color: Colors.black.withValues(alpha: 0.06),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),

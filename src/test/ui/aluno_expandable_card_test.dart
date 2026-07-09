@@ -105,8 +105,8 @@ void main() {
       'Deve navegar para a página de edição ao clicar no botão "Editar"',
       (WidgetTester tester) async {
         // Aumenta o tamanho da tela para evitar o overflow na página de edição
-        tester.binding.window.physicalSizeTestValue = const Size(1360, 2340);
-        addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+        tester.view.physicalSize = const Size(1360, 2340);
+        addTearDown(tester.view.resetPhysicalSize);
 
         await tester.pumpWidget(createWidgetUnderTest(alunoAtivo));
 

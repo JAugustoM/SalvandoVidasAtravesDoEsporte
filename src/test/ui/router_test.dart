@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:salvando_vidas/ui/global/widgets/navbar.dart';
-import 'package:salvando_vidas/ui/global/widgets/topbar.dart';
 import 'package:salvando_vidas/routing/router.dart';
 import 'package:mockito/annotations.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +29,10 @@ void main() {
           ShellRoute(
             builder: (context, state, child) => MainScaffold(child: child),
             routes: [
-              GoRoute(path: '/test', builder: (context, state) => const Text('Test Child')),
+              GoRoute(
+                path: '/test',
+                builder: (context, state) => const Text('Test Child'),
+              ),
             ],
           ),
         ],
@@ -78,3 +79,4 @@ class FakeViewPadding implements Fake, ViewPadding {
   @override
   final double bottom;
 }
+

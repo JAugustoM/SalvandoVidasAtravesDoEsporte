@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logger/logger.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/configuracao/views/editar_perfil_page.dart';
@@ -39,9 +36,9 @@ void main() {
   testWidgets('Deve exibir erro de validacao ao tentar salvar com nome vazio', (
     WidgetTester tester,
   ) async {
-    tester.binding.window.physicalSizeTestValue = const Size(1080, 2340);
-    tester.binding.window.devicePixelRatioTestValue = 1.0;
-    addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    tester.view.physicalSize = const Size(1080, 2340);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
 
     await tester.pumpWidget(
       ProviderScope(

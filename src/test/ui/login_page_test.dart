@@ -10,28 +10,29 @@ import '../mocks/local_mocks.mocks.dart';
 
 void main() {
   group('Caixa Preta - LoginPage', () {
-    testWidgets('Deve renderizar os componentes principais da pagina de login', (WidgetTester tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(1080, 2400);
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    testWidgets(
+      'Deve renderizar os componentes principais da pagina de login',
+      (WidgetTester tester) async {
+        tester.view.physicalSize = const Size(1080, 2400);
+        addTearDown(tester.view.resetPhysicalSize);
 
-      await tester.pumpWidget(
-        const ProviderScope(
-          child: MaterialApp(
-            home: LoginPage(),
-          ),
-        ),
-      );
+        await tester.pumpWidget(
+          const ProviderScope(child: MaterialApp(home: LoginPage())),
+        );
 
-      await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
 
-      expect(find.byType(LoginPage), findsOneWidget);
-      expect(find.text('Login'), findsOneWidget);
-      expect(find.text('Entrar'), findsOneWidget);
-    });
+        expect(find.byType(LoginPage), findsOneWidget);
+        expect(find.text('Login'), findsOneWidget);
+        expect(find.text('Entrar'), findsOneWidget);
+      },
+    );
 
-    testWidgets('Deve permitir interacao com o fluxo de login', (WidgetTester tester) async {
-      tester.binding.window.physicalSizeTestValue = const Size(1080, 2400);
-      addTearDown(tester.binding.window.clearPhysicalSizeTestValue);
+    testWidgets('Deve permitir interacao com o fluxo de login', (
+      WidgetTester tester,
+    ) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      addTearDown(tester.view.resetPhysicalSize);
 
       final mockUserService = MockUserService();
       when(mockUserService.login(any, any)).thenAnswer((_) async => true);
@@ -40,31 +41,30 @@ void main() {
         initialLocation: Routes.login,
         routes: [
           GoRoute(path: Routes.login, builder: (c, s) => LoginPage()),
-          GoRoute(path: Routes.home, builder: (c, s) => const Scaffold(body: Text('Pagina Home'))),
+          GoRoute(
+            path: Routes.home,
+            builder: (c, s) => const Scaffold(body: Text('Pagina Home')),
+          ),
         ],
       );
 
       await tester.pumpWidget(
         ProviderScope(
-          overrides: [
-            userServiceProvider.overrideWithValue(mockUserService),
-          ],
-          child: MaterialApp.router(
-            routerConfig: router,
-          ),
+          overrides: [userServiceProvider.overrideWithValue(mockUserService)],
+          child: MaterialApp.router(routerConfig: router),
         ),
       );
-      
+
       await tester.pumpAndSettle();
 
       final textFields = find.byType(TextField);
       await tester.enterText(textFields.at(0), 'email@teste.com');
       await tester.enterText(textFields.at(1), 'senha123');
-      
+
       await tester.ensureVisible(find.text('Entrar'));
       await tester.tap(find.text('Entrar'));
       await tester.pumpAndSettle();
-      
+
       expect(find.text('Pagina Home'), findsOneWidget);
     });
   });

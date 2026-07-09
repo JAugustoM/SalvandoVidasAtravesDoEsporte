@@ -18,7 +18,7 @@ Widget buildDropdownField<T>({
         children: [
           buildLabel(label),
           DropdownButtonFormField<T>(
-            value: value,
+            initialValue: value,
             decoration: InputDecoration(
               filled: true,
               fillColor: fill,
@@ -32,11 +32,19 @@ Widget buildDropdownField<T>({
               ),
             ),
             dropdownColor: isDark ? AppColors.darkSurface : Colors.white,
-            hint: Text(label.replaceAll('*', ''), style: TextStyle(color: isDark ? Colors.white70 : Colors.black54)),
+            hint: Text(
+              label.replaceAll('*', ''),
+              style: TextStyle(color: isDark ? Colors.white70 : Colors.black54),
+            ),
             items: items.map((T item) {
               return DropdownMenuItem<T>(
                 value: item,
-                child: Text(labelBuilder(item), style: TextStyle(color: isDark ? Colors.white : Colors.black87)),
+                child: Text(
+                  labelBuilder(item),
+                  style: TextStyle(
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
+                ),
               );
             }).toList(),
             onChanged: onChanged,

@@ -11,10 +11,12 @@ class HistoricoFrequenciaTurmaView extends ConsumerStatefulWidget {
   const HistoricoFrequenciaTurmaView({super.key, required this.turmaId});
 
   @override
-  ConsumerState<HistoricoFrequenciaTurmaView> createState() => _HistoricoFrequenciaTurmaViewState();
+  ConsumerState<HistoricoFrequenciaTurmaView> createState() =>
+      _HistoricoFrequenciaTurmaViewState();
 }
 
-class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenciaTurmaView>
+class _HistoricoFrequenciaTurmaViewState
+    extends ConsumerState<HistoricoFrequenciaTurmaView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   String _filtroNome = '';
@@ -54,7 +56,11 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
         iconTheme: IconThemeData(color: textColor),
         title: Text(
           'Histórico de Frequência',
-          style: TextStyle(color: textColor, fontWeight: FontWeight.bold, fontSize: 18),
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
         bottom: TabBar(
           controller: _tabController,
@@ -98,7 +104,9 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
 
   Widget _buildHeroCard(HistoricoFrequenciaTurmaData data, bool isDark) {
     final media = data.percentualMedioTurma;
-    final corMedia = media >= 75 ? AppColors.success : (media >= 50 ? AppColors.warning : AppColors.error);
+    final corMedia = media >= 75
+        ? AppColors.success
+        : (media >= 50 ? AppColors.warning : AppColors.error);
 
     return Container(
       margin: const EdgeInsets.all(16),
@@ -114,7 +122,7 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.deepNavy.withOpacity(isDark ? 0.4 : 0.2),
+            color: AppColors.deepNavy.withValues(alpha: isDark ? 0.4 : 0.2),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -144,9 +152,12 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: corMedia.withOpacity(0.2),
+                  color: corMedia.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(color: corMedia),
                 ),
@@ -165,9 +176,17 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildHeroStat('Sessões de Aula', '${data.sessoes.length}', Icons.event_available),
+              _buildHeroStat(
+                'Sessões de Aula',
+                '${data.sessoes.length}',
+                Icons.event_available,
+              ),
               Container(width: 1, height: 30, color: Colors.white24),
-              _buildHeroStat('Alunos Ativos', '${data.resumosAlunos.length}', Icons.groups),
+              _buildHeroStat(
+                'Alunos Ativos',
+                '${data.resumosAlunos.length}',
+                Icons.groups,
+              ),
             ],
           ),
         ],
@@ -185,7 +204,11 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
           children: [
             Text(
               value,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
             ),
             Text(
               label,
@@ -199,8 +222,14 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
 
   Widget _buildAbaAlunos(HistoricoFrequenciaTurmaData data, bool isDark) {
     final resumosFiltrados = data.resumosAlunos
-        .where((r) => r.aluno.nome.toLowerCase().contains(_filtroNome.toLowerCase()) ||
-                      (r.aluno.apelido?.toLowerCase().contains(_filtroNome.toLowerCase()) ?? false))
+        .where(
+          (r) =>
+              r.aluno.nome.toLowerCase().contains(_filtroNome.toLowerCase()) ||
+              (r.aluno.apelido?.toLowerCase().contains(
+                    _filtroNome.toLowerCase(),
+                  ) ??
+                  false),
+        )
         .toList();
 
     return Column(
@@ -250,7 +279,10 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
               ? Center(
                   child: Text(
                     'Nenhum aluno encontrado.',
-                    style: TextStyle(color: AppColors.textSecondary, fontSize: 15),
+                    style: TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 15,
+                    ),
                   ),
                 )
               : ListView.builder(
@@ -267,7 +299,9 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
   }
 
   Widget _buildAlunoCard(ResumoFrequenciaAlunoTurma resumo, bool isDark) {
-    final cor = resumo.percentual >= 75 ? AppColors.success : (resumo.percentual >= 50 ? AppColors.warning : AppColors.error);
+    final cor = resumo.percentual >= 75
+        ? AppColors.success
+        : (resumo.percentual >= 50 ? AppColors.warning : AppColors.error);
     final cardBg = isDark ? AppColors.darkSurface : Colors.white;
     final textColor = isDark ? Colors.white : AppColors.deepNavy;
 
@@ -278,7 +312,8 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
       elevation: 2,
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
-        onTap: () => mostrarHistoricoFrequenciaAlunoDialog(context, resumo.aluno),
+        onTap: () =>
+            mostrarHistoricoFrequenciaAlunoDialog(context, resumo.aluno),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -298,9 +333,12 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: cor.withOpacity(0.15),
+                      color: cor.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -326,23 +364,47 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.check_circle, size: 16, color: AppColors.success),
+                      Icon(
+                        Icons.check_circle,
+                        size: 16,
+                        color: AppColors.success,
+                      ),
                       const SizedBox(width: 4),
-                      Text('${resumo.totalPresencas} Presenças', style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                      Text(
+                        '${resumo.totalPresencas} Presenças',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
                       const SizedBox(width: 12),
                       Icon(Icons.cancel, size: 16, color: AppColors.error),
                       const SizedBox(width: 4),
-                      Text('${resumo.totalAusencias} Faltas', style: const TextStyle(fontSize: 13, color: AppColors.textSecondary)),
+                      Text(
+                        '${resumo.totalAusencias} Faltas',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: AppColors.textSecondary,
+                        ),
+                      ),
                     ],
                   ),
                   Row(
                     children: [
                       Text(
                         'Detalhes',
-                        style: TextStyle(color: AppColors.cyanPrimary, fontWeight: FontWeight.w600, fontSize: 13),
+                        style: TextStyle(
+                          color: AppColors.cyanPrimary,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                        ),
                       ),
                       const SizedBox(width: 2),
-                      Icon(Icons.arrow_forward_ios, size: 12, color: AppColors.cyanPrimary),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 12,
+                        color: AppColors.cyanPrimary,
+                      ),
                     ],
                   ),
                 ],
@@ -360,7 +422,11 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.event_busy, size: 50, color: AppColors.textSecondary.withOpacity(0.5)),
+            Icon(
+              Icons.event_busy,
+              size: 50,
+              color: AppColors.textSecondary.withValues(alpha: 0.5),
+            ),
             const SizedBox(height: 12),
             const Text(
               'Nenhuma chamada registrada para esta turma.',
@@ -402,10 +468,14 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.cyanPrimary.withOpacity(0.15),
+                      color: AppColors.cyanPrimary.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Icon(Icons.event, color: AppColors.cyanPrimary, size: 20),
+                    child: const Icon(
+                      Icons.event,
+                      color: AppColors.cyanPrimary,
+                      size: 20,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Column(
@@ -413,26 +483,40 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                     children: [
                       Text(
                         _formatarData(sessao.data),
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: textColor),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: textColor,
+                        ),
                       ),
                       const SizedBox(height: 2),
                       Text(
                         sessao.voluntarioNome ?? 'Voluntário',
-                        style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
-                  color: AppColors.cyanPrimary.withOpacity(0.15),
+                  color: AppColors.cyanPrimary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   '${sessao.percentualPresenca.toStringAsFixed(0)}% Presença',
-                  style: const TextStyle(color: AppColors.cyanPrimary, fontWeight: FontWeight.bold, fontSize: 12),
+                  style: const TextStyle(
+                    color: AppColors.cyanPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
                 ),
               ),
             ],
@@ -443,11 +527,23 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
               children: [
                 Icon(Icons.check_circle, size: 14, color: AppColors.success),
                 const SizedBox(width: 4),
-                Text('${sessao.totalPresentes} Presentes', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                Text(
+                  '${sessao.totalPresentes} Presentes',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
                 const SizedBox(width: 12),
                 Icon(Icons.cancel, size: 14, color: AppColors.error),
                 const SizedBox(width: 4),
-                Text('${sessao.totalAusentes} Ausentes', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                Text(
+                  '${sessao.totalAusentes} Ausentes',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -458,41 +554,72 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Divider(),
-                  if (sessao.observacao != null && sessao.observacao!.isNotEmpty) ...[
+                  if (sessao.observacao != null &&
+                      sessao.observacao!.isNotEmpty) ...[
                     const SizedBox(height: 4),
-                    Text('Nota do Professor:', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: textColor)),
+                    Text(
+                      'Nota do Professor:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: textColor,
+                      ),
+                    ),
                     const SizedBox(height: 4),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.darkInputFill : Colors.grey[100],
+                        color: isDark
+                            ? AppColors.darkInputFill
+                            : Colors.grey[100],
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         '"${sessao.observacao!}"',
-                        style: TextStyle(fontStyle: FontStyle.italic, color: isDark ? Colors.white70 : Colors.black87),
+                        style: TextStyle(
+                          fontStyle: FontStyle.italic,
+                          color: isDark ? Colors.white70 : Colors.black87,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 12),
                   ],
                   if (sessao.alunosPresentes.isNotEmpty) ...[
-                    Text('Presentes (${sessao.alunosPresentes.length}):', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.success)),
+                    Text(
+                      'Presentes (${sessao.alunosPresentes.length}):',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: AppColors.success,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
-                      children: sessao.alunosPresentes.map((a) => _buildAlunoChip(a, AppColors.success)).toList(),
+                      children: sessao.alunosPresentes
+                          .map((a) => _buildAlunoChip(a, AppColors.success))
+                          .toList(),
                     ),
                     const SizedBox(height: 12),
                   ],
                   if (sessao.alunosAusentes.isNotEmpty) ...[
-                    Text('Ausentes (${sessao.alunosAusentes.length}):', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.error)),
+                    Text(
+                      'Ausentes (${sessao.alunosAusentes.length}):',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                        color: AppColors.error,
+                      ),
+                    ),
                     const SizedBox(height: 6),
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
-                      children: sessao.alunosAusentes.map((a) => _buildAlunoChip(a, AppColors.error)).toList(),
+                      children: sessao.alunosAusentes
+                          .map((a) => _buildAlunoChip(a, AppColors.error))
+                          .toList(),
                     ),
                   ],
                 ],
@@ -507,8 +634,15 @@ class _HistoricoFrequenciaTurmaViewState extends ConsumerState<HistoricoFrequenc
   Widget _buildAlunoChip(Aluno aluno, Color color) {
     return ActionChip(
       avatar: Icon(Icons.person, size: 14, color: color),
-      label: Text(aluno.nomeReferencia, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w600)),
-      backgroundColor: color.withOpacity(0.1),
+      label: Text(
+        aluno.nomeReferencia,
+        style: TextStyle(
+          fontSize: 12,
+          color: color,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      backgroundColor: color.withValues(alpha: 0.1),
       side: BorderSide.none,
       onPressed: () => mostrarHistoricoFrequenciaAlunoDialog(context, aluno),
     );

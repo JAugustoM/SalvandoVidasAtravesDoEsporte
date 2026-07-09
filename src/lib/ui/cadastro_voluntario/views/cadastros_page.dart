@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:salvando_vidas/data/services/aluno_service/aluno_service.dart';
 import 'package:salvando_vidas/data/stores/cadastro_aluno/cadastro_aluno.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
@@ -27,13 +25,6 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
 
   // Controllers - Etapa 2
   final _obsMedicasController = TextEditingController();
-  final Map<int, bool?> _respostasMedicas = {
-    1: null,
-    2: null,
-    3: null,
-    4: null,
-    5: null,
-  };
   bool _termoResponsabilidadeAceito = false;
 
   late CadastroAlunoState cadastro;
@@ -55,9 +46,8 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
         return EtapaDadosMedicos(
           formKey: _formKeyEtapa2,
           termoAceito: _termoResponsabilidadeAceito,
-          onTermoChanged: (val) => setState(
-            () => _termoResponsabilidadeAceito = val ?? false,
-          ),
+          onTermoChanged: (val) =>
+              setState(() => _termoResponsabilidadeAceito = val ?? false),
         );
       case 2:
         return EtapaDadosResponsavel(formKey: _formKeyEtapa3);
@@ -73,7 +63,9 @@ class _CadastrosPageState extends ConsumerState<CadastrosPage> {
       if (!formValido || !cadastro.estaValido) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Preencha todos os campos obrigatórios corretamente.'),
+            content: Text(
+              'Preencha todos os campos obrigatórios corretamente.',
+            ),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,
           ),

@@ -20,7 +20,7 @@ class AppTheme {
     cardTheme: CardThemeData(
       color: Colors.white,
       elevation: 6,
-      shadowColor: AppColors.royalAzure.withOpacity(0.18),
+      shadowColor: AppColors.royalAzure.withValues(alpha: 0.18),
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
@@ -46,10 +46,16 @@ class AppTheme {
       ),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: WidgetStateProperty.resolveWith((states) =>
-          states.contains(WidgetState.selected) ? AppColors.royalAzure : AppColors.textSecondary),
-      trackColor: WidgetStateProperty.resolveWith((states) =>
-          states.contains(WidgetState.selected) ? AppColors.cyanPastel : AppColors.divider),
+      thumbColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AppColors.royalAzure
+            : AppColors.textSecondary,
+      ),
+      trackColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AppColors.cyanPastel
+            : AppColors.divider,
+      ),
     ),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.cyanPrimary,
@@ -75,21 +81,24 @@ class AppTheme {
     ),
     scaffoldBackgroundColor: AppColors.darkBg,
     cardColor: AppColors.darkSurface,
-    
+
     // AQUI ESTAVA O ÚLTIMO ERRO! Agora está como CardThemeData :)
     cardTheme: CardThemeData(
       color: AppColors.darkSurface,
       elevation: 6,
-      shadowColor: AppColors.royalAzure.withOpacity(0.35),
+      shadowColor: AppColors.royalAzure.withValues(alpha: 0.35),
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
-    
+
     dividerColor: AppColors.darkDivider,
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: AppColors.darkInputFill,
-      hintStyle: const TextStyle(color: AppColors.darkTextSecondary, fontSize: 13),
+      hintStyle: const TextStyle(
+        color: AppColors.darkTextSecondary,
+        fontSize: 13,
+      ),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide.none,
@@ -107,10 +116,16 @@ class AppTheme {
       ),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: WidgetStateProperty.resolveWith((states) =>
-          states.contains(WidgetState.selected) ? AppColors.cyanPrimary : AppColors.darkTextSecondary),
-      trackColor: WidgetStateProperty.resolveWith((states) =>
-          states.contains(WidgetState.selected) ? AppColors.royalAzure.withOpacity(0.5) : AppColors.darkDivider),
+      thumbColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AppColors.cyanPrimary
+            : AppColors.darkTextSecondary,
+      ),
+      trackColor: WidgetStateProperty.resolveWith(
+        (states) => states.contains(WidgetState.selected)
+            ? AppColors.royalAzure.withValues(alpha: 0.5)
+            : AppColors.darkDivider,
+      ),
     ),
     textTheme: ThemeData.dark().textTheme.apply(
       bodyColor: Colors.white,
@@ -137,3 +152,4 @@ class AppTheme {
     ),
   );
 }
+

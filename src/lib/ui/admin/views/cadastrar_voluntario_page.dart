@@ -31,7 +31,6 @@ class _CadastrarVoluntarioPageState
 
   Future<void> _salvar() async {
     final cadastro = ref.read(cadastroVoluntarioProvider);
-    final notifier = ref.read(cadastroVoluntarioProvider.notifier);
 
     if (!(_formKey.currentState?.validate() ?? false) ||
         !cadastro.podeCadastrar) {
@@ -85,7 +84,9 @@ class _CadastrarVoluntarioPageState
     } catch (e) {
       if (!mounted) return;
       Navigator.of(context, rootNavigator: true).pop();
-      ref.read(loggerProvider).e('Erro inesperado ao cadastrar voluntário', error: e);
+      ref
+          .read(loggerProvider)
+          .e('Erro inesperado ao cadastrar voluntário', error: e);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Erro ao cadastrar voluntário.'),

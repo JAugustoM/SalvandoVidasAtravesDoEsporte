@@ -9,9 +9,9 @@ import 'main_imports.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Supabase.initialize(url: SUPABASE_URL, anonKey: ANON_KEY);
+  await Supabase.initialize(url: supabaseURL, anonKey: anonKey);
 
-  runApp(const AppRoot());
+  runApp(const ProviderScope(child: AppRoot()));
 }
 
 class AppRoot extends StatelessWidget {
@@ -19,12 +19,7 @@ class AppRoot extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (_) => const MyApp(),
-      ),
-    );
+    return DevicePreview(enabled: !kReleaseMode, builder: (_) => const MyApp());
   }
 }
 

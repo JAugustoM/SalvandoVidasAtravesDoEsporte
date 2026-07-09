@@ -1,5 +1,3 @@
-import 'package:salvando_vidas/main_imports.dart';
-
 bool eEmail(String email) {
   final clean = email.trim();
   final exp = RegExp(r"^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$");

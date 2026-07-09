@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:salvando_vidas/data/services/user_service/user_service.dart';
 import 'package:salvando_vidas/main_imports.dart';

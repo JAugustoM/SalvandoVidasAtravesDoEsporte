@@ -1,4 +1,3 @@
-import 'package:salvando_vidas/data/services/global/global_service.dart';
 import 'package:salvando_vidas/data/stores/login/login_controller.dart';
 import 'package:salvando_vidas/data/stores/login/login_form.dart';
 import 'package:salvando_vidas/main_imports.dart';
@@ -14,8 +13,9 @@ class BotaoEntrar extends ConsumerWidget {
     ref.listen<AsyncValue<bool>>(loginControllerProvider, (previous, next) {
       if (next.hasError) {
         final errorMessage = next.error.toString();
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(errorMessage)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(errorMessage)));
         ref.read(loggerProvider).e(errorMessage, error: next.error);
       } else if (next.value == true) {
         context.go(Routes.home);
@@ -66,3 +66,4 @@ class BotaoEntrar extends ConsumerWidget {
     );
   }
 }
+

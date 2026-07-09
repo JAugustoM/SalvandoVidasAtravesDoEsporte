@@ -1,10 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:salvando_vidas/data/services/kimono_service/kimono_service.dart';
 import 'package:salvando_vidas/data/stores/gestao_kimonos/gestao_kimonos_store.dart';
 import 'package:salvando_vidas/data/stores/registro_kimonos/registro_kimonos_store.dart';
-import 'package:salvando_vidas/data/supabase_call.dart';
 import 'package:salvando_vidas/domain/kimono/kimono.dart';
 import 'package:salvando_vidas/main_imports.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart';
@@ -48,7 +44,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   void _mostrarConfirmacaoDoacao() {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       builder: (context) => AlertDialog(
         backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -93,7 +89,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 store.reset();
                 _doadorController.clear();
                 _qtdDoadaController.clear();
-                await ref.refresh(gestaoKimonosStoreProvider.future);
+                ref.invalidate(gestaoKimonosStoreProvider);
                 if (context.mounted) {
                   Navigator.pop(context);
                   _mostrarSucessoDoacao();
@@ -111,21 +107,9 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                   );
                 }
               } catch (e) {
-                if (context.mounted) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Erro ao registrar doação.'),
-                      backgroundColor: AppColors.error,
-                      behavior: SnackBarBehavior.floating,
-                    ),
-                  );
-                }
-              } catch (e) {
-                ref.read(loggerProvider).e(
-                  'Erro inesperado ao registrar doação',
-                  error: e,
-                );
+                ref
+                    .read(loggerProvider)
+                    .e('Erro inesperado ao registrar doação', error: e);
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -151,7 +135,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   void _mostrarSucessoDoacao() {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       builder: (context) => AlertDialog(
         backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -191,7 +175,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
     final kimono = state.kimonoPerdido!;
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       builder: (context) => AlertDialog(
         backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -236,7 +220,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                 store.reset();
                 _motivoController.clear();
                 _qtdPerdidaController.clear();
-                await ref.refresh(gestaoKimonosStoreProvider.future);
+                ref.invalidate(gestaoKimonosStoreProvider);
                 if (context.mounted) {
                   Navigator.pop(context);
                   _mostrarSucessoPerda();
@@ -254,10 +238,9 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                   );
                 }
               } catch (e) {
-                ref.read(loggerProvider).e(
-                  'Erro inesperado ao registrar perda',
-                  error: e,
-                );
+                ref
+                    .read(loggerProvider)
+                    .e('Erro inesperado ao registrar perda', error: e);
                 if (context.mounted) {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -283,7 +266,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
   void _mostrarSucessoPerda() {
     showDialog(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withValues(alpha: 0.6),
       builder: (context) => AlertDialog(
         backgroundColor: cardBg,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -397,7 +380,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: AppColors.cyanPrimary.withOpacity(0.15),
+                        color: AppColors.cyanPrimary.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
@@ -841,8 +824,8 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
                                                 decoration: BoxDecoration(
                                                   color: isSelected
                                                       ? AppColors.cyanPrimary
-                                                            .withOpacity(
-                                                              isDark
+                                                            .withValues(
+                                                              alpha: isDark
                                                                   ? 0.25
                                                                   : 0.12,
                                                             )
@@ -1117,7 +1100,7 @@ class _DoacoesPerdasPageState extends ConsumerState<DoacoesPerdasPage> {
               ? Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppColors.cyanPrimary.withOpacity(0.15),
+                    color: AppColors.cyanPrimary.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
@@ -1184,7 +1167,7 @@ class _StatCardInfo extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Icon(icon, color: Colors.white.withOpacity(0.9), size: 28),
+          Icon(icon, color: Colors.white.withValues(alpha: 0.9), size: 28),
           const SizedBox(height: 8),
           Text(
             title,

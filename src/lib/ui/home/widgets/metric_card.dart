@@ -20,12 +20,20 @@ class MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bool hasGradient = gradientColors != null && gradientColors!.length >= 2;
-    final bool colored = hasGradient || (color != null && color != Colors.white);
-    
-    final cardBg = hasGradient ? null : (colored ? color : (isDark ? AppColors.darkSurface : Colors.white));
-    final textColor = colored ? Colors.white : (isDark ? Colors.white : AppColors.deepNavy);
-    final subColor = colored ? Colors.white.withValues(alpha: 0.9) : (isDark ? Colors.white70 : AppColors.textSecondary);
+    final bool hasGradient =
+        gradientColors != null && gradientColors!.length >= 2;
+    final bool colored =
+        hasGradient || (color != null && color != Colors.white);
+
+    final cardBg = hasGradient
+        ? null
+        : (colored ? color : (isDark ? AppColors.darkSurface : Colors.white));
+    final textColor = colored
+        ? Colors.white
+        : (isDark ? Colors.white : AppColors.deepNavy);
+    final subColor = colored
+        ? Colors.white.withValues(alpha: 0.9)
+        : (isDark ? Colors.white70 : AppColors.textSecondary);
 
     return Container(
       width: double.infinity,
@@ -43,21 +51,23 @@ class MetricCard extends StatelessWidget {
         boxShadow: hasGradient
             ? [
                 BoxShadow(
-                  color: gradientColors!.first.withOpacity(isDark ? 0.45 : 0.25),
+                  color: gradientColors!.first.withValues(
+                    alpha: isDark ? 0.45 : 0.25,
+                  ),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
-                )
+                ),
               ]
             : AppColors.cardShadow(isDark),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center, 
-        mainAxisAlignment: MainAxisAlignment.center, 
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             title,
-            textAlign: TextAlign.center, 
+            textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -71,7 +81,7 @@ class MetricCard extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               value,
-              textAlign: TextAlign.center, 
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: textColor,
                 fontWeight: FontWeight.w900,
@@ -98,3 +108,4 @@ class MetricCard extends StatelessWidget {
     );
   }
 }
+

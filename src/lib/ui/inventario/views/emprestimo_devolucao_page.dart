@@ -1,5 +1,7 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:salvando_vidas/data/services/global/global_service.dart';
 import 'package:salvando_vidas/data/services/kimono_service/kimono_service.dart';
 import 'package:salvando_vidas/data/stores/gestao_emprestimos/gestao_emprestimos_store.dart';
@@ -8,8 +10,6 @@ import 'package:salvando_vidas/data/supabase_call.dart';
 import 'package:salvando_vidas/domain/aluno/aluno.dart';
 import 'package:salvando_vidas/domain/kimono/kimono.dart';
 import 'package:salvando_vidas/ui/global/themes/colors.dart';
-import 'package:go_router/go_router.dart';
-import 'package:collection/collection.dart';
 
 class EmprestimoDevolucaoPage extends ConsumerStatefulWidget {
   final bool? modoInicialEmprestar;
@@ -558,10 +558,8 @@ class _EmprestimoDevolucaoPageState
                         await ref
                             .read(kimonoServiceProvider)
                             .cadastrarEmprestimo(emprestimo);
-                        await ref.refresh(gestaoKimonosStoreProvider.future);
-                        await ref.refresh(
-                          gestaoEmprestimosStoreProvider.future,
-                        );
+                        ref.invalidate(gestaoKimonosStoreProvider);
+                        ref.invalidate(gestaoEmprestimosStoreProvider);
                         if (context.mounted) {
                           Navigator.pop(context);
                           _showPopUpSucesso(

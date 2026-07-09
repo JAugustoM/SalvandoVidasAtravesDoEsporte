@@ -99,7 +99,6 @@ class GestaoEmprestimosStore extends _$GestaoEmprestimosStore {
   }
 
   void updateKimono(Estoque kimono) {
-    print(kimono.tamanho.nomeVisivel);
     final data = state.value!;
     state = AsyncValue.data(data.copyWith(kimono: kimono));
   }

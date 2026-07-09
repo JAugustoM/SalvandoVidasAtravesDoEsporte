@@ -41,7 +41,7 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
           borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               blurRadius: 15,
               offset: const Offset(0, -5),
             ),
@@ -66,8 +66,14 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
                 children: [
                   CircleAvatar(
                     radius: 26,
-                    backgroundColor: AppColors.royalAzure.withOpacity(0.2),
-                    child: const Icon(Icons.checkroom, color: AppColors.royalAzure, size: 30),
+                    backgroundColor: AppColors.royalAzure.withValues(
+                      alpha: 0.2,
+                    ),
+                    child: const Icon(
+                      Icons.checkroom,
+                      color: AppColors.royalAzure,
+                      size: 30,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -106,7 +112,9 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
             Expanded(
               child: state.when(
                 loading: () => const Center(
-                  child: CircularProgressIndicator(color: AppColors.cyanPrimary),
+                  child: CircularProgressIndicator(
+                    color: AppColors.cyanPrimary,
+                  ),
                 ),
                 error: (err, stack) => Center(
                   child: Text(
@@ -141,19 +149,30 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
                             padding: const EdgeInsets.symmetric(vertical: 40),
                             child: Column(
                               children: [
-                                Icon(Icons.history, size: 48, color: AppColors.textSecondary.withOpacity(0.5)),
+                                Icon(
+                                  Icons.history,
+                                  size: 48,
+                                  color: AppColors.textSecondary.withValues(
+                                    alpha: 0.5,
+                                  ),
+                                ),
                                 const SizedBox(height: 12),
                                 const Text(
                                   'Nenhum empréstimo ou devolução registrado para este aluno.',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(color: AppColors.textSecondary, fontSize: 15),
+                                  style: TextStyle(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 15,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         )
                       else
-                        ...itensDoAluno.map((item) => _buildTimelineCard(context, item, isDark)),
+                        ...itensDoAluno.map(
+                          (item) => _buildTimelineCard(context, item, isDark),
+                        ),
                     ],
                   );
                 },
@@ -167,8 +186,12 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
 
   Widget _buildResumoGrid(List<HistoricoItem> itens, bool isDark) {
     final total = itens.length;
-    final ativos = itens.where((i) => i.emprestimo.dataDevolucao == null).length;
-    final devolvidos = itens.where((i) => i.emprestimo.dataDevolucao != null).length;
+    final ativos = itens
+        .where((i) => i.emprestimo.dataDevolucao == null)
+        .length;
+    final devolvidos = itens
+        .where((i) => i.emprestimo.dataDevolucao != null)
+        .length;
 
     final corStatus = ativos > 0 ? AppColors.warning : AppColors.success;
 
@@ -206,7 +229,9 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      ativos > 0 ? '$ativos Empréstimo(s) Ativo(s)' : 'Sem Empréstimos Pendentes',
+                      ativos > 0
+                          ? '$ativos Empréstimo(s) Ativo(s)'
+                          : 'Sem Empréstimos Pendentes',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
@@ -218,9 +243,12 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
               ),
               const SizedBox(width: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: corStatus.withOpacity(0.15),
+                  color: corStatus.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -240,18 +268,44 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
             child: LinearProgressIndicator(
               value: total > 0 ? (devolvidos / total) : 1.0,
               backgroundColor: isDark ? Colors.white12 : Colors.grey[300],
-              valueColor: const AlwaysStoppedAnimation<Color>(AppColors.success),
+              valueColor: const AlwaysStoppedAnimation<Color>(
+                AppColors.success,
+              ),
               minHeight: 8,
             ),
           ),
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _buildStatBadge('Total', '$total', Icons.history, AppColors.royalAzure, isDark)),
+              Expanded(
+                child: _buildStatBadge(
+                  'Total',
+                  '$total',
+                  Icons.history,
+                  AppColors.royalAzure,
+                  isDark,
+                ),
+              ),
               const SizedBox(width: 8),
-              Expanded(child: _buildStatBadge('Em Aberto', '$ativos', Icons.pending_actions, AppColors.warning, isDark)),
+              Expanded(
+                child: _buildStatBadge(
+                  'Em Aberto',
+                  '$ativos',
+                  Icons.pending_actions,
+                  AppColors.warning,
+                  isDark,
+                ),
+              ),
               const SizedBox(width: 8),
-              Expanded(child: _buildStatBadge('Devolvidos', '$devolvidos', Icons.check_circle, AppColors.success, isDark)),
+              Expanded(
+                child: _buildStatBadge(
+                  'Devolvidos',
+                  '$devolvidos',
+                  Icons.check_circle,
+                  AppColors.success,
+                  isDark,
+                ),
+              ),
             ],
           ),
         ],
@@ -259,7 +313,13 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
     );
   }
 
-  Widget _buildStatBadge(String label, String value, IconData icon, Color color, bool isDark) {
+  Widget _buildStatBadge(
+    String label,
+    String value,
+    IconData icon,
+    Color color,
+    bool isDark,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       decoration: BoxDecoration(
@@ -280,23 +340,35 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
           ),
           Text(
             label,
-            style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 11,
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTimelineCard(BuildContext context, HistoricoItem item, bool isDark) {
+  Widget _buildTimelineCard(
+    BuildContext context,
+    HistoricoItem item,
+    bool isDark,
+  ) {
     final isDevolvido = item.emprestimo.dataDevolucao != null;
     final statusColor = isDevolvido ? AppColors.success : AppColors.warning;
     final statusText = isDevolvido ? 'Devolvido' : 'Em Aberto';
-    final statusIcon = isDevolvido ? Icons.check_circle_outline : Icons.pending_actions;
+    final statusIcon = isDevolvido
+        ? Icons.check_circle_outline
+        : Icons.pending_actions;
 
     final dataEmp = _formatarData(item.emprestimo.data);
-    final dataDev = isDevolvido ? _formatarData(item.emprestimo.dataDevolucao!) : null;
+    final dataDev = isDevolvido
+        ? _formatarData(item.emprestimo.dataDevolucao!)
+        : null;
 
-    final kimono = '${item.emprestimo.tamanho.nomeVisivel}, ${item.emprestimo.cor.nomeVisivel}';
+    final kimono =
+        '${item.emprestimo.tamanho.nomeVisivel}, ${item.emprestimo.cor.nomeVisivel}';
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -314,82 +386,118 @@ class _HistoricoEmprestimoAlunoSheet extends ConsumerWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Icon(Icons.sports_martial_arts, size: 20, color: AppColors.royalAzure),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: Text(
-                        'Kimono: $kimono',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: isDark ? Colors.white : Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Row(
-                  children: [
-                    Icon(statusIcon, size: 14, color: statusColor),
-                    const SizedBox(width: 4),
-                    Text(
-                      statusText,
-                      style: TextStyle(
-                        color: statusColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Divider(color: isDark ? Colors.white10 : Colors.grey[200], height: 1),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Data de Empréstimo:', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
-                  const SizedBox(height: 2),
-                  Text(dataEmp, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: isDark ? Colors.white : AppColors.deepNavy)),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.sports_martial_arts,
+                          size: 20,
+                          color: AppColors.royalAzure,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Kimono: $kimono',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                              color: isDark ? Colors.white : Colors.black87,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: statusColor.withValues(alpha: 0.15),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(statusIcon, size: 14, color: statusColor),
+                        const SizedBox(width: 4),
+                        Text(
+                          statusText,
+                          style: TextStyle(
+                            color: statusColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              if (dataDev != null)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text('Data de Devolução:', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
-                    const SizedBox(height: 2),
-                    Text(dataDev, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: AppColors.success)),
-                  ],
-                ),
+              const SizedBox(height: 10),
+              Divider(
+                color: isDark ? Colors.white10 : Colors.grey[200],
+                height: 1,
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Data de Empréstimo:',
+                        style: TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        dataEmp,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 13,
+                          color: isDark ? Colors.white : AppColors.deepNavy,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (dataDev != null)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const Text(
+                          'Data de Devolução:',
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          dataDev,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                            color: AppColors.success,
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
-    ),
-    ),
     );
   }
 }

@@ -19,10 +19,10 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     final topbarColor = isDark ? AppColors.darkTopbar : AppColors.cyanPrimary;
-    final logoTextColor = isDark ? AppColors.cyanPastel : AppColors.deepNavy;
+    // final logoTextColor = isDark ? AppColors.cyanPastel : AppColors.deepNavy;
     final logoSplash = isDark
-        ? AppColors.cyanPastel.withOpacity(0.15)
-        : AppColors.deepNavy.withOpacity(0.2);
+        ? AppColors.cyanPastel.withValues(alpha: 0.15)
+        : AppColors.deepNavy.withValues(alpha: 0.2);
 
     return Container(
       color: topbarColor,
@@ -36,7 +36,7 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
               InkWell(
                 onTap: () => context.go(Routes.home),
                 splashColor: logoSplash,
-                highlightColor: logoSplash.withOpacity(0.1),
+                highlightColor: logoSplash.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
                   padding: isDark
@@ -58,18 +58,29 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
 
               if (isAdmin)
                 Tooltip(
-                  message: isAdminPage ? 'Você está no painel admin' : 'Acessar painel admin',
+                  message: isAdminPage
+                      ? 'Você está no painel admin'
+                      : 'Acessar painel admin',
                   decoration: BoxDecoration(
                     color: AppColors.deepNavy,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  textStyle: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w500),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isAdminPage ? Colors.white.withOpacity(0.2) : Colors.transparent,
+                      color: isAdminPage
+                          ? Colors.white.withValues(alpha: 0.2)
+                          : Colors.transparent,
                       border: Border.all(
                         color: isAdminPage ? Colors.white : Colors.transparent,
                         width: 2,
@@ -80,14 +91,18 @@ class TopBar extends ConsumerWidget implements PreferredSizeWidget {
                       shape: const CircleBorder(),
                       clipBehavior: Clip.antiAlias,
                       child: InkWell(
-                        onTap: isAdminPage ? null : () => context.go(Routes.admin),
+                        onTap: isAdminPage
+                            ? null
+                            : () => context.go(Routes.admin),
                         splashColor: Colors.white24,
                         highlightColor: Colors.white10,
                         child: Padding(
                           padding: const EdgeInsets.all(6),
                           child: Icon(
                             Icons.admin_panel_settings,
-                            color: isAdminPage ? Colors.white : Colors.white.withOpacity(0.7),
+                            color: isAdminPage
+                                ? Colors.white
+                                : Colors.white.withValues(alpha: 0.7),
                             size: 24,
                           ),
                         ),
